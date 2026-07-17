@@ -168,6 +168,6 @@
     questions: Object.freeze(questions),
     personas: Object.freeze(personaRows.map(item => Object.freeze(item))),
     personasByCode: Object.freeze(Object.fromEntries(personaRows.map(item => [item.code, Object.freeze(item)]))),
-    assetManifestUrl: "operator-assets/v0.1/manifest.json",
+    assetManifestUrl: "operator-assets/v0.1/manifest.json?v=20260717-imageperf-02",
   });
 })(typeof window !== "undefined" ? window : globalThis);

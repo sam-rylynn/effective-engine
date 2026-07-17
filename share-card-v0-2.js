@@ -158,7 +158,7 @@
           <div class="share-stamp" aria-hidden="true">DNA<br />MATCHED</div>
         </section>
         <figure class="share-animal">
-          <img src="${escapeHtml(model.asset)}" alt="${escapeHtml(model.assetAlt)}" />
+          <img src="${escapeHtml(model.asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(model.assetAlt)}" />
         </figure>
         <blockquote class="share-quote">${escapeHtml(model.quote)}</blockquote>
         <div>
@@ -188,11 +188,11 @@
         </div>
         <div class="share-match-pair">
           <figure>
-            <img src="${escapeHtml(model.self.asset)}" alt="${escapeHtml(model.self.name)}" />
+            <img src="${escapeHtml(model.self.asset)}" decoding="async" alt="${escapeHtml(model.self.name)}" />
             <figcaption>${escapeHtml(model.self.name)} · ${escapeHtml(model.self.code)}</figcaption>
           </figure>
           <figure>
-            <img src="${escapeHtml(model.project.asset)}" alt="${escapeHtml(model.project.name)}" />
+            <img src="${escapeHtml(model.project.asset)}" decoding="async" alt="${escapeHtml(model.project.name)}" />
             <figcaption>${escapeHtml(model.project.name)} · ${escapeHtml(model.project.code)}</figcaption>
           </figure>
         </div>

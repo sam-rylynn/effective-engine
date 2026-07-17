@@ -76,7 +76,7 @@
     answerLocked: false,
     assetGate: {
       status: "checking",
-      reason: "正在核对 16 张正式操盘怪物资产。",
+      reason: "正在读取操盘怪物资产清单。",
       assetsById: {},
     },
   };
@@ -279,7 +279,7 @@
           return `
             <button class="dual-history-card dual-history-${entry.mode}" data-dual-history-id="${escapeHtml(entry.id)}" type="button">
               <span>${entry.mode === "self" ? "自我" : "项目"}</span>
-              <img src="${escapeHtml(asset)}" alt="" />
+              <img src="${escapeHtml(asset)}" loading="lazy" decoding="async" alt="" />
               <strong>${escapeHtml(persona.name)}</strong>
               <b>${escapeHtml(entry.result.code)}</b>
               <small>${formatHistoryDate(entry.completedAt)}</small>
@@ -529,7 +529,7 @@
             `).join("")}
           </div>
           <figure class="dual-result-visual">
-            <img id="dualResultImage" src="${escapeHtml(asset)}" alt="${escapeHtml(persona.assetAlt)}" />
+            <img id="dualResultImage" src="${escapeHtml(asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(persona.assetAlt)}" />
           </figure>
           <footer>DNA 档案 · ${escapeHtml(result.code)}</footer>
         </section>
@@ -592,7 +592,7 @@
             <p>${escapeHtml(item.usable || item.value || "先观察它如何把空间、内容与运营节奏放在一起。")}</p>
             <button data-dual-recommendation-detail type="button">查看项目 <b aria-hidden="true">→</b></button>
           </div>
-          <img src="${escapeHtml(item.image || "")}" alt="${escapeHtml(item.name || "推荐项目")}" />
+          <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
         </div>
         ${tags.length ? `<div class="dual-project-tags">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
         <details>
@@ -882,25 +882,15 @@
     }
   }
 
-  async function verifyAssetFiles(assetsById) {
-    const rows = Object.values(assetsById);
-    const checks = await Promise.all(rows.map(async asset => {
-      let response = await fetch(asset.file, { method: "HEAD", cache: "no-store" });
-      if (!response.ok && [405, 501].includes(response.status)) {
-        response = await fetch(asset.file, { cache: "no-store" });
-      }
-      return response.ok ? "" : asset.assetId;
-    }));
-    return checks.filter(Boolean);
-  }
-
   async function loadAssetManifest() {
     dualState.assetGate = {
       status: "checking",
-      reason: "正在核对 16 张正式操盘怪物资产。",
+      reason: "正在读取操盘怪物资产清单。",
       assetsById: {},
     };
-    renderHome();
+    const initialRoute = parseRoute();
+    if (initialRoute.screen === "home") renderHome();
+    else setVisiblePage(initialRoute.screen, initialRoute.mode);
     try {
       const response = await fetch(operatorSystem.assetManifestUrl, { cache: "no-store" });
       if (!response.ok) throw new Error(`资产清单读取失败（${response.status}）`);
@@ -910,8 +900,6 @@
       }
       const validation = dualLogic.validateAssetManifest(manifest);
       if (!validation.valid) throw new Error(validation.errors.join("；"));
-      const missing = await verifyAssetFiles(validation.assetsById);
-      if (missing.length) throw new Error(`${missing.join("、")} 角色文件不存在。`);
       dualState.assetGate = {
         status: "ready",
         reason: "",

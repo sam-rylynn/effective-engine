@@ -8,112 +8,112 @@
       "code": "LSBE",
       "personaName": "收尾洁癖獾",
       "species": "獾",
-      "file": "operator-assets/v0.1/p01-lsbe-badger.jpg"
+      "file": "operator-assets/v0.1/p01-lsbe-badger-web-v02.jpg"
     },
     {
       "assetId": "P02",
       "code": "LSBR",
       "personaName": "群聊永生鼠",
       "species": "鼠",
-      "file": "operator-assets/v0.1/p02-lsbr-mouse.jpg"
+      "file": "operator-assets/v0.1/p02-lsbr-mouse-web-v02.jpg"
     },
     {
       "assetId": "P03",
       "code": "LCBE",
       "personaName": "假日献祭狗",
       "species": "狗",
-      "file": "operator-assets/v0.1/p03-lcbe-dog.jpg"
+      "file": "operator-assets/v0.1/p03-lcbe-dog-web-v02.jpg"
     },
     {
       "assetId": "P04",
       "code": "LCBR",
       "personaName": "永不静音鹦",
       "species": "鹦鹉",
-      "file": "operator-assets/v0.1/p04-lcbr-parrot.jpg"
+      "file": "operator-assets/v0.1/p04-lcbr-parrot-web-v02.jpg"
     },
     {
       "assetId": "P05",
       "code": "LSME",
       "personaName": "第十七版甲",
       "species": "穿山甲",
-      "file": "operator-assets/v0.1/p05-lsme-pangolin.jpg"
+      "file": "operator-assets/v0.1/p05-lsme-pangolin-web-v02.jpg"
     },
     {
       "assetId": "P06",
       "code": "LSMR",
       "personaName": "饭局上班蛛",
       "species": "蜘蛛",
-      "file": "operator-assets/v0.1/p06-lsmr-spider.jpg"
+      "file": "operator-assets/v0.1/p06-lsmr-spider-web-v02.jpg"
     },
     {
       "assetId": "P07",
       "code": "LCME",
       "personaName": "翻车急救蜥",
       "species": "壁虎",
-      "file": "operator-assets/v0.1/p07-lcme-gecko.jpg"
+      "file": "operator-assets/v0.1/p07-lcme-gecko-web-v02.jpg"
     },
     {
       "assetId": "P08",
       "code": "LCMR",
       "personaName": "活动套娃獭",
       "species": "水獭",
-      "file": "operator-assets/v0.1/p08-lcmr-otter.jpg"
+      "file": "operator-assets/v0.1/p08-lcmr-otter-web-v02.jpg"
     },
     {
       "assetId": "P09",
       "code": "DSBE",
       "personaName": "改到天亮犀",
       "species": "犀牛",
-      "file": "operator-assets/v0.1/p09-dsbe-rhino.jpg"
+      "file": "operator-assets/v0.1/p09-dsbe-rhino-web-v02.jpg"
     },
     {
       "assetId": "P10",
       "code": "DSBR",
       "personaName": "报表缉凶犬",
       "species": "边境牧羊犬",
-      "file": "operator-assets/v0.1/p10-dsbr-border-collie.jpg"
+      "file": "operator-assets/v0.1/p10-dsbr-border-collie-web-v02.jpg"
     },
     {
       "assetId": "P11",
       "code": "DCBE",
       "personaName": "开业催产猩",
       "species": "大猩猩",
-      "file": "operator-assets/v0.1/p11-dcbe-gorilla.jpg"
+      "file": "operator-assets/v0.1/p11-dcbe-gorilla-web-v02.jpg"
     },
     {
       "assetId": "P12",
       "code": "DCBR",
       "personaName": "满租幻觉豹",
       "species": "黑豹",
-      "file": "operator-assets/v0.1/p12-dcbr-panther.jpg"
+      "file": "operator-assets/v0.1/p12-dcbr-panther-web-v02.jpg"
     },
     {
       "assetId": "P13",
       "code": "DSME",
       "personaName": "项目算命鸮",
       "species": "猫头鹰",
-      "file": "operator-assets/v0.1/p13-dsme-owl.jpg"
+      "file": "operator-assets/v0.1/p13-dsme-owl-web-v02.jpg"
     },
     {
       "assetId": "P14",
       "code": "DSMR",
       "personaName": "速成过敏牦",
       "species": "牦牛",
-      "file": "operator-assets/v0.1/p14-dsmr-yak.jpg"
+      "file": "operator-assets/v0.1/p14-dsmr-yak-web-v02.jpg"
     },
     {
       "assetId": "P15",
       "code": "DCME",
       "personaName": "首店梭哈龙",
       "species": "变色龙",
-      "file": "operator-assets/v0.1/p15-dcme-chameleon.jpg"
+      "file": "operator-assets/v0.1/p15-dcme-chameleon-web-v02.jpg"
     },
     {
       "assetId": "P16",
       "code": "DCMR",
       "personaName": "改图拉群猴",
       "species": "卷尾猴",
-      "file": "operator-assets/v0.1/p16-dcmr-capuchin.jpg"
+      "file": "operator-assets/v0.1/p16-dcmr-capuchin-web-v02.jpg"
     }
   ]
 }

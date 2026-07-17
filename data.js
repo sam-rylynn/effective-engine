@@ -55,7 +55,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习公园客流导入商业、屋顶街区和长期培育节奏。",
       "caution": "体量和城市能级较高，不适合直接套招商比例。",
       "next": "只作高位标杆，不直接套体量；重点看连廊和日常运营。",
-      "image": "assets/01-深业上城.png",
+      "image": "assets/01-深业上城.webp",
       "applicableTypes": [
         "T1",
         "T4"
@@ -110,7 +110,7 @@ window.PARK_CASE_DATA = {
       "usable": "反推生态大盘商业的培育期、社群运营和内容节奏。",
       "caution": "要拆分麓坊/CPI/漫汀等组团，不能把商业集群当单体。",
       "next": "拆分麓坊/CPI/漫汀/运动公园，避免把商业集群当单体。",
-      "image": "assets/02-麓湖-麓坊中心.png",
+      "image": "assets/02-麓湖-麓坊中心.webp",
       "applicableTypes": [
         "T1",
         "T2"
@@ -164,7 +164,7 @@ window.PARK_CASE_DATA = {
       "usable": "观察公园旁商业如何用景观IP和开业内容起势。",
       "caution": "新开业样本，品牌兑现和真实客流仍需跟踪。",
       "next": "开业后跟踪品牌兑现、客流峰值和餐饮体验结构。",
-      "image": "assets/03-重庆光环花园城.png",
+      "image": "assets/03-重庆光环花园城.webp",
       "applicableTypes": [
         "T1"
       ],
@@ -217,7 +217,7 @@ window.PARK_CASE_DATA = {
       "usable": "作为开放式公园商业的对照，学习室内自然场景如何造停留。",
       "caution": "品牌名录和楼层热区影响还需要补充。",
       "next": "补品牌名录和室内植物园对停留时长/楼层热区的影响。",
-      "image": "assets/04-重庆光环购物公园.png",
+      "image": "assets/04-重庆光环购物公园.webp",
       "applicableTypes": [
         "T5"
       ],
@@ -271,7 +271,7 @@ window.PARK_CASE_DATA = {
       "usable": "借鉴自营市集、菜场主力店和社区日常消费组织。",
       "caution": "不是典型公园商业，不参与主库横向排名。",
       "next": "转入边界样本，借鉴自营市集和15分钟生活圈。",
-      "image": "assets/05-鸿寿坊.png",
+      "image": "assets/05-鸿寿坊.webp",
       "applicableTypes": [
         "T2",
         "T6"
@@ -326,7 +326,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习夜经济、露台外摆和城市事件承载方式。",
       "caution": "复合都心属性强，不能和公园商业做强对比。",
       "next": "单独归为城市更新，不与公园商业做强对比。",
-      "image": "assets/06-上海新天地东台里.png",
+      "image": "assets/06-上海新天地东台里.webp",
       "applicableTypes": [
         "T6",
         "T10"
@@ -381,7 +381,7 @@ window.PARK_CASE_DATA = {
       "usable": "看花园空间、宠物/运动/艺术活动如何组合招商。",
       "caution": "新开业后还要验证活动频率、空铺和品牌稳定性。",
       "next": "跟踪开业后活动频率、空铺、品牌稳定性。",
-      "image": "assets/07-上德银泰城.png",
+      "image": "assets/07-上德银泰城.webp",
       "applicableTypes": [
         "T1",
         "T2"
@@ -435,7 +435,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习文保、公园和首店招商如何策展成目的地。",
       "caution": "需要补真实客流、首店转化和开业后稳定表现。",
       "next": "补开业后的真实客流、首店转化和餐饮/体验占比。",
-      "image": "assets/08-嘉佰汇.png",
+      "image": "assets/08-嘉佰汇.webp",
       "applicableTypes": [
         "T6",
         "T3"
@@ -491,7 +491,7 @@ window.PARK_CASE_DATA = {
       "usable": "适合拆年轻客群、公园零距离、宠物和户外运动组合。",
       "caution": "开业后需持续补品牌、客流和活动表现。",
       "next": "开业后持续补品牌、客流和活动，做年轻客群专题。",
-      "image": "assets/09-光谷KIC-PARK.png",
+      "image": "assets/09-光谷KIC-PARK.webp",
       "applicableTypes": [
         "T1",
         "T2"
@@ -546,7 +546,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习文化内容和建筑IP如何形成非标吸引力。",
       "caution": "艺术园区属性强，不适合作招商结构基准。",
       "next": "作为文化内容/建筑IP样本保留。",
-      "image": "assets/10-天目里.png",
+      "image": "assets/10-天目里.webp",
       "applicableTypes": [
         "T8"
       ],
@@ -601,7 +601,7 @@ window.PARK_CASE_DATA = {
       "usable": "很适合贵阳参考：社区配套如何长成微度假目的地。",
       "caution": "餐饮面积口径不能直接当铺位口径，需要重新整理品牌清单。",
       "next": "把餐饮约45%面积口径改成铺位数口径，并补主理人清单。",
-      "image": "assets/11-玉鸟集.png",
+      "image": "assets/11-玉鸟集.webp",
       "applicableTypes": [
         "T2",
         "T6"
@@ -656,7 +656,7 @@ window.PARK_CASE_DATA = {
       "usable": "看政府滨水更新中轻商业如何依托自然资源做内容。",
       "caution": "公开信息薄，先核实体量、品牌和运营主体。",
       "next": "优先核实体量、铺位、品牌和运营主体，再决定是否入主库。",
-      "image": "assets/12-永定河集.png",
+      "image": "assets/12-永定河集.webp",
       "applicableTypes": [
         "T3"
       ],
@@ -710,7 +710,7 @@ window.PARK_CASE_DATA = {
       "usable": "最适合拆小体量非标商业的招商、租金和内容运营打法。",
       "caution": "容量有限，目的性到达为主。",
       "next": "先补完整品牌清单，再按铺位数拆零售/生活方式/餐饮/服务。",
-      "image": "assets/13-成都REGULAR源野.png",
+      "image": "assets/13-成都REGULAR源野.webp",
       "applicableTypes": [
         "T1",
         "T8"
@@ -766,7 +766,7 @@ window.PARK_CASE_DATA = {
       "usable": "尺度接近可落地，适合学习社区活动和半户外运营边界。",
       "caution": "国际样本，经营指标不要和国内项目硬比。",
       "next": "重点拆公共空间、儿童健身、社区活动和自然通风运营边界。",
-      "image": "assets/14-The-Commons-曼谷.png",
+      "image": "assets/14-The-Commons-曼谷.webp",
       "applicableTypes": [
         "T2"
       ],
@@ -820,7 +820,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习退台绿化、动线和楼层商业协同。",
       "caution": "空间技术更值得看，招商口径和客流销售不要直接套用。",
       "next": "拆空间动线、退台绿化、楼层商业协同，不硬套客流销售。",
-      "image": "assets/15-难波公园NambaParks-大阪.png",
+      "image": "assets/15-难波公园NambaParks-大阪.webp",
       "applicableTypes": [
         "T4",
         "T9"
@@ -875,7 +875,7 @@ window.PARK_CASE_DATA = {
       "usable": "对公共公园用地、屋顶公园和商业酒店一体化有参考。",
       "caution": "狭长地块动线受限，需拆公共性管理边界。",
       "next": "拆PPP边界、公共性管理、夜间运营和狭长动线。",
-      "image": "assets/16-宫下公园MIYASHITA-PARK-东京.png",
+      "image": "assets/16-宫下公园MIYASHITA-PARK-东京.webp",
       "applicableTypes": [
         "T4"
       ],
@@ -929,7 +929,7 @@ window.PARK_CASE_DATA = {
       "usable": "只看景观造流量和商业环景观布局的逻辑。",
       "caution": "机场枢纽和投资规模不可复制。",
       "next": "只做概念标杆，拆雨漩涡/森林谷的动线和商业环景观布局。",
-      "image": "assets/17-星耀樟宜Jewel-新加坡.png",
+      "image": "assets/17-星耀樟宜Jewel-新加坡.webp",
       "applicableTypes": [
         "T9",
         "T5"
@@ -984,7 +984,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习历史活化+开放街区的策展节奏和首发活动组织。",
       "caution": "核心地段、文保资产和顶奢品牌资源不可复制，只能借鉴打法。",
       "next": "补齐体量、租金和分期口径，跟踪东区开业后的日常客流结构。",
-      "image": "assets/18-张园.png",
+      "image": "assets/18-张园.webp",
       "applicableTypes": [
         "T6",
         "T10"
@@ -1040,7 +1040,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习水系动线组织、微度假客群运营和四季节庆日历。",
       "caution": "大尺度公共绿地和水乡肌理难复制，别只学古镇立面。",
       "next": "核实商业体量与租户结构，跟踪平日客流和居民复访占比。",
-      "image": "assets/19-蟠龙天地.png",
+      "image": "assets/19-蟠龙天地.webp",
       "applicableTypes": [
         "T1",
         "T6"
@@ -1096,7 +1096,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习策展排期、快闪位预留和楼层主题重写的方法。",
       "caution": "策展运营团队能力是硬门槛，没有内容生产线不要套这个模式。",
       "next": "跟踪固定租户存活率和展览转化数据，补充租金与坪效口径。",
-      "image": "assets/20-TX淮海.png",
+      "image": "assets/20-TX淮海.webp",
       "applicableTypes": [
         "T10"
       ],
@@ -1151,7 +1151,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习主题叙事统一招商和轻装修低门槛的入驻机制。",
       "caution": "运营方要有强审美和统一管理，否则轻装修容易变杂乱。",
       "next": "补运营主体和体量口径，核验租户续约与用户主题认知。",
-      "image": "assets/21-HAI550.png",
+      "image": "assets/21-HAI550.webp",
       "applicableTypes": [
         "T10",
         "T2"
@@ -1207,7 +1207,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习大尺度厂房的场景切分和展览拉客流的节奏。",
       "caution": "区位孤立是硬边界，内容一断客流就断，别只学空间美学。",
       "next": "补运营主体、体量和租户结构，跟踪非展期的日常客流。",
-      "image": "assets/22-EKA天物.png",
+      "image": "assets/22-EKA天物.webp",
       "applicableTypes": [
         "T7",
         "T8"
@@ -1263,7 +1263,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习滨水节点组织和艺术观演客流向消费的转化设计。",
       "caution": "工业遗存+西岸艺术区是复制边界，普通滨水项目要降维学节点。",
       "next": "补体量与租户口径，跟踪非活动日的滨水日常客流转化。",
-      "image": "assets/23-GateM西岸梦中心.png",
+      "image": "assets/23-GateM西岸梦中心.webp",
       "applicableTypes": [
         "T3",
         "T7"
@@ -1319,7 +1319,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习历史节点串联动线和7x24开放社区的运营管理。",
       "caution": "成片历史建筑资产稀缺，开放式管理需要长期投入。",
       "next": "补商业体量与租户口径，跟踪二期开放后的客群结构变化。",
-      "image": "assets/24-上生新所.png",
+      "image": "assets/24-上生新所.webp",
       "applicableTypes": [
         "T6",
         "T8"
@@ -1375,7 +1375,7 @@ window.PARK_CASE_DATA = {
       "usable": "学习按时段分工的业态组织和办公+公园双路径导流。",
       "caution": "不是目的地商业，别指望传播带客，成立前提是嵌入日常路径。",
       "next": "补体量与租户口径，跟踪工作日/周末客流比和首店存活。",
-      "image": "assets/25-前滩公园巷.png",
+      "image": "assets/25-前滩公园巷.webp",
       "applicableTypes": [
         "T1",
         "T2"
