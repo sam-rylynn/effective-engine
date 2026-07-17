@@ -219,26 +219,114 @@
     return `${model.eyebrow}「${model.name}」${model.code}。${model.quote}`;
   }
 
-  async function shareCurrent(model, status) {
-    const text = shareText(model);
+  function cardFileName(model) {
+    const identity = model.type === "match" ? `同频度-${model.score}` : `${model.name}-${model.code}`;
+    return `商业DNA-${identity}.png`.replace(/[\\/:*?"<>|]/g, "-");
+  }
+
+  async function waitForCardImages(card) {
+    await Promise.all(Array.from(card.querySelectorAll("img")).map(async image => {
+      if (image.complete) {
+        if (image.naturalWidth > 0) return;
+        throw new Error("卡片图片加载失败。");
+      }
+      try {
+        if (typeof image.decode === "function") {
+          await image.decode();
+        } else {
+          await new Promise((resolve, reject) => {
+            image.addEventListener("load", resolve, { once: true });
+            image.addEventListener("error", reject, { once: true });
+          });
+        }
+      } catch (error) {
+        throw new Error("卡片图片尚未加载完成。");
+      }
+      if (image.naturalWidth <= 0) throw new Error("卡片图片加载失败。");
+    }));
+  }
+
+  async function cardBlob(stage) {
+    const card = stage.querySelector(".share-card");
+    if (!card) throw new Error("分享卡片尚未生成。");
+    if (typeof globalScope.html2canvas !== "function") throw new Error("卡片保存组件未加载。");
+    await waitForCardImages(card);
+    const canvas = await globalScope.html2canvas(card, {
+      backgroundColor: "#f7f1e6",
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      imageTimeout: 15000,
+    });
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (blob) resolve(blob);
+        else reject(new Error("卡片图片生成失败。"));
+      }, "image/png");
+    });
+  }
+
+  async function saveCurrent(model, stage, status, button) {
+    button.disabled = true;
+    status.textContent = "正在生成卡片...";
     try {
+      const blob = await cardBlob(stage);
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = cardFileName(model);
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      status.textContent = "卡片已保存为 PNG。";
+    } catch (error) {
+      status.textContent = error.message || "卡片暂时无法保存。";
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function shareCurrent(model, stage, status, button) {
+    const text = shareText(model);
+    button.disabled = true;
+    status.textContent = "正在准备分享卡片...";
+    try {
+      const blob = await cardBlob(stage);
+      const file = typeof globalScope.File === "function"
+        ? new globalScope.File([blob], cardFileName(model), { type: "image/png" })
+        : null;
+      if (file && navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ title: "商业 DNA 分享卡", text, files: [file] });
+        status.textContent = "分享卡片已发送。";
+        return;
+      }
       if (navigator.share) {
         await navigator.share({ title: "商业 DNA 分享卡", text, url: location.href });
+        status.textContent = "分享链接已发送。";
         return;
       }
       await navigator.clipboard.writeText(`${text} ${location.href}`);
       status.textContent = "分享文案和链接已复制。";
     } catch (error) {
       if (error?.name === "AbortError") return;
-      status.textContent = "暂时无法调用系统分享，请直接截图这张卡。";
+      status.textContent = error.message || "暂时无法调用系统分享。";
+    } finally {
+      button.disabled = false;
     }
   }
 
   async function init() {
     const stage = document.getElementById("shareStage");
+    const saveButton = document.getElementById("shareSaveButton");
     const shareButton = document.getElementById("shareCardButton");
     const backButton = document.getElementById("shareBackButton");
     const status = document.getElementById("shareStatus");
+    const embedded = new URLSearchParams(location.search).get("embed") === "1";
+    document.body.classList.toggle("is-embedded", embedded);
+    backButton.hidden = embedded;
+    saveButton.disabled = true;
+    shareButton.disabled = true;
     try {
       const request = parseRequest(location.search);
       const assetsById = await loadAssets(globalScope.COMMERCIAL_DNA_OPERATOR_V1);
@@ -247,14 +335,22 @@
         project: globalScope.COMMERCIAL_DNA_PERSONA,
         assetsById,
       });
+      stage.classList.add("is-preparing");
       stage.innerHTML = model.type === "match" ? matchCardHtml(model) : resultCardHtml(model);
+      await waitForCardImages(stage.querySelector(".share-card"));
+      stage.classList.remove("is-preparing");
+      saveButton.disabled = false;
+      shareButton.disabled = false;
       document.title = model.type === "match"
         ? `商业 DNA 同频度 ${model.score}%`
         : `商业 DNA · ${model.name}`;
-      shareButton.addEventListener("click", () => shareCurrent(model, status));
+      saveButton.addEventListener("click", () => saveCurrent(model, stage, status, saveButton));
+      shareButton.addEventListener("click", () => shareCurrent(model, stage, status, shareButton));
       backButton.addEventListener("click", () => history.back());
     } catch (error) {
+      stage.classList.remove("is-preparing");
       stage.innerHTML = `<p class="share-error">${escapeHtml(error.message || "分享卡读取失败。")}</p>`;
+      saveButton.disabled = true;
       shareButton.disabled = true;
       backButton.addEventListener("click", () => history.back());
     }
@@ -264,6 +360,8 @@
     parseRequest,
     createModel,
     shareText,
+    cardFileName,
+    waitForCardImages,
   });
 
   if (globalScope.document) init();

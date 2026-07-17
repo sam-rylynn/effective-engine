@@ -38,7 +38,25 @@ button {
 }
 
 .share-stage {
+  position: relative;
   width: 100%;
+}
+
+.share-stage.is-preparing .share-card {
+  visibility: hidden;
+}
+
+.share-stage.is-preparing::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  content: "正在生成分享卡片...";
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 850;
 }
 
 .share-loading,
@@ -386,9 +404,24 @@ button {
   font-weight: 950;
 }
 
-.share-actions button:first-child {
+.share-actions #shareSaveButton {
   background: var(--ink);
   color: var(--yellow);
+}
+
+.share-actions #shareCardButton {
+  background: var(--yellow);
+}
+
+.share-actions #shareBackButton {
+  grid-column: 1 / -1;
+  min-height: 40px;
+  border: 0;
+  background: transparent;
+}
+
+.share-actions button:disabled {
+  opacity: .58;
 }
 
 .share-status {
@@ -404,6 +437,24 @@ button {
 button:focus-visible {
   outline: 3px solid var(--blue);
   outline-offset: 3px;
+}
+
+body.is-embedded .share-page {
+  min-height: 0;
+  padding: 10px 12px 18px;
+}
+
+body.is-embedded .share-card {
+  box-shadow: none;
+}
+
+body.is-embedded .share-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  background: #e9e5dd;
+  margin-top: 14px;
+  padding-top: 8px;
 }
 
 @media (max-width: 360px) {

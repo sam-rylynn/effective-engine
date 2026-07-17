@@ -15,7 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111111'/%3E%3Ccircle cx='21' cy='20' r='8' fill='%23ffd13d'/%3E%3Ccircle cx='43' cy='32' r='8' fill='%23ff5a3d'/%3E%3Ccircle cx='21' cy='44' r='8' fill='%23255dff'/%3E%3Cpath d='M28 20c12 0 4 24 16 24M28 44c12 0 4-24 16-24' fill='none' stroke='%23fff8eb' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="combo.css?v=20260716-dual-v02-01" />
   <link rel="stylesheet" href="dual-v0-2.css?v=20260717-01" />
-  <link rel="stylesheet" href="dual-v0-3.css?v=20260717-reference-01" />
+  <link rel="stylesheet" href="dual-v0-3.css?v=20260717-shareflow-04" />
 </head>
 <body data-app-page="home" data-experience="dual-v01">
   <header class="topbar">
@@ -498,6 +498,16 @@
     </section>
   </main>
 
+  <dialog class="dual-share-dialog" id="dualShareDialog" aria-labelledby="dualShareDialogTitle">
+    <section class="dual-share-dialog-panel">
+      <header>
+        <strong id="dualShareDialogTitle">分享卡片</strong>
+        <button data-dual-share-close type="button" aria-label="关闭分享卡片">×</button>
+      </header>
+      <iframe id="dualShareFrame" title="商业 DNA 分享卡片" allow="web-share; clipboard-write"></iframe>
+    </section>
+  </dialog>
+
   <div class="dual-toast" id="dualToast" role="status" aria-live="polite" hidden></div>
 
   <script src="data.js?v=20260717-imageperf-02"></script>
@@ -518,7 +528,7 @@
   <script src="combo-logic.js?v=20260716-dual-v01-01"></script>
   <script src="combo-render.js?v=20260716-dual-v01-01"></script>
   <script src="combo-app.js?v=20260716-dual-v01-01"></script>
-  <script src="dual-v01.js?v=20260717-imageperf-02"></script>
+  <script src="dual-v01.js?v=20260717-shareflow-04"></script>
   <script src="feedback-v1.js?v=20260706-01"></script>
 </body>
 </html>

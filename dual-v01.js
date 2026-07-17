@@ -61,6 +61,8 @@
     result: document.getElementById("personaResult"),
     match: document.getElementById("dualMatchResult"),
     toast: document.getElementById("dualToast"),
+    shareDialog: document.getElementById("dualShareDialog"),
+    shareFrame: document.getElementById("dualShareFrame"),
   };
 
   const baseState = {
@@ -537,14 +539,14 @@
           <p>${escapeHtml(shareLine)}</p>
           <small>${escapeHtml(recognition)}</small>
         </blockquote>
-        ${recommendationHtml}
         <section class="dual-result-roast">
-          <span>一句搞笑锐评</span>
+          <span>DNA评价</span>
           <p>${escapeHtml(persona.roast)}</p>
         </section>
+        ${recommendationHtml}
         <footer class="dual-result-actions">
           ${canMatch() ? '<button class="primary" data-dual-open-match type="button">查看同频度</button>' : ""}
-          <a class="${canMatch() ? "" : "primary"}" href="${escapeHtml(shareHref)}" target="_blank" rel="noopener">分享结果</a>
+          <button class="${canMatch() ? "" : "primary"}" data-dual-share data-share-href="${escapeHtml(shareHref)}" type="button">分享结果</button>
           <button data-dual-other="${otherMode}" type="button">${otherResult ? `查看${modeCopy[otherMode].label}结果` : `去${modeCopy[otherMode].label}`}</button>
           <button class="text" data-dual-home type="button">返回首页</button>
         </footer>
@@ -571,6 +573,37 @@
       roast: match.roastLine,
     });
     return `share.html?${params.toString()}`;
+  }
+
+  function resetShareDialog() {
+    document.body.classList.remove("dual-share-open");
+    elements.shareFrame?.removeAttribute("src");
+  }
+
+  function openShareDialog(href) {
+    const target = String(href || "").trim();
+    if (!target.startsWith("share.html?")) return;
+    if (!elements.shareDialog || !elements.shareFrame) {
+      globalScope.location.href = target;
+      return;
+    }
+    elements.shareFrame.src = `${target}&embed=1`;
+    document.body.classList.add("dual-share-open");
+    if (typeof elements.shareDialog.showModal === "function") {
+      if (!elements.shareDialog.open) elements.shareDialog.showModal();
+    } else {
+      elements.shareDialog.setAttribute("open", "");
+    }
+  }
+
+  function closeShareDialog() {
+    if (!elements.shareDialog) return;
+    if (typeof elements.shareDialog.close === "function" && elements.shareDialog.open) {
+      elements.shareDialog.close();
+      return;
+    }
+    elements.shareDialog.removeAttribute("open");
+    resetShareDialog();
   }
 
   function selfProjectRecommendationHTML(result) {
@@ -921,6 +954,7 @@
       + "[data-dual-home], [data-dual-other], [data-dual-open-match], "
       + "[data-dual-view-result], [data-dual-retest], [data-dual-history-id], "
       + "[data-dual-menu], [data-dual-menu-close], "
+      + "[data-dual-share], [data-dual-share-close], "
       + "[data-dual-recommendation-detail], "
       + ".brand[data-shell-page='home']",
     );
@@ -935,6 +969,8 @@
     else if (target.matches("[data-dual-option]")) answerCurrentQuestion(target.dataset.dualOption);
     else if (target.matches("[data-dual-menu]")) toggleQuickMenu();
     else if (target.matches("[data-dual-menu-close]")) toggleQuickMenu(false);
+    else if (target.matches("[data-dual-share]")) openShareDialog(target.dataset.shareHref);
+    else if (target.matches("[data-dual-share-close]")) closeShareDialog();
     else if (target.matches("[data-dual-recommendation-detail]")) toggleRecommendationDetail(target);
     else if (target.matches("[data-dual-home], .brand[data-shell-page='home']")) navigate("#home");
     else if (target.matches("[data-dual-open-match]")) navigate("#match");
@@ -965,6 +1001,10 @@
   async function init() {
     hydratePersistedState();
     document.addEventListener("click", handleOwnedClick, true);
+    elements.shareDialog?.addEventListener("click", event => {
+      if (event.target === elements.shareDialog) closeShareDialog();
+    });
+    elements.shareDialog?.addEventListener("close", resetShareDialog);
     globalScope.addEventListener("hashchange", () => queueMicrotask(handleRoute));
     globalScope.addEventListener("popstate", () => queueMicrotask(handleRoute));
     if (!globalScope.location.hash) globalScope.history.replaceState(null, "", "#home");
