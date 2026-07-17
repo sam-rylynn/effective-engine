@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>商业 DNA｜从不同中，找到同类</title>
+  <meta name="description" content="用 16 道情境题测试你的操盘怪物，或测出一个项目的动物人格；两份结果还能生成商业 DNA 同频度。" />
+  <!-- 部署后把 og:url / og:image 换成线上绝对地址 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="商业 DNA｜从不同中，找到同类" />
+  <meta property="og:description" content="测我，或测项目。16 道题找到你的商业 DNA、动物人格和一句能转发的锐评。" />
+  <meta property="og:image" content="assets/strategy-hero.png" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111111'/%3E%3Ccircle cx='21' cy='20' r='8' fill='%23ffd13d'/%3E%3Ccircle cx='43' cy='32' r='8' fill='%23ff5a3d'/%3E%3Ccircle cx='21' cy='44' r='8' fill='%23255dff'/%3E%3Cpath d='M28 20c12 0 4 24 16 24M28 44c12 0 4-24 16-24' fill='none' stroke='%23fff8eb' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="combo.css?v=20260716-dual-v02-01" />
+  <link rel="stylesheet" href="dual-v0-2.css?v=20260717-01" />
+  <link rel="stylesheet" href="dual-v0-3.css?v=20260717-reference-01" />
+</head>
+<body data-app-page="home" data-experience="dual-v01">
+  <header class="topbar">
+    <a class="brand" href="#home" data-shell-page="home" aria-label="商业 DNA 策略">
+      <span class="dna-logo" aria-hidden="true"><i>D</i><i>N</i><i>A</i></span>
+      <span class="brand-copy">
+        <strong>商业 DNA</strong>
+        <em>从不同中，找到同类</em>
+      </span>
+    </a>
+    <button class="dual-menu-button" data-dual-menu type="button" aria-label="打开菜单" aria-expanded="false">☰</button>
+    <div class="dual-quick-menu" id="dualQuickMenu" hidden>
+      <button data-dual-mode="self" type="button">测我</button>
+      <button data-dual-mode="project" type="button">测项目</button>
+      <button data-dual-menu-close type="button">关闭</button>
+    </div>
+  </header>
+
+  <nav class="app-main-nav" aria-label="主导航">
+    <a href="#home" data-shell-page="home">首页</a>
+    <a href="#sample-library" data-shell-page="sample-library">样本库</a>
+    <a href="#ops-library" data-shell-page="ops-library">操盘库</a>
+    <a href="#profile" data-shell-page="profile">我的档案</a>
+  </nav>
+
+  <nav class="stage-progress" id="stageProgress" aria-label="当前流程阶段">
+    <button data-flow-stage="diagnose" type="button"><span>01</span><strong>测试</strong></button>
+    <button data-flow-stage="result" type="button"><span>02</span><strong>结果</strong></button>
+    <button data-flow-stage="cases" type="button"><span>03</span><strong>样本</strong></button>
+    <button data-flow-stage="cases" data-flow-action="evidence" type="button"><span>04</span><strong>操盘</strong></button>
+    <button data-flow-stage="match" type="button"><span>05</span><strong>品牌</strong></button>
+  </nav>
+
+  <main id="top">
+    <section class="app-page app-home" id="home">
+      <article class="dna-home-hero dual-home-hero">
+        <h1 id="dualHomeTitle" tabindex="-1"><span>测试你的</span><span>商业 DNA</span></h1>
+        <p class="dna-home-lead" id="dualHomeLead">测我：看看你是哪只商业打工怪物。</p>
+        <figure class="dna-home-mascot">
+          <img src="assets/dna-decoder-home-reference-v03.png" alt="商业 DNA 主 IP：手持 DNA DECODER 卡片的黑色解码者" />
+        </figure>
+        <div class="dual-mode-switch" id="dualModeSwitch" role="group" aria-label="选择测试模式">
+          <button class="is-active" data-dual-mode="self" type="button" aria-pressed="true"><span>测我</span><small>发现你的商业动物人格</small></button>
+          <button data-dual-mode="project" type="button" aria-pressed="false"><span>测项目</span><small>看看项目的人格匹配</small></button>
+        </div>
+        <div class="dual-home-action">
+          <button id="dualStartButton" data-dual-start type="button" disabled>正在准备测我</button>
+          <p id="dualGateNote" role="status" aria-live="polite">正在核对 16 张正式操盘怪物资产。</p>
+        </div>
+      </article>
+      <section class="dual-history-shelf" id="dualHistoryShelf" hidden aria-labelledby="dualHistoryTitle"></section>
+    </section>
+
+    <section class="app-page app-library" id="sample-library" hidden>
+      <div class="library-head">
+        <span>LIBRARY</span>
+        <h2>样本库</h2>
+        <p>不做测试也能浏览。完成项目测试后，样本会按你的项目类型重新排序。</p>
+      </div>
+      <div class="library-filters">
+        <input id="sampleSearch" placeholder="搜索项目 / 城市 / 操盘方" />
+        <select id="sampleTypeFilter">
+          <option value="">全部形态</option>
+        </select>
+        <select id="sampleBarrierFilter">
+          <option value="">全部门槛</option>
+          <option>低</option>
+          <option>中</option>
+          <option>高</option>
+        </select>
+      </div>
+      <div class="library-grid" id="sampleLibraryGrid"></div>
+    </section>
+
+    <section class="app-page app-library" id="ops-library" hidden>
+      <div class="library-head">
+        <span>PLAYBOOK</span>
+        <h2>操盘库</h2>
+        <p>把样本拆成可借鉴动作、复制门槛和适合谁看，先看判断，再补证据。</p>
+      </div>
+      <div class="library-filters">
+        <input id="opsSearch" placeholder="搜索项目 / 操盘动作 / 维度" />
+        <select id="opsDimensionFilter">
+          <option value="">全部维度</option>
+        </select>
+        <select id="opsStatusFilter">
+          <option value="">全部状态</option>
+          <option>操盘推断</option>
+          <option>待核验</option>
+        </select>
+      </div>
+      <div class="ops-list" id="opsLibraryList"></div>
+    </section>
+
+    <section class="app-page app-profile-page" id="profile" hidden>
+      <div class="library-head">
+        <span>PROFILE</span>
+        <h2>我的档案</h2>
+        <p>保存测过的项目、品牌档案和后续关注记录。</p>
+      </div>
+      <div class="profile-panel" id="profilePanel"></div>
+    </section>
+
+    <section class="app-page app-brand-gate" id="brand-gate" hidden>
+      <div class="library-head">
+        <span>BRAND SIDE</span>
+        <h2>品牌方 · 看机会</h2>
+        <p>已开店看合作机会，想开店先找方向。品牌档案会进入后续共创匹配。</p>
+      </div>
+      <div class="brand-track-grid">
+        <button class="brand-track-card active" data-brand-track="open" type="button">
+          <span>已开店</span>
+          <strong>被合适的项目发现</strong>
+          <em>留下品牌调性和城市，方便被合适的非标项目看见。</em>
+        </button>
+        <button class="brand-track-card" data-brand-track="seed" type="button">
+          <span>想开店</span>
+          <strong>先找方向</strong>
+          <em>先记录开店想法，再看同类主理人与适合的项目类型。</em>
+        </button>
+      </div>
+      <div class="brand-register-card">
+        <div>
+          <span id="brandTrackLabel">已开店 · 档案登记</span>
+          <h3 id="brandTrackTitle">让项目方看懂你是什么品牌</h3>
+          <p id="brandTrackCopy">保存基础档案，后续用于共创匹配和机会提醒。</p>
+        </div>
+        <label>品牌 / 主理人名称<input id="brandRegisterName" placeholder="例如：某某咖啡 / 某某主理人" /></label>
+        <label>城市<input id="brandRegisterCity" placeholder="例如：贵阳 / 重庆 / 厦门" /></label>
+        <label>品类<input id="brandRegisterCategory" placeholder="咖啡烘焙 / 文创城市礼物 / 主理人零售..." /></label>
+        <label>联系方式（选填）<input id="brandRegisterContact" placeholder="微信 / 手机号，先只存在本地" /></label>
+        <button class="primary-action" id="brandRegisterButton" type="button">保存品牌档案</button>
+      </div>
+    </section>
+
+    <section class="app-page app-consumer-gate" id="consumer-gate" hidden>
+      <article class="consumer-wait-card">
+        <span>CONSUMER SIDE</span>
+        <h2>消费者版 · 预约</h2>
+        <p>未来按逛街人格推荐同频项目、主理人品牌和策展式路线。</p>
+        <label>想第一时间知道？<input id="consumerContact" placeholder="选填手机号 / 微信，先只存在本地" /></label>
+        <button class="primary-action" id="consumerSaveButton" type="button">保存提醒意向</button>
+      </article>
+    </section>
+
+    <section class="app-page persona-test-page" id="personality-test" hidden>
+      <article class="persona-question-card">
+        <button class="persona-back dual-visually-hidden" data-dual-back type="button">返回上一题</button>
+        <div class="persona-topline">
+          <div class="persona-count"><span>问题</span><strong id="personaCount">1 / 16</strong></div>
+          <div class="persona-progress" id="personaProgress" aria-label="答题进度">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+        <section class="persona-question-paper">
+          <span class="persona-axis" id="personaAxis">引力</span>
+          <h2 id="personaQuestion">你项目里最常见的画面是——</h2>
+          <span class="persona-question-stamp" aria-hidden="true">?</span>
+        </section>
+        <div class="persona-options" id="personaOptions"></div>
+        <button class="persona-skip" data-dual-skip type="button">跳过本题</button>
+      </article>
+    </section>
+
+    <section class="app-page persona-result-page" id="personality-result" hidden>
+      <div id="personaResult" aria-live="polite"></div>
+    </section>
+
+    <section class="app-page dual-match-page" id="dual-match" hidden>
+      <div id="dualMatchResult" aria-live="polite"></div>
+    </section>
+
+    <section class="hero" id="diagnose">
+      <article class="story-panel">
+        <h1 id="heroTitle">测DNA找到同类坐标</h1>
+        <p class="lead" id="heroLead">回答 3 个问题，给出项目类型、最像样本和可参考的操盘动作。</p>
+
+        <div class="mode-switch" id="modeSwitch" aria-label="选择测试身份">
+          <button class="active" data-mode="commercial" type="button">
+            <span>商业运营方</span>
+            <strong>找对标 / 看操盘</strong>
+          </button>
+          <button data-mode="brand" type="button">
+            <span>品牌方</span>
+            <strong>找场地 / 看案例</strong>
+          </button>
+        </div>
+
+        <div class="quick-start" id="quickStart"></div>
+
+        <button class="primary-action" id="generateButton">生成初读结果</button>
+
+        <details class="detail-preferences" id="detailPreferences">
+          <summary>
+            <span>细化偏好（可选）</span>
+            <strong id="detailSummaryText">项目名称、资产底色、空间形态、运营条件，想更准确时再补充。</strong>
+          </summary>
+          <div class="form-grid">
+          <label data-field="name">
+            <span id="nameFieldLabel">项目名称</span>
+            <input id="projectName" value="观山湖商业项目" />
+          </label>
+          <label data-field="city">
+            <span id="cityFieldLabel">城市 / 片区</span>
+            <input id="projectCity" value="贵阳观山湖" />
+          </label>
+          <label data-field="relation">
+            <span id="relationFieldLabel">空间关系</span>
+            <select id="relationSelect">
+              <option>贴近公园</option>
+              <option>滨水界面</option>
+              <option>屋顶</option>
+              <option>城市更新</option>
+              <option>社区中心</option>
+            </select>
+          </label>
+          <label data-field="cityTier">
+            <span id="cityTierFieldLabel">城市能级</span>
+            <select id="cityTierSelect">
+              <option>新一线/强二线</option>
+              <option>一线城市</option>
+              <option>普通二线</option>
+              <option>旅游城市</option>
+              <option>产业新区</option>
+              <option>下沉城市</option>
+            </select>
+          </label>
+          <label data-field="asset">
+            <span id="assetFieldLabel">资产底色</span>
+            <select id="assetSelect">
+              <option>公园/滨水配套</option>
+              <option>城市更新存量</option>
+              <option>历史街区</option>
+              <option>工业遗存</option>
+              <option>社区商业</option>
+              <option>文旅景区</option>
+            </select>
+          </label>
+          <label data-field="stage">
+            <span id="stageFieldLabel">当前任务</span>
+            <select id="stageSelect">
+              <option>定位策划</option>
+              <option>空间方案</option>
+              <option>招商落位</option>
+              <option>开业筹备</option>
+              <option>运营调改</option>
+            </select>
+          </label>
+          <label data-field="space">
+            <span id="spaceFieldLabel">空间形态</span>
+            <select id="spaceSelect">
+              <option>开放街区</option>
+              <option>半户外/下沉</option>
+              <option>盒子改造</option>
+              <option>小体量组团</option>
+              <option>大体量综合体</option>
+              <option>轻资产市集</option>
+            </select>
+          </label>
+          <label data-field="owner">
+            <span id="ownerFieldLabel">业主背景</span>
+            <select id="ownerSelect">
+              <option>平台/国企</option>
+              <option>地产开发商</option>
+              <option>文旅/景区</option>
+              <option>街区/政府</option>
+              <option>民营业主</option>
+              <option>存量资产方</option>
+            </select>
+          </label>
+          <label data-field="operator">
+            <span id="operatorFieldLabel">运营角色</span>
+            <select id="operatorSelect">
+              <option>自持商管</option>
+              <option>委托运营</option>
+              <option>招商代理</option>
+              <option>内容主理人</option>
+              <option>品牌联合运营</option>
+            </select>
+          </label>
+          <label data-field="brandGoal">
+            <span id="brandGoalFieldLabel">品牌目标</span>
+            <select id="brandGoalSelect">
+              <option>新兴品牌首店</option>
+              <option>在地主理人</option>
+              <option>咖啡烘焙密度</option>
+              <option>宠物户外社群</option>
+              <option>文创艺术内容</option>
+              <option>稳态生活配套</option>
+            </select>
+          </label>
+          <label data-field="operation">
+            <span id="operationFieldLabel">运营频率</span>
+            <select id="operationSelect">
+              <option>每周有内容</option>
+              <option>每月主题活动</option>
+              <option>开业节点爆发</option>
+              <option>长期稳态经营</option>
+              <option>品牌自运营为主</option>
+            </select>
+          </label>
+          </div>
+
+          <div class="chip-block">
+            <span id="scenarioFieldLabel">策略偏好</span>
+            <div class="chip-row" id="scenarioChips"></div>
+          </div>
+          <button class="detail-submit" id="detailGenerateButton" type="button">更新匹配结果</button>
+        </details>
+      </article>
+
+      <figure class="cover-image sample-collage" id="coverImage">
+        <div class="collage-top">
+          <span>SAMPLE RADAR</span>
+          <strong id="targetCountLabel">100 个非标商业参考样本</strong>
+        </div>
+        <div class="logo-cloud" id="sampleCloud"></div>
+        <div class="dna-primer">
+          <strong id="primerTitle">项目性格判断</strong>
+          <p id="primerCopy">先判断项目靠什么复访、靠什么传播、适合什么品牌结构，以及需要多高频的运营。</p>
+          <div>
+            <span id="primerAxisOne">复访力</span>
+            <span id="primerAxisTwo">传播力</span>
+            <span id="primerAxisThree">品牌结构</span>
+            <span id="primerAxisFour">运营节奏</span>
+          </div>
+        </div>
+        <figcaption>
+          <span>当前锁定</span>
+          <strong id="coverCaseName">正在匹配参考样本</strong>
+        </figcaption>
+      </figure>
+
+      <aside class="deck-panel" id="deck">
+        <div class="deck-head">
+          <div>
+            <p class="eyebrow">MATCH</p>
+            <h2>推荐组合</h2>
+          </div>
+          <div class="score-badge">
+            <span>结果</span>
+            <strong id="dnaScore">--</strong>
+          </div>
+        </div>
+
+        <div class="diagnosis-card">
+          <span id="diagnosisType">城市客厅型</span>
+          <p id="diagnosisCopy">适合先建立复访理由，再通过案例样本反推招商和运营节奏。</p>
+        </div>
+
+        <div class="mini-deck" id="miniDeck"></div>
+      </aside>
+    </section>
+
+    <section class="result-section" id="result">
+      <div class="result-hero">
+        <p class="eyebrow">RESULT</p>
+        <div class="result-code" id="resultCode">您的项目初读为</div>
+        <h2 id="resultName">正在生成项目性格</h2>
+        <p id="resultIntro">先看类型说明，再进入最像样本和共创对象。</p>
+        <div class="result-pulse" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="result-body">
+        <article class="result-summary">
+          <div>
+            <span>下一步</span>
+            <strong id="resultConfidence">看样本</strong>
+          </div>
+        <p id="resultSummary">先看一个最像的参考样本，再看它背后的操盘动作。</p>
+        </article>
+
+        <div class="strategy-grid" id="strategyGrid"></div>
+
+        <details class="result-explain">
+          <summary>专业判断详情</summary>
+          <div class="axis-grid" id="axisGrid"></div>
+        </details>
+
+        <article class="refine-panel">
+          <div>
+            <p class="eyebrow">REFINE</p>
+            <h3>觉得哪里不准？直接更正倾向</h3>
+          </div>
+          <p id="refineNote">请确认当前判断：项目更靠近“日常复访”还是“城市目的地”；更适合“基础品牌”还是“主理人矩阵”。</p>
+          <div class="refine-actions" id="refineActions">
+            <button data-refine="local">更像社区复访</button>
+            <button data-refine="destination">更像城市打卡</button>
+            <button data-refine="maker">更需要主理人</button>
+            <button data-refine="steady">更需要稳态经营</button>
+          </div>
+        </article>
+
+        <a class="result-next" id="resultNext" href="#cases">先看推荐样本</a>
+      </div>
+    </section>
+
+    <section class="match-section" id="match">
+      <div class="section-head">
+        <div>
+            <p class="eyebrow">MATCH</p>
+          <h2>品牌共创匹配</h2>
+        </div>
+        <p id="matchLead">不是把电话和空铺直接配对，而是先判断双方是否有共同的空间气质、客群场景、内容能力和落地节奏。</p>
+      </div>
+
+      <div class="match-lane">
+        <article class="match-profile" id="businessMatchCard"></article>
+        <div class="match-core">
+          <span>优先级</span>
+          <strong id="matchScore">--</strong>
+          <p id="matchType">等待生成匹配</p>
+          <div class="link-visual" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </div>
+        </div>
+        <article class="match-profile" id="brandMatchCard"></article>
+      </div>
+
+      <div class="match-actions" id="matchActions"></div>
+      <a class="result-next intent-jump" href="#intent">生成共创意向卡</a>
+    </section>
+
+    <section class="intent-section" id="intent">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">INTENT CARD</p>
+          <h2>共创意向卡</h2>
+        </div>
+        <p id="intentLead">把匹配结果转成一张可以发给对方看的意向卡：说清楚我是谁、想共创什么、能提供什么、下一步怎么聊。</p>
+      </div>
+      <div class="intent-options" id="intentOptions"></div>
+      <article class="intent-card" id="intentCard"></article>
+    </section>
+
+    <section class="report-band" hidden aria-hidden="true">
+      <div>
+        <p class="eyebrow">WHY</p>
+        <h2 id="reportTitle">观山湖商业项目 · 初筛核验</h2>
+      </div>
+      <div class="metrics" id="metricGrid"></div>
+    </section>
+
+    <section class="case-section" id="cases">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">REFERENCE</p>
+          <h2 id="caseSectionTitle">推荐参考样本</h2>
+        </div>
+        <p id="recommendHint">左右滑动查看相近参考样本。</p>
+      </div>
+      <div class="case-grid" id="caseGrid"></div>
+      <a class="result-next case-next" id="caseNext" href="#evidence">查看操盘解读</a>
+    </section>
+
+    <section class="brand-section" id="brands" hidden>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">BRAND MATCH</p>
+          <h2 id="brandSectionTitle">推荐共创机会</h2>
+        </div>
+        <p id="brandHint">品牌伙伴会同时看调性适配、非标落地可能性、地域关系和平台热度。</p>
+      </div>
+      <div class="brand-grid" id="brandGrid"></div>
+    </section>
+
+    <section class="evidence-section" id="evidence" hidden>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">OPERATION NOTES</p>
+          <h2>样本操盘解读</h2>
+        </div>
+        <p>看它哪些动作能借鉴，哪些条件不能照搬。</p>
+      </div>
+      <div class="evidence-grid" id="evidenceGrid"></div>
+    </section>
+  </main>
+
+  <div class="dual-toast" id="dualToast" role="status" aria-live="polite" hidden></div>
+
+  <script src="data.js?v=20260703-convert-01"></script>
+  <script src="dna-data.js?v=20260704-citytidy-01"></script>
+  <script src="strategy-curation-v2.js?v=20260704-citytidy-02"></script>
+  <script src="local-brand-curation-v1.js?v=20260701-nolinks-01"></script>
+  <script src="confirmed-brand-curation-20260629.js?v=20260701-nolinks-01"></script>
+  <script src="daily-confirmed-20260703.js?v=20260703-fix-02"></script>
+  <script src="daily-confirmed-20260704.js?v=20260704-01"></script>
+  <script src="daily-confirmed-20260705.js?v=20260705-01"></script>
+  <script src="scene-evidence-v1.js?v=20260704-refill-02"></script>
+  <script src="persona-data-v1.js?v=20260712-mainline-01"></script>
+  <script src="operator-persona-data-v1.js?v=20260716-approved-01"></script>
+  <script src="operator-match-v0-1.js?v=20260716-contract-01"></script>
+  <script src="operator-share-v0-1.js?v=20260716-contract-01"></script>
+  <script src="dual-experience-v0-2.js?v=20260716-experience-01"></script>
+  <script src="combo-core.js?v=20260716-dual-v01-01"></script>
+  <script src="combo-logic.js?v=20260716-dual-v01-01"></script>
+  <script src="combo-render.js?v=20260716-dual-v01-01"></script>
+  <script src="combo-app.js?v=20260716-dual-v01-01"></script>
+  <script src="dual-v01.js?v=20260717-reference-01"></script>
+  <script src="feedback-v1.js?v=20260706-01"></script>
+</body>
+</html>

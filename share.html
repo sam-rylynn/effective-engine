@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>商业 DNA 分享卡</title>
+  <meta name="description" content="分享你的商业 DNA、项目动物人格或商业 DNA 同频度。" />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="share-card-v0-2.css?v=20260717-01" />
+</head>
+<body>
+  <main class="share-page">
+    <div class="share-stage" id="shareStage" aria-live="polite">
+      <p class="share-loading">正在读取商业 DNA 卡片...</p>
+    </div>
+    <nav class="share-actions" aria-label="分享卡操作">
+      <button id="shareCardButton" type="button">分享这张卡</button>
+      <button id="shareBackButton" type="button">返回结果</button>
+    </nav>
+    <p class="share-status" id="shareStatus" role="status" aria-live="polite"></p>
+  </main>
+
+  <script src="persona-data-v1.js?v=20260712-mainline-01"></script>
+  <script src="operator-persona-data-v1.js?v=20260716-approved-01"></script>
+  <script src="operator-share-v0-1.js?v=20260716-contract-01"></script>
+  <script src="share-card-v0-2.js?v=20260717-01"></script>
+</body>
+</html>

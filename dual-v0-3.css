@@ -1,0 +1,1458 @@
+:root {
+  --dna-paper: #f4efe5;
+  --dna-paper-deep: #e8e1d5;
+  --dna-canvas: #e7e3dc;
+  --dna-ink: #111111;
+  --dna-red: #d94336;
+  --dna-blue: #2149cf;
+  --dna-green: #2e693d;
+  --dna-yellow: #f5ce35;
+  --dna-muted: #68645d;
+  --dna-hairline: 1.5px solid var(--dna-ink);
+}
+
+body[data-experience="dual-v01"] {
+  min-width: 320px;
+  min-height: 100svh;
+  overflow-x: hidden;
+  background: var(--dna-canvas);
+  color: var(--dna-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+body[data-experience="dual-v01"] .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: min(430px, 100%);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 auto;
+  border-bottom: 2px solid var(--dna-ink);
+  background: var(--dna-paper);
+  padding: 0 14px;
+  backdrop-filter: none;
+}
+
+body[data-experience="dual-v01"] .topbar .brand {
+  width: auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-right: auto;
+}
+
+body[data-experience="dual-v01"] .topbar .brand > .dna-logo {
+  width: auto;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 31px);
+  gap: 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, .13);
+  padding: 0;
+}
+
+body[data-experience="dual-v01"] .topbar .dna-logo i {
+  width: 31px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--dna-ink);
+  border-radius: 0;
+  background: var(--dna-ink);
+  color: var(--dna-paper);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .topbar .dna-logo i:nth-child(2) {
+  background: var(--dna-red);
+}
+
+body[data-experience="dual-v01"] .topbar .dna-logo i:nth-child(3) {
+  background: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .topbar .brand-copy {
+  width: auto;
+  height: auto;
+  display: grid;
+  place-items: start;
+  gap: 1px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--dna-ink);
+}
+
+body[data-experience="dual-v01"] .topbar .brand-copy strong {
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+body[data-experience="dual-v01"] .topbar .brand-copy em {
+  color: var(--dna-muted);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 780;
+  line-height: 1.2;
+}
+
+.dual-menu-button {
+  width: 32px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--dna-ink);
+  padding: 0;
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"]:not([data-app-page="home"]) .dual-menu-button {
+  visibility: hidden;
+}
+
+.dual-quick-menu {
+  position: absolute;
+  top: 52px;
+  right: 14px;
+  z-index: 45;
+  width: 132px;
+  display: grid;
+  border: 2px solid var(--dna-ink);
+  background: var(--dna-paper);
+  box-shadow: 5px 5px 0 var(--dna-ink);
+  padding: 5px;
+}
+
+.dual-quick-menu[hidden] {
+  display: none !important;
+}
+
+.dual-quick-menu button {
+  min-height: 38px;
+  border: 0;
+  border-bottom: 1px solid rgba(17, 17, 17, .18);
+  background: transparent;
+  color: var(--dna-ink);
+  font-size: 13px;
+  font-weight: 900;
+  text-align: left;
+}
+
+.dual-quick-menu button:last-child {
+  border-bottom: 0;
+  color: var(--dna-muted);
+}
+
+.dual-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+body[data-experience="dual-v01"] .app-main-nav,
+body[data-experience="dual-v01"] .stage-progress,
+body[data-experience="dual-v01"] #diagnose,
+body[data-experience="dual-v01"] #result,
+body[data-experience="dual-v01"] .report-band,
+body[data-experience="dual-v01"] #cases,
+body[data-experience="dual-v01"] #evidence,
+body[data-experience="dual-v01"] #match,
+body[data-experience="dual-v01"] #brands,
+body[data-experience="dual-v01"] #intent {
+  display: none !important;
+}
+
+body[data-experience="dual-v01"] .app-page[hidden] {
+  display: none !important;
+}
+
+body[data-experience="dual-v01"] main,
+body[data-experience="dual-v01"][data-app-page="home"] main,
+body[data-experience="dual-v01"][data-app-page="personality-test"] main,
+body[data-experience="dual-v01"][data-app-page="personality-result"] main,
+body[data-experience="dual-v01"][data-app-page="dual-match"] main {
+  width: min(430px, 100%);
+  min-height: calc(100svh - 70px);
+  margin: 0 auto;
+  border-right: 1px solid rgba(17, 17, 17, .08);
+  border-left: 1px solid rgba(17, 17, 17, .08);
+  background: var(--dna-paper);
+  padding: 0 14px 28px;
+}
+
+body[data-experience="dual-v01"] .app-home,
+body[data-experience="dual-v01"] .persona-test-page,
+body[data-experience="dual-v01"] .persona-result-page,
+body[data-experience="dual-v01"] .dual-match-page {
+  width: 100%;
+  padding: 0;
+}
+
+/* Home */
+body[data-experience="dual-v01"] .dual-home-hero {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto;
+  align-content: start;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  padding: 28px 0 0;
+}
+
+body[data-experience="dual-v01"] .dual-home-hero h1 {
+  max-width: none;
+  margin: 0;
+  color: var(--dna-ink);
+  font-size: 47px;
+  font-weight: 950;
+  line-height: .98;
+  letter-spacing: 0;
+}
+
+body[data-experience="dual-v01"] .dual-home-hero h1 span {
+  display: block;
+}
+
+body[data-experience="dual-v01"] .dual-home-hero h1 span:last-child {
+  width: auto;
+  max-width: none;
+  background: transparent;
+  color: var(--dna-blue);
+  padding: 0;
+}
+
+body[data-experience="dual-v01"] .dual-home-hero .dna-home-lead {
+  min-height: 0;
+  margin: 9px 0 0;
+  color: var(--dna-muted);
+  font-size: 12px;
+  font-weight: 820;
+  line-height: 1.45;
+}
+
+body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 574 / 412;
+  margin: 8px 0 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot img {
+  position: static;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: none;
+}
+
+body[data-experience="dual-v01"] .dual-mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  margin-top: 7px;
+  padding: 0;
+}
+
+body[data-experience="dual-v01"] .dual-mode-switch button {
+  min-width: 0;
+  min-height: 58px;
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  border: 1.5px solid var(--dna-ink);
+  border-radius: 4px;
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  padding: 7px 10px;
+  text-align: left;
+}
+
+body[data-experience="dual-v01"] .dual-mode-switch button span {
+  font-size: 16px;
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+body[data-experience="dual-v01"] .dual-mode-switch button small {
+  overflow: hidden;
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 760;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-experience="dual-v01"] .dual-mode-switch button.is-active {
+  background: var(--dna-ink);
+  color: var(--dna-yellow);
+}
+
+body[data-experience="dual-v01"] .dual-mode-switch button.is-active small {
+  color: var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-home-action {
+  display: grid;
+  gap: 5px;
+  margin-top: 9px;
+}
+
+body[data-experience="dual-v01"] .dual-home-action > button {
+  position: relative;
+  min-height: 51px;
+  border: 1.5px solid var(--dna-ink);
+  border-radius: 4px;
+  background: var(--dna-yellow);
+  color: var(--dna-ink);
+  box-shadow: none;
+  padding: 0 44px 0 18px;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-home-action > button::after {
+  content: "→";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+body[data-experience="dual-v01"] .dual-home-action > button:disabled {
+  background: #d4cec3;
+  color: rgba(17, 17, 17, .56);
+  box-shadow: none;
+}
+
+body[data-experience="dual-v01"] .dual-home-action p {
+  min-height: 13px;
+  margin: 0;
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 760;
+  line-height: 1.35;
+  text-align: center;
+}
+
+body[data-experience="dual-v01"] .dual-history-shelf {
+  border-top: 0;
+  margin-top: 13px;
+  padding: 0 0 4px;
+}
+
+body[data-experience="dual-v01"] .dual-history-head {
+  min-height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-history-head h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+body[data-experience="dual-v01"] .dual-history-head > small {
+  color: var(--dna-ink);
+  font-size: 10px;
+  font-weight: 820;
+}
+
+body[data-experience="dual-v01"] .dual-history-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-history-card {
+  position: relative;
+  min-width: 0;
+  height: 164px;
+  display: grid;
+  grid-template-rows: 105px auto auto;
+  overflow: hidden;
+  border: 1.5px solid var(--dna-green);
+  border-radius: 5px;
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  padding: 0;
+  text-align: left;
+}
+
+body[data-experience="dual-v01"] .dual-history-card.dual-history-project {
+  border-color: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-history-card > span {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  z-index: 2;
+  width: auto;
+  max-width: calc(100% - 10px);
+  margin: 0;
+  background: transparent;
+  color: var(--dna-green);
+  padding: 0;
+  font-size: 7px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-history-project > span {
+  color: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-history-card img {
+  grid-row: 1;
+  width: 100%;
+  height: 105px;
+  min-height: 0;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  background: var(--dna-paper-deep);
+}
+
+body[data-experience="dual-v01"] .dual-history-project img {
+  object-fit: cover;
+}
+
+body[data-experience="dual-v01"] .dual-history-card strong {
+  min-width: 0;
+  align-self: end;
+  margin: 5px 6px 0;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1.08;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-experience="dual-v01"] .dual-history-card b {
+  margin: 2px 6px 5px;
+  color: var(--dna-green);
+  font-size: 8px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-history-project b {
+  color: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-history-card small {
+  position: absolute;
+  right: 5px;
+  bottom: 4px;
+  margin: 0;
+  color: var(--dna-muted);
+  font-size: 6px;
+  font-weight: 760;
+}
+
+body[data-experience="dual-v01"] .dual-history-locked {
+  border-color: rgba(17, 17, 17, .28);
+  background: #e9e3d9;
+}
+
+body[data-experience="dual-v01"] .dual-history-locked > div {
+  grid-row: 1;
+  display: grid;
+  place-items: center;
+  color: rgba(17, 17, 17, .22);
+  font-size: 25px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-history-locked > span,
+body[data-experience="dual-v01"] .dual-history-locked > b {
+  color: var(--dna-muted);
+}
+
+/* Questions */
+body[data-experience="dual-v01"] .persona-test-page {
+  padding-top: 0;
+}
+
+body[data-experience="dual-v01"] .persona-question-card {
+  position: relative;
+  min-height: calc(100svh - 70px);
+  display: grid;
+  grid-template-rows: 40px 228px repeat(1, auto) 32px;
+  align-content: start;
+  gap: 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 20px 0 18px;
+}
+
+body[data-experience="dual-v01"] .persona-topline {
+  display: grid;
+  grid-template-columns: 105px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+body[data-experience="dual-v01"] .persona-count {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .persona-count strong {
+  font-size: 17px;
+}
+
+body[data-experience="dual-v01"] .persona-progress {
+  height: 8px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 3px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+body[data-experience="dual-v01"] .persona-progress i {
+  width: auto;
+  height: 5px;
+  display: block;
+  border-radius: 4px;
+  background: #d3cec5;
+  transition: background-color 120ms ease;
+}
+
+body[data-experience="dual-v01"] .persona-progress i.is-active {
+  background: var(--dna-red);
+}
+
+body[data-experience="dual-v01"] .persona-question-paper {
+  position: relative;
+  min-height: 228px;
+  display: grid;
+  align-content: start;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, .48);
+  background-color: #f6f0e5;
+  background-image:
+    linear-gradient(rgba(17, 17, 17, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, .045) 1px, transparent 1px);
+  background-size: 18px 18px;
+  box-shadow: 0 5px 9px rgba(17, 17, 17, .13);
+  padding: 35px 30px;
+}
+
+body[data-experience="dual-v01"] .persona-question-paper::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: -6px;
+  width: 12px;
+  background:
+    radial-gradient(circle at 50% 9px, var(--dna-paper) 0 5px, transparent 5.5px)
+    0 0 / 12px 31px repeat-y;
+}
+
+body[data-experience="dual-v01"] .persona-axis {
+  display: none;
+}
+
+body[data-experience="dual-v01"] .persona-question-card h2 {
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 850;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+body[data-experience="dual-v01"] .persona-question-stamp {
+  position: absolute;
+  right: 24px;
+  bottom: 14px;
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  border: 3px solid rgba(17, 17, 17, .12);
+  border-radius: 50%;
+  color: rgba(17, 17, 17, .16);
+  transform: rotate(-11deg);
+  font-size: 37px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .persona-options {
+  align-self: stretch;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+body[data-experience="dual-v01"] .persona-option {
+  position: relative;
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) 31px;
+  align-items: stretch;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, .42);
+  border-radius: 0;
+  background: #f7f1e6;
+  color: var(--dna-ink);
+  box-shadow: 0 4px 7px rgba(17, 17, 17, .12);
+  padding: 0;
+  text-align: left;
+}
+
+body[data-experience="dual-v01"] .persona-option::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  width: 10px;
+  background:
+    radial-gradient(circle at 50% 8px, var(--dna-paper) 0 4px, transparent 4.5px)
+    0 0 / 10px 20px repeat-y;
+  z-index: 3;
+}
+
+body[data-experience="dual-v01"] .persona-option span {
+  width: 62px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 0;
+  background: var(--dna-red);
+  color: var(--dna-paper);
+  font-size: 30px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .persona-option:nth-child(2) span {
+  background: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .persona-option:nth-child(3) span {
+  background: var(--dna-green);
+}
+
+body[data-experience="dual-v01"] .persona-option:nth-child(4) span {
+  background: var(--dna-yellow);
+  color: var(--dna-ink);
+}
+
+body[data-experience="dual-v01"] .persona-option strong {
+  min-width: 0;
+  align-self: center;
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.42;
+}
+
+body[data-experience="dual-v01"] .persona-option > b {
+  align-self: center;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+body[data-experience="dual-v01"] .persona-option.is-selected {
+  box-shadow: 4px 4px 0 var(--dna-ink);
+  transform: translate(-1px, -1px);
+}
+
+body[data-experience="dual-v01"] .persona-skip {
+  min-height: 32px;
+  border: 0;
+  background: transparent;
+  color: var(--dna-muted);
+  font-size: 10px;
+  font-weight: 780;
+}
+
+/* Persona result */
+body[data-experience="dual-v01"] .persona-result-page,
+body[data-experience="dual-v01"] .dual-match-page {
+  padding-top: 0;
+}
+
+body[data-experience="dual-v01"] .dual-result-card {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  padding: 17px 0 28px;
+}
+
+body[data-experience="dual-v01"] .dual-result-topline {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0;
+}
+
+body[data-experience="dual-v01"] .dual-result-topline > span {
+  color: var(--dna-ink);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-result-topline > strong {
+  min-width: 42px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 5px;
+  background: var(--dna-green);
+  color: var(--dna-paper);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-result-project .dual-result-topline > strong {
+  background: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-collectible-card {
+  position: relative;
+  width: 100%;
+  height: 421px;
+  overflow: hidden;
+  border: 1.5px solid var(--dna-green);
+  border-radius: 5px;
+  background: #ece7dc;
+  box-shadow: 0 4px 8px rgba(17, 17, 17, .12);
+}
+
+body[data-experience="dual-v01"] .dual-result-project .dual-collectible-card {
+  border-color: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-collectible-title {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  min-height: 106px;
+  display: grid;
+  align-content: center;
+  background: var(--dna-green);
+  color: var(--dna-paper);
+  padding: 12px 95px 12px 17px;
+}
+
+body[data-experience="dual-v01"] .dual-result-project .dual-collectible-title {
+  background: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-collectible-title > span {
+  font-size: 9px;
+  font-weight: 850;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-title h1 {
+  width: auto;
+  max-width: 100%;
+  margin: 1px 0 0;
+  overflow-wrap: anywhere;
+  background: transparent;
+  color: var(--dna-paper);
+  padding: 0;
+  font-size: 36px;
+  font-weight: 950;
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-title > b {
+  margin-top: 3px;
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-seal {
+  position: absolute;
+  top: 13px;
+  right: 12px;
+  z-index: 6;
+  width: 71px;
+  height: 71px;
+  display: grid;
+  place-content: center;
+  gap: 1px;
+  border: 3px solid rgba(244, 239, 229, .78);
+  border-radius: 50%;
+  color: var(--dna-paper);
+  transform: rotate(8deg);
+  font-size: 19px;
+  font-weight: 950;
+  line-height: 1;
+  text-align: center;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-seal small {
+  font-size: 6px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-ratings {
+  position: absolute;
+  top: 118px;
+  left: 13px;
+  z-index: 5;
+  width: 92px;
+  display: grid;
+  gap: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-ratings > span {
+  display: grid;
+  gap: 1px;
+  color: var(--dna-green);
+  font-size: 8px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-result-project .dual-collectible-ratings > span {
+  color: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-collectible-ratings b {
+  font-size: 10px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+body[data-experience="dual-v01"] .dual-result-visual {
+  position: absolute;
+  inset: 106px 0 27px;
+  z-index: 2;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #e9e4d9;
+  margin: 0;
+}
+
+body[data-experience="dual-v01"] .dual-result-self .dual-result-visual,
+body[data-experience="dual-v01"] .dual-result-project .dual-result-visual {
+  border-left: 0;
+}
+
+body[data-experience="dual-v01"] .dual-result-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-result-project .dual-result-visual img {
+  background: #e1e7ed;
+}
+
+body[data-experience="dual-v01"] .dual-result-visual.is-error {
+  display: grid;
+  place-items: center;
+  background: #f1d9d5;
+  padding: 24px;
+}
+
+body[data-experience="dual-v01"] .dual-collectible-card > footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  background: var(--dna-green);
+  color: var(--dna-paper);
+  padding: 0 12px;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-result-project .dual-collectible-card > footer {
+  background: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-result-quote {
+  position: relative;
+  margin: 0;
+  border: 1px solid rgba(17, 17, 17, .32);
+  border-radius: 4px;
+  background: #f7f2e9;
+  padding: 17px 25px 15px 34px;
+}
+
+body[data-experience="dual-v01"] .dual-result-quote::before,
+body[data-experience="dual-v01"] .dual-result-quote::after {
+  position: absolute;
+  color: var(--dna-ink);
+  font-size: 27px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-result-quote::before {
+  content: "“";
+  top: 7px;
+  left: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-result-quote::after {
+  content: "”";
+  right: 9px;
+  bottom: 0;
+}
+
+body[data-experience="dual-v01"] .dual-result-quote p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.55;
+}
+
+body[data-experience="dual-v01"] .dual-result-quote small {
+  display: block;
+  max-height: 36px;
+  overflow: hidden;
+  margin-top: 6px;
+  color: var(--dna-muted);
+  font-size: 9px;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation {
+  display: grid;
+  gap: 8px;
+  border-top: 0;
+  padding-top: 2px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation > header {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation > header h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation > header span {
+  border-radius: 4px;
+  background: var(--dna-blue);
+  color: var(--dna-paper);
+  padding: 4px 7px;
+  font-size: 8px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main {
+  position: relative;
+  min-height: 157px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(120px, .75fr);
+  overflow: hidden;
+  border: 1.5px solid rgba(17, 17, 17, .38);
+  border-radius: 4px;
+  background: #dfe5f3;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main > div {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  border: 0;
+  border-right: 1px dashed rgba(17, 17, 17, .28);
+  background: #dbe3fa;
+  padding: 13px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main h3 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 950;
+  line-height: 1.04;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main strong {
+  color: var(--dna-ink);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main p {
+  max-height: 31px;
+  overflow: hidden;
+  margin: 2px 0 0;
+  color: var(--dna-ink);
+  font-size: 9px;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main button {
+  width: max-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 5px;
+  background: var(--dna-blue);
+  color: var(--dna-paper);
+  border: 0;
+  padding: 7px 10px;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main img {
+  width: 100%;
+  height: 100%;
+  min-height: 157px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+body[data-experience="dual-v01"] .dual-project-tags i {
+  border: 1px solid var(--dna-blue);
+  color: var(--dna-blue);
+  padding: 3px 5px;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation details {
+  border-top: 1px dashed var(--dna-ink);
+  padding-top: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-result-roast {
+  display: grid;
+  gap: 5px;
+  border-top: 1.5px solid var(--dna-ink);
+  border-bottom: 1.5px solid var(--dna-ink);
+  padding: 10px 0;
+}
+
+body[data-experience="dual-v01"] .dual-result-roast span {
+  color: var(--dna-red);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-result-roast p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.5;
+}
+
+body[data-experience="dual-v01"] .dual-result-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-result-actions button,
+body[data-experience="dual-v01"] .dual-result-actions a {
+  min-width: 0;
+  min-height: 47px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--dna-ink);
+  border-radius: 3px;
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  padding: 8px 9px;
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-result-actions .primary {
+  background: var(--dna-yellow);
+  color: var(--dna-ink);
+}
+
+body[data-experience="dual-v01"] .dual-result-actions button.text {
+  border: 0;
+  background: transparent;
+}
+
+/* Match */
+body[data-experience="dual-v01"] .dual-match-result {
+  min-height: calc(100svh - 70px);
+  display: grid;
+  grid-template-rows: 56px 329px auto auto auto;
+  align-content: start;
+  gap: 13px;
+  padding: 24px 0 20px;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > header {
+  display: flex;
+  align-items: center;
+  border-bottom: 0;
+  padding: 0;
+}
+
+body[data-experience="dual-v01"] .dual-match-result h1 {
+  margin: 0;
+  color: var(--dna-ink);
+  font-size: 19px;
+  font-weight: 950;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+body[data-experience="dual-v01"] .dual-match-score {
+  position: relative;
+  min-height: 329px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  overflow: hidden;
+  border: 12px solid var(--dna-red);
+  background: var(--dna-paper);
+  box-shadow: inset 0 0 0 2px var(--dna-red);
+}
+
+body[data-experience="dual-v01"] .dual-match-score > span {
+  position: absolute;
+  top: 18px;
+  right: 17px;
+  border: 2px solid var(--dna-red);
+  color: var(--dna-red);
+  padding: 4px 7px;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-match-score > strong {
+  position: relative;
+  z-index: 1;
+  color: var(--dna-red);
+  font-size: 112px;
+  font-weight: 950;
+  line-height: .92;
+}
+
+body[data-experience="dual-v01"] .dual-match-score small {
+  font-size: 34px;
+}
+
+body[data-experience="dual-v01"] .dual-match-score > b {
+  width: calc(100% - 44px);
+  border-top: 1.5px solid var(--dna-red);
+  padding-top: 12px;
+  color: var(--dna-ink);
+  font-size: 19px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-match-score > code {
+  width: calc(100% - 44px);
+  color: var(--dna-muted);
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > blockquote {
+  position: relative;
+  margin: 0;
+  border: 0;
+  padding: 17px 29px;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.62;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > blockquote::before,
+body[data-experience="dual-v01"] .dual-match-result > blockquote::after {
+  position: absolute;
+  color: var(--dna-red);
+  font-size: 28px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > blockquote::before {
+  content: "“";
+  top: 5px;
+  left: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > blockquote::after {
+  content: "”";
+  right: 6px;
+  bottom: 0;
+}
+
+body[data-experience="dual-v01"] .dual-match-unlocked {
+  min-height: 78px;
+  display: grid;
+  grid-template-columns: 1fr minmax(130px, 1.2fr);
+  align-items: center;
+  gap: 10px;
+  border: 1px dashed var(--dna-green);
+  background: #dce6d7;
+  padding: 10px 13px;
+}
+
+body[data-experience="dual-v01"] .dual-match-unlocked div {
+  display: grid;
+  gap: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-match-unlocked span {
+  font-size: 12px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-match-unlocked small {
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 760;
+}
+
+body[data-experience="dual-v01"] .dual-match-unlocked > strong {
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1.35;
+  text-align: right;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > footer a,
+body[data-experience="dual-v01"] .dual-match-result > footer button {
+  min-width: 0;
+  min-height: 49px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--dna-ink);
+  border-radius: 3px;
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 950;
+  text-align: center;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-match-result > footer .primary {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: var(--dna-yellow);
+  color: var(--dna-ink);
+}
+
+body[data-experience="dual-v01"] .dual-toast {
+  border-radius: 3px;
+}
+
+body[data-experience="dual-v01"] button:focus-visible,
+body[data-experience="dual-v01"] a:focus-visible,
+body[data-experience="dual-v01"] h1:focus-visible,
+body[data-experience="dual-v01"] h2:focus-visible,
+body[data-experience="dual-v01"] summary:focus-visible {
+  outline: 3px solid var(--dna-blue);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-experience="dual-v01"] .persona-progress i {
+    transition: none;
+  }
+
+  body[data-experience="dual-v01"] .persona-option.is-selected {
+    transform: none;
+  }
+}
+
+@media (max-width: 380px) {
+  body[data-experience="dual-v01"] main,
+  body[data-experience="dual-v01"][data-app-page="home"] main,
+  body[data-experience="dual-v01"][data-app-page="personality-test"] main,
+  body[data-experience="dual-v01"][data-app-page="personality-result"] main,
+  body[data-experience="dual-v01"][data-app-page="dual-match"] main {
+    padding-inline: 11px;
+  }
+
+  body[data-experience="dual-v01"] .topbar {
+    padding-inline: 11px;
+  }
+
+  body[data-experience="dual-v01"] .topbar .brand > .dna-logo {
+    grid-template-columns: repeat(3, 28px);
+  }
+
+  body[data-experience="dual-v01"] .topbar .dna-logo i {
+    width: 28px;
+    height: 32px;
+  }
+
+  body[data-experience="dual-v01"] .topbar .brand-copy strong {
+    font-size: 17px;
+  }
+
+  body[data-experience="dual-v01"] .dual-home-hero h1 {
+    font-size: 43px;
+  }
+
+  body[data-experience="dual-v01"] .dual-history-card {
+    height: 154px;
+    grid-template-rows: 98px auto auto;
+  }
+
+  body[data-experience="dual-v01"] .dual-history-card img {
+    height: 98px;
+  }
+
+  body[data-experience="dual-v01"] .persona-question-card {
+    grid-template-rows: 38px 214px auto 30px;
+    gap: 8px;
+    padding-top: 12px;
+  }
+
+  body[data-experience="dual-v01"] .persona-question-paper {
+    min-height: 214px;
+    padding: 24px 26px;
+  }
+
+  body[data-experience="dual-v01"] .persona-question-card h2 {
+    font-size: 18px;
+  }
+
+  body[data-experience="dual-v01"] .persona-option {
+    min-height: 70px;
+    grid-template-columns: 55px minmax(0, 1fr) 28px;
+  }
+
+  body[data-experience="dual-v01"] .persona-option span {
+    width: 55px;
+    font-size: 27px;
+  }
+
+  body[data-experience="dual-v01"] .persona-option strong {
+    padding-inline: 12px;
+    font-size: 14px;
+  }
+
+  body[data-experience="dual-v01"] .dual-collectible-card {
+    height: 403px;
+  }
+
+  body[data-experience="dual-v01"] .dual-collectible-title h1 {
+    font-size: 32px;
+  }
+
+  body[data-experience="dual-v01"] .dual-project-recommendation-main {
+    grid-template-columns: minmax(0, 1.15fr) minmax(110px, .85fr);
+  }
+
+  body[data-experience="dual-v01"] .dual-project-recommendation-main h3 {
+    font-size: 21px;
+  }
+
+  body[data-experience="dual-v01"] .dual-match-result {
+    grid-template-rows: 50px 305px auto auto auto;
+  }
+
+  body[data-experience="dual-v01"] .dual-match-score {
+    min-height: 305px;
+  }
+
+  body[data-experience="dual-v01"] .dual-match-score > strong {
+    font-size: 100px;
+  }
+}
