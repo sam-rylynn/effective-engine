@@ -217,49 +217,12 @@ body[data-experience="dual-v01"] .dual-match-page {
 body[data-experience="dual-v01"] .dual-home-hero {
   min-height: 0;
   display: grid;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto;
   align-content: start;
   overflow: visible;
   border: 0;
   background: transparent;
-  padding: 26px 0 0;
-}
-
-body[data-experience="dual-v01"] .dual-home-hero h1 {
-  position: relative;
-  z-index: 2;
-  max-width: none;
-  margin: 0;
-  color: var(--dna-ink);
-  font-family: "Arial Black", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  font-size: clamp(46px, 12.7vw, 52px);
-  font-weight: 950;
-  line-height: .9;
-  letter-spacing: 0;
-}
-
-body[data-experience="dual-v01"] .dual-home-hero h1 span {
-  display: block;
-}
-
-body[data-experience="dual-v01"] .dual-home-hero h1 span:last-child {
-  width: auto;
-  max-width: none;
-  background: transparent;
-  color: var(--dna-blue);
-  padding: 0;
-  margin-top: 4px;
-}
-
-body[data-experience="dual-v01"] .dual-home-hero .dna-home-lead {
-  position: relative;
-  z-index: 2;
-  min-height: 0;
-  margin: 12px 0 0;
-  color: var(--dna-muted);
-  font-size: 12.5px;
-  font-weight: 820;
-  line-height: 1.45;
+  padding: 14px 0 0;
 }
 
 body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot {
@@ -269,21 +232,26 @@ body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot {
   width: 100%;
   height: auto;
   min-height: 0;
-  aspect-ratio: 574 / 412;
-  margin: 2px 0 0;
+  aspect-ratio: 714 / 1024;
+  margin: 0;
   overflow: hidden;
   border: 0;
   border-radius: 0;
   background: var(--dna-paper);
 }
 
+body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot::before,
+body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot::after {
+  display: none;
+}
+
 body[data-experience="dual-v01"] .dual-home-hero .dna-home-mascot img {
   position: static;
   width: 100%;
-  height: 100%;
+  height: auto;
   min-height: 0;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   transform: none;
 }
@@ -349,8 +317,8 @@ body[data-experience="dual-v01"] .dual-home-action > button {
   min-height: 51px;
   border: 1.5px solid var(--dna-ink);
   border-radius: 4px;
-  background: var(--dna-yellow);
-  color: var(--dna-ink);
+  background: var(--dna-blue);
+  color: #ffffff;
   box-shadow: none;
   padding: 0 44px 0 18px;
   font-size: 16px;
@@ -1566,10 +1534,6 @@ body[data-experience="dual-v01"] h2[tabindex="-1"]:focus {
 
   body[data-experience="dual-v01"] .topbar .brand-copy strong {
     font-size: 17px;
-  }
-
-  body[data-experience="dual-v01"] .dual-home-hero h1 {
-    font-size: 44px;
   }
 
   body[data-experience="dual-v01"] .dual-history-card {

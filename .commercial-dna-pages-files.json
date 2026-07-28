@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "9eab80659ff5776a341d79468674551d506a6202",
+  "sourceCommit": "15b73808cee7d0e3bc3e41baafa32039e94ab616",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -34,7 +34,7 @@
     "assets/26-苏州双塔市集.jpg",
     "assets/37-北京环球度假区一期.jpg",
     "assets/41-成都东郊记忆.jpg",
-    "assets/dna-decoder-home-reference-v03.webp",
+    "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
     "assets/strategy-hero.png",
     "assets/vendor/bootstrap-icons/house-fill.svg",
