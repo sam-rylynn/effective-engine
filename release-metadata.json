@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "allowlistVersion": "commercial-dna-pages-v1",
+  "sourceRepository": "local/commercial-dna-main",
+  "sourceDirectory": "commercial_dna_web",
+  "sourceCommit": "9eab80659ff5776a341d79468674551d506a6202",
+  "sourceRef": "main",
+  "sourceDirty": false,
+  "generatedAt": "2026-07-28T03:58:14.856Z",
+  "packagedFileCount": 96,
+  "packagedBytes": 11067536,
+  "packagedFilesSha256": "15fc139b52bd5a0c91b3f55ef89b6e6770963594791ce26c17ce65fc7ee42716"
+}

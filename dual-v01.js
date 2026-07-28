@@ -468,23 +468,6 @@
     }
   }
 
-  function resultRatingRows(result) {
-    const labels = {
-      radius: "场域雷达",
-      content: "内容燃点",
-      brand: "非标适配",
-      operation: "续航强度",
-    };
-    return ["radius", "content", "operation"].map(key => {
-      const ratio = Number(result.axisRatios?.[key] || 0);
-      const filled = Math.max(1, Math.min(5, Math.round(ratio * 4) + 1));
-      return {
-        label: labels[key],
-        stars: `${"★".repeat(filled)}${"☆".repeat(5 - filled)}`,
-      };
-    });
-  }
-
   function renderResult(mode) {
     const result = sanitizeResult(dualState.results[mode], mode);
     if (!result) {
@@ -500,60 +483,36 @@
       return;
     }
     const isSelf = mode === "self";
-    const recognition = isSelf ? persona.ability : persona.label;
-    const shareLine = isSelf
-      ? persona.shareLine
-      : (persona.profile?.coreTension || persona.label);
     const otherMode = isSelf ? "project" : "self";
     const otherResult = sanitizeResult(dualState.results[otherMode], otherMode);
     const recommendationHtml = isSelf ? selfProjectRecommendationHTML(result) : "";
     const shareHref = resultShareHref(mode, result);
-    const ratingRows = resultRatingRows(result);
 
     setVisiblePage("result", mode);
     dualState.returnMode = mode;
     elements.result.innerHTML = `
       <article class="dual-result-card dual-result-${mode}">
-        <header class="dual-result-topline">
-          <span>${isSelf ? "你的商业动物人格" : "你的项目动物人格"}</span>
-          <strong>${isSelf ? "自我" : "项目"}</strong>
-        </header>
-        <section class="dual-collectible-card">
-          <header class="dual-collectible-title">
-            <span>${escapeHtml(modeCopy[mode].identity)}</span>
-            <h1 id="dualResultTitle" tabindex="-1">${escapeHtml(persona.name)}</h1>
-            <b>${escapeHtml(result.code)}</b>
-          </header>
-          <span class="dual-collectible-seal" aria-hidden="true">DNA<small>MATCHED</small></span>
-          <div class="dual-collectible-ratings">
-            ${ratingRows.map(row => `
-              <span>${escapeHtml(row.label)}<b>${row.stars}</b></span>
-            `).join("")}
-          </div>
-          <figure class="dual-result-visual">
-            <img id="dualResultImage" src="${escapeHtml(asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(persona.assetAlt)}" />
-          </figure>
-          <footer>DNA 档案 · ${escapeHtml(result.code)}</footer>
-        </section>
-        <blockquote class="dual-result-quote">
-          <p>${escapeHtml(shareLine)}</p>
-          <small>${escapeHtml(recognition)}</small>
-        </blockquote>
+        <figure class="dual-result-visual dual-result-image-only">
+          <img id="dualResultImage" src="${escapeHtml(asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(persona.assetAlt)}" tabindex="-1" />
+        </figure>
         <section class="dual-result-roast">
           <span>DNA评价</span>
           <p>${escapeHtml(persona.roast)}</p>
         </section>
         ${recommendationHtml}
-        <footer class="dual-result-actions">
+        <footer class="dual-result-actions ${canMatch() ? "has-match" : "no-match"}" aria-label="结果页操作">
           ${canMatch() ? '<button class="primary" data-dual-open-match type="button">查看同频度</button>' : ""}
           <button class="${canMatch() ? "" : "primary"}" data-dual-share data-share-href="${escapeHtml(shareHref)}" type="button">分享结果</button>
           <button data-dual-other="${otherMode}" type="button">${otherResult ? `查看${modeCopy[otherMode].label}结果` : `去${modeCopy[otherMode].label}`}</button>
-          <button class="text" data-dual-home type="button">返回首页</button>
+          <button class="text" data-dual-home type="button">
+            <img class="dual-result-home-icon" src="assets/vendor/bootstrap-icons/house-fill.svg" alt="" aria-hidden="true" />
+            <span>返回首页</span>
+          </button>
         </footer>
       </article>
     `;
     bindResultImageState();
-    focusHeading(document.getElementById("dualResultTitle"));
+    focusHeading(document.getElementById("dualResultImage"));
   }
 
   function resultShareHref(mode, result) {
@@ -611,6 +570,7 @@
     if (!rows.length) return "";
     const [primary, ...alternatives] = rows;
     const item = primary.item;
+    const presentation = item.presentation || {};
     const tags = (item.heroTags || item.scenarioTags || []).slice(0, 3);
     return `
       <section class="dual-project-recommendation" aria-labelledby="dualProjectRecommendationTitle">
@@ -622,7 +582,8 @@
           <div>
             <h3>${escapeHtml(item.name || "推荐项目")}</h3>
             <strong>${escapeHtml(item.dna?.code || "")}</strong>
-            <p>${escapeHtml(item.usable || item.value || "先观察它如何把空间、内容与运营节奏放在一起。")}</p>
+            ${presentation.valueTitle ? `<em class="dual-project-value-title">${escapeHtml(presentation.valueTitle)}</em>` : ""}
+            <p>${escapeHtml(presentation.oneLineValue || item.usable || item.value || "先观察它如何把空间、内容与运营节奏放在一起。")}</p>
             <button data-dual-recommendation-detail type="button">查看项目 <b aria-hidden="true">→</b></button>
           </div>
           <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
@@ -630,8 +591,9 @@
         ${tags.length ? `<div class="dual-project-tags">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
         <details>
           <summary>为什么推荐给我</summary>
-          <p>${escapeHtml(item.bestFor || item.copyConditions || "它与你的四轴倾向接近，适合作为现场观察样本。")}</p>
-          ${item.caution ? `<small>别照搬：${escapeHtml(item.caution)}</small>` : ""}
+          <p>${escapeHtml(presentation.businessProblem || item.bestFor || item.copyConditions || "它与你的四轴倾向接近，适合作为现场观察样本。")}</p>
+          ${presentation.bestFor ? `<small>适合：${escapeHtml(presentation.bestFor)}</small>` : ""}
+          ${(presentation.risk || item.caution) ? `<small>别照搬：${escapeHtml(presentation.risk || item.caution)}</small>` : ""}
           ${alternatives.length ? `
             <div class="dual-project-alternatives">
               <span>另外两个可以顺路看</span>
@@ -662,6 +624,10 @@
     }
     const selfPersona = personaForResult(dualState.results.self);
     const projectPersona = personaForResult(dualState.results.project);
+    const selfAsset = resultAssetFor("self", selfPersona);
+    const frequencyLabel = match.matchPercent >= 75
+      ? "高频同频"
+      : (match.matchPercent >= 60 ? "频率在线" : "偶尔同频");
     const retestMode = dualState.returnMode || "self";
     setVisiblePage("match");
     elements.match.innerHTML = `
@@ -672,8 +638,8 @@
         <section class="dual-match-score">
           <span>MATCH</span>
           <strong>${match.matchPercent}<small>%</small></strong>
-          <b>商业同频记录</b>
-          <code>${escapeHtml(dualState.results.self.code)} × ${escapeHtml(dualState.results.project.code)}</code>
+          <b>${frequencyLabel}</b>
+          <code>MATCH NO. ${escapeHtml(dualState.results.self.code)}-${escapeHtml(dualState.results.project.code)}-${match.matchPercent}</code>
         </section>
         <blockquote>${escapeHtml(match.roastLine)}</blockquote>
         <section class="dual-match-unlocked">
@@ -681,10 +647,13 @@
             <span>已解锁新卡片</span>
             <small>可加入卡册收藏</small>
           </div>
-          <strong>${escapeHtml(selfPersona.name)} × ${escapeHtml(projectPersona.name)}</strong>
+          <figure class="dual-match-unlocked-card">
+            <img src="${escapeHtml(selfAsset)}" decoding="async" alt="${escapeHtml(selfPersona.name)}" />
+            <b>${escapeHtml(selfPersona.name)} × ${escapeHtml(projectPersona.name)}</b>
+          </figure>
         </section>
         <footer>
-          <a class="primary" href="${escapeHtml(matchShareHref(match))}" target="_blank" rel="noopener">分享同频度 <b aria-hidden="true">↗</b></a>
+          <button class="primary" data-dual-share data-share-href="${escapeHtml(matchShareHref(match))}" type="button">分享同频度 <b aria-hidden="true">↗</b></button>
           <button data-dual-home type="button">返回首页</button>
           <button data-dual-retest="${retestMode}" type="button">再测一次</button>
         </footer>

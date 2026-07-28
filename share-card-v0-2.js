@@ -3,6 +3,22 @@
 
   const CODE_PATTERN = /^[LD][SC][BM][ER]$/;
   const TYPES = new Set(["self", "project", "match"]);
+  const SERIAL_DATE = "20260718";
+  const referenceAssets = Object.freeze({
+    self: Object.freeze({
+      registration: "share-assets/reference-v0.3/registration-self.png",
+      stamp: "share-assets/reference-v0.3/stamp-self.png",
+    }),
+    project: Object.freeze({
+      registration: "share-assets/reference-v0.3/registration-project.png",
+      stamp: "share-assets/reference-v0.3/stamp-project.png",
+    }),
+    match: Object.freeze({
+      registration: "share-assets/reference-v0.3/registration-match.png",
+      stamp: "share-assets/reference-v0.3/stamp-match.png",
+    }),
+    barcode: "share-assets/reference-v0.3/barcode.png",
+  });
   const projectAssets = {
     "居委会": "persona-assets/community-capybara-v1.webp",
     "文艺据点": "persona-assets/art-cat-v1.webp",
@@ -73,13 +89,18 @@
       const persona = selfPersona(request.code, systems.operator, systems.assetsById);
       return Object.freeze({
         type: "self",
-        eyebrow: "我是",
+        eyebrow: "我的操盘怪物",
         name: persona.name,
         code: persona.code,
         quote: persona.shareLine,
         metaLabel: "怪物技能",
         metaValue: persona.label,
         footer: "测测你的商业 DNA",
+        serialLabel: "自我卡片",
+        serialNumber: `NO.${SERIAL_DATE}-${persona.code}`,
+        registrationAsset: referenceAssets.self.registration,
+        stampAsset: referenceAssets.self.stamp,
+        barcodeAsset: referenceAssets.barcode,
         asset: persona.asset,
         assetAlt: persona.assetAlt,
       });
@@ -88,13 +109,18 @@
       const persona = projectPersona(request.code, systems.project);
       return Object.freeze({
         type: "project",
-        eyebrow: "我的商业项目是",
+        eyebrow: "项目动物人格",
         name: persona.name,
         code: persona.code,
         quote: persona.roast,
         metaLabel: "项目暗号",
         metaValue: persona.profile.firstMove || persona.label,
         footer: "测测你的项目 DNA",
+        serialLabel: "项目卡片",
+        serialNumber: `NO.${SERIAL_DATE}-${persona.code}`,
+        registrationAsset: referenceAssets.project.registration,
+        stampAsset: referenceAssets.project.stamp,
+        barcodeAsset: referenceAssets.barcode,
         asset: persona.asset,
         assetAlt: `${persona.name}项目动物人格`,
       });
@@ -110,6 +136,11 @@
       metaLabel: "同频暗号",
       metaValue: "先对频道，再一起开工",
       footer: "测测你们的同频度",
+      serialLabel: "MATCH NO.",
+      serialNumber: `${SERIAL_DATE}-${request.score}`,
+      registrationAsset: referenceAssets.match.registration,
+      stampAsset: referenceAssets.match.stamp,
+      barcodeAsset: referenceAssets.barcode,
       self: {
         name: self.name,
         code: self.code,
@@ -123,14 +154,17 @@
     });
   }
 
-  function brandHtml() {
+  function brandHtml(model) {
     return `
       <header class="share-brand">
         <div class="share-brand-lockup">
           <span class="share-dna-logo" aria-hidden="true"><i>D</i><i>N</i><i>A</i></span>
-          <strong>商业 DNA</strong>
+          <span class="share-brand-copy">
+            <strong>商业 DNA</strong>
+            <small>从不同中，找到同类</small>
+          </span>
         </div>
-        <small>从不同中，找到同类</small>
+        <img class="share-registration" src="${escapeHtml(model.registrationAsset)}" alt="" aria-hidden="true" />
       </header>
     `;
   }
@@ -147,27 +181,23 @@
     `;
   }
 
+  function serialHtml(model) {
+    return `
+      <div class="share-serial">
+        <span>${escapeHtml(model.serialLabel)}</span>
+        <strong>${escapeHtml(model.serialNumber)}</strong>
+        <img src="${escapeHtml(model.barcodeAsset)}" alt="" aria-hidden="true" />
+      </div>
+    `;
+  }
+
   function resultCardHtml(model) {
     return `
-      <article class="share-card share-card-${escapeHtml(model.type)}" id="shareCard">
-        ${brandHtml()}
-        <section class="share-title">
-          <span>${escapeHtml(model.eyebrow)}</span>
-          <h1>${escapeHtml(model.name)}</h1>
-          <strong>${escapeHtml(model.code)}</strong>
-          <div class="share-stamp" aria-hidden="true">DNA<br />MATCHED</div>
-        </section>
-        <figure class="share-animal">
+      <article class="share-card share-card-${escapeHtml(model.type)} share-card-image-only" id="shareCard">
+        <figure class="share-image-only">
           <img src="${escapeHtml(model.asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(model.assetAlt)}" />
+          <span class="share-qr-slot" aria-label="二维码预留位置"></span>
         </figure>
-        <blockquote class="share-quote">${escapeHtml(model.quote)}</blockquote>
-        <div>
-          <div class="share-meta">
-            <span>${escapeHtml(model.metaLabel)}</span>
-            <strong>${escapeHtml(model.metaValue)}</strong>
-          </div>
-          ${footerHtml(model)}
-        </div>
       </article>
     `;
   }
@@ -175,34 +205,27 @@
   function matchCardHtml(model) {
     return `
       <article class="share-card share-card-match" id="shareCard">
-        ${brandHtml()}
+        ${brandHtml(model)}
         <section class="share-title">
           <span>${escapeHtml(model.eyebrow)}</span>
         </section>
-        <div class="share-match-summary">
-          <div class="share-match-score">
-            <strong>${model.score}<small>%</small></strong>
-            <span>MATCH</span>
+        <section class="share-match-ticket">
+          <strong class="share-match-number">${model.score}<small>%</small></strong>
+          <blockquote class="share-quote"><span aria-hidden="true">“</span><p>${escapeHtml(model.quote)}</p><span aria-hidden="true">”</span></blockquote>
+          <div class="share-match-pair">
+            <figure>
+              <img src="${escapeHtml(model.self.asset)}" decoding="async" alt="${escapeHtml(model.self.name)}" />
+              <figcaption>${escapeHtml(model.self.code)}</figcaption>
+            </figure>
+            <figure>
+              <img src="${escapeHtml(model.project.asset)}" decoding="async" alt="${escapeHtml(model.project.name)}" />
+              <figcaption>${escapeHtml(model.project.code)}</figcaption>
+            </figure>
+            <img class="share-match-stamp" src="${escapeHtml(model.stampAsset)}" alt="" aria-hidden="true" />
           </div>
-          <blockquote class="share-quote">${escapeHtml(model.quote)}</blockquote>
-        </div>
-        <div class="share-match-pair">
-          <figure>
-            <img src="${escapeHtml(model.self.asset)}" decoding="async" alt="${escapeHtml(model.self.name)}" />
-            <figcaption>${escapeHtml(model.self.name)} · ${escapeHtml(model.self.code)}</figcaption>
-          </figure>
-          <figure>
-            <img src="${escapeHtml(model.project.asset)}" decoding="async" alt="${escapeHtml(model.project.name)}" />
-            <figcaption>${escapeHtml(model.project.name)} · ${escapeHtml(model.project.code)}</figcaption>
-          </figure>
-        </div>
-        <div>
-          <div class="share-meta">
-            <span>${escapeHtml(model.metaLabel)}</span>
-            <strong>${escapeHtml(model.metaValue)}</strong>
-          </div>
-          ${footerHtml(model)}
-        </div>
+          ${serialHtml(model)}
+        </section>
+        ${footerHtml(model)}
       </article>
     `;
   }
@@ -246,24 +269,52 @@
     }));
   }
 
-  async function cardBlob(stage) {
+  async function cardCanvas(stage) {
     const card = stage.querySelector(".share-card");
     if (!card) throw new Error("分享卡片尚未生成。");
     if (typeof globalScope.html2canvas !== "function") throw new Error("卡片保存组件未加载。");
     await waitForCardImages(card);
-    const canvas = await globalScope.html2canvas(card, {
+    return globalScope.html2canvas(card, {
       backgroundColor: "#f7f1e6",
       scale: 2,
       useCORS: true,
       logging: false,
       imageTimeout: 15000,
     });
+  }
+
+  async function cardBlob(stage) {
+    const canvas = await cardCanvas(stage);
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (blob) resolve(blob);
         else reject(new Error("卡片图片生成失败。"));
       }, "image/png");
     });
+  }
+
+  async function prepareConfirmationExport(model, stage, status) {
+    document.body.dataset.shareExportState = "preparing";
+    try {
+      const canvas = await cardCanvas(stage);
+      const dataUrl = canvas.toDataURL("image/jpeg", .9);
+      const fileName = cardFileName(model).replace(/\.png$/i, ".jpg");
+      globalScope.COMMERCIAL_DNA_CARD_EXPORT_V0_3 = Object.freeze({
+        fileName,
+        dataUrl,
+      });
+      const output = document.createElement("output");
+      output.id = "shareConfirmationExport";
+      output.hidden = true;
+      output.dataset.fileName = fileName;
+      output.textContent = dataUrl;
+      document.body.appendChild(output);
+      document.body.dataset.shareExportState = "ready";
+      status.textContent = "确认图已生成。";
+    } catch (error) {
+      document.body.dataset.shareExportState = "error";
+      status.textContent = error.message || "确认图生成失败。";
+    }
   }
 
   async function saveCurrent(model, stage, status, button) {
@@ -322,7 +373,9 @@
     const shareButton = document.getElementById("shareCardButton");
     const backButton = document.getElementById("shareBackButton");
     const status = document.getElementById("shareStatus");
-    const embedded = new URLSearchParams(location.search).get("embed") === "1";
+    const pageParams = new URLSearchParams(location.search);
+    const embedded = pageParams.get("embed") === "1";
+    const confirmationExport = pageParams.get("export") === "1";
     document.body.classList.toggle("is-embedded", embedded);
     backButton.hidden = embedded;
     saveButton.disabled = true;
@@ -344,6 +397,7 @@
       document.title = model.type === "match"
         ? `商业 DNA 同频度 ${model.score}%`
         : `商业 DNA · ${model.name}`;
+      if (confirmationExport) await prepareConfirmationExport(model, stage, status);
       saveButton.addEventListener("click", () => saveCurrent(model, stage, status, saveButton));
       shareButton.addEventListener("click", () => shareCurrent(model, stage, status, shareButton));
       backButton.addEventListener("click", () => history.back());

@@ -513,8 +513,10 @@ function priorityLabel(score) {
 }
 
 function caseBorrowPoints(item, insight) {
+  const presentation = item.presentation || {};
   const tags = [...(item.heroTags || []), ...(item.scenarioTags || [])].filter(Boolean).slice(0, 3);
   const points = uniqueShortList([
+    ...(presentation.learnPoints || []),
     item.usable,
     tags.length ? `可借鉴：${tags.join(" / ")}` : "",
     insight.lookAt,
@@ -622,9 +624,12 @@ function caseInsight(row, index) {
 function renderCases() {
   const rankedRows = state.recommended.slice(0, 4);
   const selectedRowIndex = rankedRows.findIndex(row => row.item.id === state.selectedCaseId);
+  const selectedItem = cases.find(item => item.id === state.selectedCaseId);
   const caseRows = selectedRowIndex > 0
     ? [rankedRows[selectedRowIndex], ...rankedRows.filter((_, index) => index !== selectedRowIndex)]
-    : rankedRows;
+    : selectedRowIndex === -1 && selectedItem
+      ? [{ item: selectedItem, score: scoreCase(selectedItem) }, ...rankedRows].slice(0, 4)
+      : rankedRows;
   const mainRow = caseRows[0];
   const type = currentType();
   if (els.caseSectionTitle) {
@@ -659,6 +664,7 @@ function renderCases() {
     <div class="case-main-carousel" data-case-carousel aria-label="左右滑动查看参考样本">
       ${caseRows.map((row, index) => {
         const item = row.item;
+        const presentation = item.presentation || {};
         const insight = caseInsight(row, index);
         const borrowPoints = caseBorrowPoints(item, insight);
         return `
@@ -668,17 +674,17 @@ function renderCases() {
               <span class="fit-pill">${escapeHtml(item.city || "非标商业")}</span>
             </div>
             <div class="case-body">
-              <p class="eyebrow">${escapeHtml(item.archetype || item.dna?.name || "参考样本")}</p>
+              <p class="eyebrow">${escapeHtml(presentation.valueTitle || item.archetype || item.dna?.name || "参考样本")}</p>
               <h3>${escapeHtml(item.name)}</h3>
               <p class="case-fitline">${escapeHtml(sampleMatchLine(item, type))}</p>
-              <p class="case-reason">${escapeHtml(insight.reason)}</p>
+              <p class="case-reason">${escapeHtml(presentation.oneLineValue || insight.reason)}</p>
               <div class="case-borrow-block">
                 <strong>${state.mode === "brand" ? "适合你看的点" : "可借鉴动作"}</strong>
                 <ul>
                   ${borrowPoints.map(point => `<li>${escapeHtml(point)}</li>`).join("")}
                 </ul>
               </div>
-              <p class="case-risk"><span>先确认</span>${escapeHtml(shortText(item.copyConditions || item.caution || item.pain || insight.warning, "城市条件、运营强度和品牌资源是否能承接。", 64))}</p>
+              <p class="case-risk"><span>先确认</span>${escapeHtml(shortText(presentation.risk || item.copyConditions || item.caution || item.pain || insight.warning, "城市条件、运营强度和品牌资源是否能承接。", 64))}</p>
               <span class="case-evidence-cta">查看操盘解读</span>
             </div>
           </article>
@@ -842,6 +848,16 @@ function renderBrands() {
 function renderEvidence() {
   const active = selectedCase();
   const critique = sampleCritique(active);
+  const presentation = active?.presentation || {};
+  const observationRows = Array.isArray(presentation.learnPoints) && presentation.learnPoints.length
+    ? [
+      ...presentation.learnPoints.map((action, index) => ({
+        dimension: `可借鉴 ${String(index + 1).padStart(2, "0")}`,
+        action,
+      })),
+      ...(presentation.notFor ? [{ dimension: "不适合照搬", action: presentation.notFor }] : []),
+    ]
+    : critique.slice(0, 5);
   const controllable = critique.slice(0, 4);
   const focusItems = controllable.map((item, index) => ({ ...item, brief: focusActionBrief(item.action, index) }));
   const sceneLinks = prioritizeSceneLinks(sceneEvidenceLinks(active)).slice(0, 6);
@@ -870,7 +886,7 @@ function renderEvidence() {
       <span>操盘观察</span>
       <h3>具体看这几件事</h3>
       <div class="operation-observation-list">
-        ${critique.slice(0, 5).map(item => `
+        ${observationRows.map(item => `
           <div>
             <strong>${escapeHtml(item.dimension)}</strong>
             <p>${escapeHtml(shortText(item.action, "看项目如何把空间、人群、品牌和运营接起来。", 56))}</p>
@@ -969,6 +985,20 @@ function sceneEvidenceLinks(item = selectedCase()) {
 function operationCore(item = selectedCase()) {
   const text = fullText(item || {});
   const name = item?.name || "这个样本";
+  const presentation = item?.presentation || {};
+  if (presentation.valueTitle && presentation.oneLineValue) {
+    const mechanism = (presentation.mechanism || [])
+      .map(row => `${row.stage}：${row.body}`)
+      .join("；");
+    return {
+      statement: `${presentation.valueTitle}。${presentation.oneLineValue}`,
+      cards: [
+        { title: "解决什么问题", body: presentation.businessProblem || item?.value || "" },
+        { title: "怎么成立", body: mechanism || item?.usable || "" },
+        { title: "最适合谁看", body: presentation.bestFor || item?.bestFor || "" },
+      ],
+    };
+  }
   const profile = operationProfile(item);
   const statement = profile.statement || generatedOperationStatement(item);
   return {
@@ -1427,6 +1457,7 @@ function libraryText(item = {}) {
 
 function sampleCardHTML(item = {}) {
   const playbook = samplePlaybook(item);
+  const presentation = item.presentation || {};
   const types = sampleTypeNames(item.applicableTypes || []) || "类型待补";
   return `
     <article class="library-sample-card" data-preview-case="${escapeHtml(item.id || "")}">
@@ -1435,9 +1466,9 @@ function sampleCardHTML(item = {}) {
         <em>${escapeHtml(item.city || "城市待补")}</em>
       </div>
       <div class="library-sample-body">
-        <span>${escapeHtml(playbook.name || item.archetype || "打法待补")}</span>
+        <span>${escapeHtml(presentation.valueTitle || playbook.name || item.archetype || "打法待补")}</span>
         <h3>${escapeHtml(item.name || "未命名样本")}</h3>
-        <p>${escapeHtml(shortText(item.bestFor || item.usable || item.value, "适合寻找非标商业打法参照的项目。", 62))}</p>
+        <p>${escapeHtml(shortText(presentation.oneLineValue || item.bestFor || item.usable || item.value, "适合寻找非标商业打法参照的项目。", 62))}</p>
         <div>
           <i>${escapeHtml(types)}</i>
           <i>${escapeHtml(item.typeFitLabel || `${item.copyThreshold || "待判断"}门槛`)}</i>
@@ -1832,7 +1863,7 @@ function personaSampleRelation(result = {}, item = {}) {
 function projectPersonaSampleRowHTML(result = {}, row = {}, primary = false) {
   const item = row.item || {};
   const relation = personaSampleRelation(result, item);
-  const boundary = shortText(item.copyConditions || item.caution || item.pain || "", "先确认城市、人群、体量和运营团队能否承接。", 72);
+  const boundary = shortText(item.presentation?.risk || item.copyConditions || item.caution || item.pain || "", "先确认城市、人群、体量和运营团队能否承接。", 72);
   return `
     <article class="${primary ? "persona-calibration-primary" : "persona-calibration-row"}">
       <div class="persona-calibration-image" style="background-image:url('${imageUrl(item)}')">
