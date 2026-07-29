@@ -4,23 +4,28 @@
   const dualLogic = globalScope.COMMERCIAL_DNA_DUAL_V0_1;
   const operatorSystem = globalScope.COMMERCIAL_DNA_OPERATOR_V1;
   const projectSystem = globalScope.COMMERCIAL_DNA_PERSONA;
+  const projectPosterSystem = globalScope.COMMERCIAL_DNA_PROJECT_POSTERS_V0_1;
   const matchSystem = globalScope.COMMERCIAL_DNA_OPERATOR_MATCH_V0_1;
   const experienceSystem = globalScope.COMMERCIAL_DNA_DUAL_EXPERIENCE_V0_2;
-  if (!dualLogic || !operatorSystem || !projectSystem || !matchSystem || !experienceSystem) return;
+  if (!dualLogic || !operatorSystem || !projectSystem || !projectPosterSystem || !matchSystem || !experienceSystem) return;
 
   const STORAGE_KEY = "commercial_dna_dual_test_v1";
   const PROJECT_CONTENT_VERSION = "project-persona-v1";
   const MODES = ["self", "project"];
-  const projectAssets = {
-    "居委会": "persona-assets/community-capybara-v1.webp",
-    "文艺据点": "persona-assets/art-cat-v1.webp",
-    "周末限定": "persona-assets/weekend-squirrel-v1.webp",
-    "中央车站": "persona-assets/station-elephant-v1.webp",
-    "同好会馆": "persona-assets/club-fox-v1.webp",
-    "顶流片场": "persona-assets/studio-peacock-v1.webp",
-    "新物种实验室": "persona-assets/lab-octopus-v1.webp",
-    "内容永动机": "persona-assets/engine-bee-v1.webp",
-  };
+  const DNA_CODE_PATTERN = /^[LD][SC][BM][ER]$/;
+  const guideIcons = Object.freeze({
+    back: "assets/vendor/bootstrap-icons/arrow-left.svg",
+    next: "assets/vendor/bootstrap-icons/arrow-right.svg",
+    location: "assets/vendor/bootstrap-icons/geo-alt.svg",
+    type: "assets/vendor/bootstrap-icons/buildings.svg",
+    stay: "assets/vendor/bootstrap-icons/shop.svg",
+    consume: "assets/vendor/bootstrap-icons/bag.svg",
+    revisit: "assets/vendor/bootstrap-icons/arrow-repeat.svg",
+    observe: "assets/vendor/bootstrap-icons/eye.svg",
+    takeaway: "assets/vendor/bootstrap-icons/clipboard2-check.svg",
+    bookmark: "assets/vendor/bootstrap-icons/bookmark-star-fill.svg",
+    warning: "assets/vendor/bootstrap-icons/exclamation-triangle.svg",
+  });
   const modeCopy = {
     self: {
       label: "测我",
@@ -53,6 +58,8 @@
     testPage: document.getElementById("personality-test"),
     resultPage: document.getElementById("personality-result"),
     matchPage: document.getElementById("dual-match"),
+    projectRoutesPage: document.getElementById("dual-project-routes"),
+    fieldGuidePage: document.getElementById("dual-field-guide"),
     progress: document.getElementById("personaProgress"),
     count: document.getElementById("personaCount"),
     axis: document.getElementById("personaAxis"),
@@ -60,6 +67,8 @@
     options: document.getElementById("personaOptions"),
     result: document.getElementById("personaResult"),
     match: document.getElementById("dualMatchResult"),
+    projectRoutes: document.getElementById("dualProjectRoutes"),
+    fieldGuide: document.getElementById("dualFieldGuide"),
     toast: document.getElementById("dualToast"),
     shareDialog: document.getElementById("dualShareDialog"),
     shareFrame: document.getElementById("dualShareFrame"),
@@ -74,6 +83,7 @@
     history: [],
     match: null,
     returnMode: null,
+    pendingMatchAfterSelf: false,
     storageAvailable: true,
     answerLocked: false,
     assetGate: {
@@ -119,14 +129,16 @@
     const name = projectSystem.personas?.project?.[result.code];
     if (!name) return null;
     const info = projectSystem.info?.[name] || ["项目人格", "这个项目还需要更多真实信息。"];
+    const poster = projectPosterSystem.entryForResultCode(result.code);
     return {
       id: name,
       code: result.code,
+      representativeCode: poster?.representativeCode || result.code,
       name,
       label: info[0],
       roast: info[1],
       profile: projectSystem.projectProfiles?.[result.code] || null,
-      assetAlt: `${name}项目动物人格`,
+      assetAlt: poster?.assetAlt || `${name}项目动物人格`,
     };
   }
 
@@ -158,6 +170,8 @@
       dualState.history = Array.isArray(parsed.history)
         ? parsed.history.map(sanitizeHistoryEntry).filter(Boolean).slice(0, 12)
         : [];
+      dualState.pendingMatchAfterSelf = Boolean(parsed.pendingMatchAfterSelf);
+      if (!dualState.results.project) dualState.pendingMatchAfterSelf = false;
     } catch (error) {
       dualState.storageAvailable = false;
     }
@@ -172,6 +186,7 @@
         drafts: dualState.drafts,
         results: dualState.results,
         history: dualState.history,
+        pendingMatchAfterSelf: dualState.pendingMatchAfterSelf,
         updatedAt: new Date().toISOString(),
       }));
     } catch (error) {
@@ -324,7 +339,13 @@
       question: "personality-test",
       result: "personality-result",
       match: "dual-match",
+      routes: "dual-project-routes",
+      guide: "dual-field-guide",
     }[screen] || "home";
+    if (!["routes", "guide"].includes(screen)) {
+      delete document.body.dataset.dualCode;
+      delete document.body.dataset.dualProject;
+    }
     if (elements.quickMenu) elements.quickMenu.hidden = true;
     if (elements.menuButton) elements.menuButton.setAttribute("aria-expanded", "false");
 
@@ -333,6 +354,8 @@
       question: "personality-test",
       result: "personality-result",
       match: "dual-match",
+      routes: "dual-project-routes",
+      guide: "dual-field-guide",
     }[screen];
     document.querySelectorAll(".app-page").forEach(section => {
       section.hidden = section.id !== visibleId;
@@ -446,7 +469,7 @@
     if (mode === "self") {
       return dualState.assetGate.assetsById?.[persona.assetId]?.file || "";
     }
-    return projectAssets[persona.name] || "";
+    return projectPosterSystem.entryForPersona(persona.name)?.asset || "";
   }
 
   function bindResultImageState() {
@@ -468,6 +491,62 @@
     }
   }
 
+  function projectBusinessJudgmentHTML(result, persona) {
+    const judgment = projectPosterSystem.judgmentFor(result.code, projectSystem);
+    return `
+      <section class="dual-project-judgment" aria-labelledby="dualProjectJudgmentTitle">
+        <header>
+          <span>经营判断</span>
+          <h2 id="dualProjectJudgmentTitle">这个项目接下来先看什么</h2>
+        </header>
+        <dl>
+          <div>
+            <dt>项目本能</dt>
+            <dd>${escapeHtml(judgment.instinct)}</dd>
+          </div>
+          <div>
+            <dt>经营风险</dt>
+            <dd>${escapeHtml(judgment.risk)}</dd>
+          </div>
+          <div>
+            <dt>现在先做</dt>
+            <dd>${escapeHtml(judgment.action)}</dd>
+          </div>
+        </dl>
+        <blockquote>
+          <span>DNA 锐评</span>
+          <p>${escapeHtml(judgment.roast)}</p>
+        </blockquote>
+        <p class="dual-visually-hidden">项目人格代表码为 ${escapeHtml(persona.representativeCode)}；同频项目排序继续使用完整测评码 ${escapeHtml(result.code)}。</p>
+      </section>
+    `;
+  }
+
+  function resultHomeButtonHTML() {
+    return `
+      <button class="text" data-dual-home type="button">
+        <img class="dual-result-home-icon" src="assets/vendor/bootstrap-icons/house-fill.svg" alt="" aria-hidden="true" />
+        <span>返回首页</span>
+      </button>
+    `;
+  }
+
+  function projectResultActionsHTML(result) {
+    const hasSelfResult = Boolean(sanitizeResult(dualState.results.self, "self"));
+    const canDirectShare = typeof globalScope.navigator?.share === "function";
+    const shareHref = resultShareHref("project", result, { saveOnly: !canDirectShare });
+    return `
+      <footer class="dual-result-actions dual-project-result-actions" aria-label="测项目结果页操作">
+        ${hasSelfResult
+          ? '<button class="primary dual-project-primary" data-dual-open-match type="button">查看我和项目的同频度</button>'
+          : '<button class="primary dual-project-primary" data-dual-start-match type="button">测测我和这个项目合不合</button>'}
+        <button class="dual-project-share" data-dual-share data-share-href="${escapeHtml(shareHref)}" type="button">${canDirectShare ? "分享项目人格卡" : "保存项目人格卡"}</button>
+        <button class="dual-project-retest" data-dual-retest="project" type="button">重新测项目</button>
+        ${resultHomeButtonHTML()}
+      </footer>
+    `;
+  }
+
   function renderResult(mode) {
     const result = sanitizeResult(dualState.results[mode], mode);
     if (!result) {
@@ -485,7 +564,7 @@
     const isSelf = mode === "self";
     const otherMode = isSelf ? "project" : "self";
     const otherResult = sanitizeResult(dualState.results[otherMode], otherMode);
-    const recommendationHtml = isSelf ? selfProjectRecommendationHTML(result) : "";
+    const recommendationHtml = projectRecommendationHTML(result, mode);
     const shareHref = resultShareHref(mode, result);
 
     setVisiblePage("result", mode);
@@ -495,31 +574,33 @@
         <figure class="dual-result-visual dual-result-image-only">
           <img id="dualResultImage" src="${escapeHtml(asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(persona.assetAlt)}" tabindex="-1" />
         </figure>
-        <section class="dual-result-roast">
-          <span>DNA评价</span>
-          <p>${escapeHtml(persona.roast)}</p>
-        </section>
+        ${isSelf ? `
+          <section class="dual-result-roast">
+            <span>DNA评价</span>
+            <p>${escapeHtml(persona.roast)}</p>
+          </section>
+        ` : projectBusinessJudgmentHTML(result, persona)}
         ${recommendationHtml}
-        <footer class="dual-result-actions ${canMatch() ? "has-match" : "no-match"}" aria-label="结果页操作">
-          ${canMatch() ? '<button class="primary" data-dual-open-match type="button">查看同频度</button>' : ""}
-          <button class="${canMatch() ? "" : "primary"}" data-dual-share data-share-href="${escapeHtml(shareHref)}" type="button">分享结果</button>
-          <button data-dual-other="${otherMode}" type="button">${otherResult ? `查看${modeCopy[otherMode].label}结果` : `去${modeCopy[otherMode].label}`}</button>
-          <button class="text" data-dual-home type="button">
-            <img class="dual-result-home-icon" src="assets/vendor/bootstrap-icons/house-fill.svg" alt="" aria-hidden="true" />
-            <span>返回首页</span>
-          </button>
-        </footer>
+        ${isSelf ? `
+          <footer class="dual-result-actions ${canMatch() ? "has-match" : "no-match"}" aria-label="结果页操作">
+            ${canMatch() ? '<button class="primary" data-dual-open-match type="button">查看同频度</button>' : ""}
+            <button class="${canMatch() ? "" : "primary"}" data-dual-share data-share-href="${escapeHtml(shareHref)}" type="button">分享结果</button>
+            <button data-dual-other="${otherMode}" type="button">${otherResult ? `查看${modeCopy[otherMode].label}结果` : `去${modeCopy[otherMode].label}`}</button>
+            ${resultHomeButtonHTML()}
+          </footer>
+        ` : projectResultActionsHTML(result)}
       </article>
     `;
     bindResultImageState();
     focusHeading(document.getElementById("dualResultImage"));
   }
 
-  function resultShareHref(mode, result) {
+  function resultShareHref(mode, result, { saveOnly = false } = {}) {
     const params = new URLSearchParams({
       type: mode,
       code: result.code,
     });
+    if (saveOnly) params.set("saveOnly", "1");
     return `share.html?${params.toString()}`;
   }
 
@@ -565,112 +646,309 @@
     resetShareDialog();
   }
 
-  function recommendationId(prefix, item) {
-    return `${prefix}-${String(item?.id || "project").replace(/[^a-zA-Z0-9_-]/g, "")}`;
-  }
-
   function recommendationMatchLabel(row) {
     const percent = Number.isFinite(row?.matchPercent) ? row.matchPercent : 0;
     return `${row?.relationLabel || "同频项目"} · ${percent}% 匹配`;
   }
 
-  function recommendationDetailHTML(row) {
+  function guideIconHTML(name, className = "") {
+    const source = guideIcons[name];
+    if (!source) return "";
+    return `<img class="dual-line-icon ${escapeHtml(className)}" src="${escapeHtml(source)}" alt="" aria-hidden="true" />`;
+  }
+
+  function projectRowsForCode(code) {
+    const normalizedCode = String(code || "").toUpperCase();
+    if (!DNA_CODE_PATTERN.test(normalizedCode)) return [];
+    try {
+      return experienceSystem.recommendProjects(
+        normalizedCode,
+        globalScope.PARK_CASE_DATA?.cases || [],
+        3,
+      );
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function projectGuideModel(row, sourceCode) {
     const item = row.item || {};
     const presentation = item.presentation || {};
     const businessProblem = presentation.businessProblem || item.value || item.usable || "先观察它如何把空间、内容与运营节奏放在一起。";
-    const mechanism = Array.isArray(presentation.mechanism) && presentation.mechanism.length
-      ? presentation.mechanism
+    const mechanism = Array.isArray(presentation.mechanism) && presentation.mechanism.length >= 4
+      ? presentation.mechanism.slice(0, 4)
       : [
-        { stage: "可借鉴动作", body: item.usable || businessProblem },
-        { stage: "复制边界", body: presentation.risk || item.caution || item.copyConditions || "先补足现场经营数据，再决定是否照搬。" },
+        {
+          stage: "流量入口",
+          body: item.audience || (item.heroTags || []).join("、") || "项目自身识别与目标客群到访",
+        },
+        {
+          stage: "停留机制",
+          body: (item.scenarioTags || []).join("、") || item.format || "空间体验与内容场景",
+        },
+        {
+          stage: "消费承接",
+          body: (item.leadFormats || []).join("、") || item.brands || "主力业态与消费场景",
+        },
+        {
+          stage: "复访更新",
+          body: item.next || item.usable || "持续更新内容与经营动作",
+        },
       ];
     const learnPoints = Array.isArray(presentation.learnPoints) && presentation.learnPoints.length
       ? presentation.learnPoints
-      : [item.usable || item.bestFor || "先观察它的空间、内容与运营节奏如何协同。"];
-    const risk = presentation.risk || item.caution || item.copyConditions;
-    return `
-      <header>
-        <span>PROJECT NOTES</span>
-        <strong>${escapeHtml(recommendationMatchLabel(row))}</strong>
-      </header>
-      ${presentation.valueTitle ? `<h4>${escapeHtml(presentation.valueTitle)}</h4>` : ""}
-      <p class="dual-project-detail-problem">${escapeHtml(businessProblem)}</p>
-      <dl class="dual-project-mechanism">
-        ${mechanism.map(step => `<div><dt>${escapeHtml(step.stage || "操盘动作")}</dt><dd>${escapeHtml(step.body || "")}</dd></div>`).join("")}
-      </dl>
-      <div class="dual-project-learn-points">
-        <span>最值得看</span>
-        <ul>${learnPoints.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ul>
-      </div>
-      ${risk ? `<small>别照搬：${escapeHtml(risk)}</small>` : ""}
-    `;
+      : [
+        item.usable,
+        item.bestFor,
+        item.next,
+      ].filter(Boolean);
+    const calibration = presentation.matchCalibration?.recommendedCodes?.find(candidate => (
+      String(candidate?.code || "").toUpperCase() === sourceCode
+    ));
+    const whyPrefix = row.exact
+      ? `你的商业 DNA 与项目同为 ${sourceCode}`
+      : `你的商业 DNA 是 ${sourceCode}，与项目的四轴匹配度为 ${row.matchPercent}%`;
+    const why = calibration?.learning
+      ? `${whyPrefix}；最值得对照的是${calibration.learning}。`
+      : `${whyPrefix}；可重点比较它如何组织空间、内容、品牌和持续运营。`;
+    const risk = presentation.risk || item.caution || item.copyConditions || "先补足现场经营数据，再决定是否照搬。";
+    const evidenceBoundary = item.evidenceGate?.formalIngestReady === false
+      ? `${item.sourceNote || "用户确认运行时样本"}；当前不计入六维正式证据库。`
+      : item.sourceNote || "";
+    return {
+      item,
+      presentation,
+      businessProblem,
+      mechanism,
+      learnPoints: learnPoints.filter(Boolean).slice(0, 3),
+      risk,
+      evidenceBoundary,
+      why,
+      valueTitle: presentation.valueTitle || item.special || item.usable || "项目观察手册",
+      summary: presentation.oneLineValue || item.usable || item.value || businessProblem,
+      tags: (item.heroTags || item.scenarioTags || []).slice(0, 3),
+      location: [item.city, item.location].filter(Boolean).join(" · ") || "地点待核",
+      type: item.format || item.subtype || item.archetype || "非标商业项目",
+      operation: item.operator || item.archetype || "持续内容运营",
+    };
   }
 
-  function recommendationCardHTML(row, rank, primary = false) {
-    const item = row.item || {};
-    const presentation = item.presentation || {};
-    const detailId = recommendationId("dualProjectDetail", item);
-    const tags = (item.heroTags || item.scenarioTags || []).slice(0, primary ? 3 : 2);
-    const summary = presentation.oneLineValue || item.usable || item.value || "先观察它如何把空间、内容与运营节奏放在一起。";
-    const classes = primary
-      ? "dual-project-recommendation-main dual-project-recommendation-card is-primary"
-      : "dual-project-recommendation-card dual-project-recommendation-alternative";
+  function routeProjectCardHTML(row, index, sourceCode, originMode = "self") {
+    const model = projectGuideModel(row, sourceCode);
+    const item = model.item;
+    const isPrimary = index === 0;
+    const guideHref = `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(item.id || "")}`;
     return `
-      <article class="${classes}" data-dual-recommendation-card data-project-id="${escapeHtml(item.id || "")}" data-recommendation-rank="${rank}" data-match-percent="${escapeHtml(row.matchPercent || 0)}">
-        <div class="dual-project-card-copy">
-          <span>${escapeHtml(recommendationMatchLabel(row))}</span>
-          <h3>${escapeHtml(item.name || "推荐项目")}</h3>
+      <a
+        class="dual-route-card ${isPrimary ? "is-primary" : "is-alternative"}"
+        href="${guideHref}"
+        data-dual-recommendation-card
+        data-dual-open-guide
+        data-dual-origin="${escapeHtml(originMode)}"
+        data-dual-code="${escapeHtml(sourceCode)}"
+        data-project-id="${escapeHtml(item.id || "")}"
+        data-recommendation-rank="${index + 1}"
+        data-match-percent="${escapeHtml(row.matchPercent || 0)}"
+        aria-label="查看${escapeHtml(item.name || "推荐项目")}项目详情"
+      >
+        <figure class="dual-route-card-media">
+          <img src="${escapeHtml(item.image || "")}" loading="${isPrimary ? "eager" : "lazy"}" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
+          <span class="dual-route-bookmark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
+        </figure>
+        <div class="dual-route-card-copy">
+          <span class="dual-route-match">${escapeHtml(recommendationMatchLabel(row))}</span>
+          <h2>${escapeHtml(item.name || "推荐项目")}</h2>
           <strong>${escapeHtml(item.dna?.code || "")}</strong>
-          ${presentation.valueTitle ? `<em class="dual-project-value-title">${escapeHtml(presentation.valueTitle)}</em>` : ""}
-          <p>${escapeHtml(summary)}</p>
-          ${tags.length ? `<div class="dual-project-tags">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
-          <button data-dual-project-detail-toggle type="button" aria-expanded="false" aria-controls="${detailId}">查看项目 <b aria-hidden="true">→</b></button>
+          <p>${escapeHtml(model.summary)}</p>
+          ${model.tags.length ? `<div class="dual-project-tags">${model.tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
+          <dl class="dual-route-card-meta">
+            <div>${guideIconHTML("location")}<dt>城市</dt><dd>${escapeHtml(item.city || "待核")}</dd></div>
+            <div>${guideIconHTML("type")}<dt>类型</dt><dd>${escapeHtml(item.subtype || item.format || "非标项目")}</dd></div>
+            <div>${guideIconHTML("revisit")}<dt>机制</dt><dd>${escapeHtml(item.archetype || "持续运营")}</dd></div>
+          </dl>
+          ${isPrimary ? `
+            <span class="dual-route-primary-action">
+              查看项目
+              ${guideIconHTML("next")}
+            </span>
+          ` : ""}
+          ${isPrimary ? "" : `<span class="dual-route-card-arrow" aria-hidden="true">${guideIconHTML("next")}</span>`}
         </div>
-        <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
-        <section class="dual-project-detail" id="${detailId}" data-dual-project-detail hidden>
-          ${recommendationDetailHTML(row)}
-        </section>
-      </article>
+      </a>
     `;
   }
 
-  function selfProjectRecommendationHTML(result) {
-    const rows = experienceSystem.recommendProjects(result.code, globalScope.PARK_CASE_DATA?.cases || [], 3);
+  function projectRecommendationHTML(result, originMode = "self") {
+    const rows = projectRowsForCode(result.code);
     if (!rows.length) return "";
-    const [primary, ...alternatives] = rows;
+    const [primary] = rows;
     const item = primary.item || {};
-    const presentation = item.presentation || {};
-    const whyId = recommendationId("dualRecommendationWhy", item);
-    const primaryMatch = recommendationMatchLabel(primary);
-    const whyCopy = `你的商业 DNA 是 ${result.code}；${item.name || "该项目"}是 ${item.dna?.code || "待核"}，属于${primaryMatch}。已选的三个项目按四轴匹配度排序；入选范围保留已确认样本的策展优先级。`;
+    const model = projectGuideModel(primary, result.code);
+    const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(result.code)}`;
+    const title = originMode === "project" ? "与这个项目同频的参考项目" : "适合你的同频项目";
     return `
       <section class="dual-project-recommendation" aria-labelledby="dualProjectRecommendationTitle">
         <header>
-          <h2 id="dualProjectRecommendationTitle">适合你的同频项目</h2>
+          <h2 id="dualProjectRecommendationTitle">${title}</h2>
           <span>按匹配度排序</span>
         </header>
-        ${recommendationCardHTML(primary, 1, true)}
+        <article class="dual-project-recommendation-launch">
+          <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
+          <div>
+            <span>${escapeHtml(recommendationMatchLabel(primary))}</span>
+            <h3>${escapeHtml(item.name || "推荐项目")}</h3>
+            <strong>${escapeHtml(item.dna?.code || "")}</strong>
+            <p>${escapeHtml(model.summary)}</p>
+            <a href="${routesHref}" data-dual-open-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(result.code)}">
+              查看同频项目路线册
+              ${guideIconHTML("next")}
+            </a>
+          </div>
+        </article>
+        <p class="dual-project-recommendation-note">共 ${rows.length} 个独立项目页；进入路线册后按匹配度逐个查看，不在结果页展开。</p>
+      </section>
+    `;
+  }
+
+  function renderProjectRoutes(origin, code) {
+    const originMode = MODES.includes(origin) ? origin : "self";
+    const sourceCode = String(code || "").toUpperCase();
+    const rows = projectRowsForCode(sourceCode);
+    if (!rows.length || !elements.projectRoutes) {
+      navigate("#home", true);
+      return;
+    }
+    setVisiblePage("routes");
+    document.body.dataset.dualCode = sourceCode;
+    const [primary, ...alternatives] = rows;
+    elements.projectRoutes.innerHTML = `
+      <article class="dual-route-book" data-dual-recommendation-list-page data-dual-code="${escapeHtml(sourceCode)}">
+        <button class="dual-page-back" data-dual-back-result data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}" type="button">
+          ${guideIconHTML("back")}
+          <span>返回${originMode === "project" ? "测项目" : "测我"}结果</span>
+        </button>
+        <nav class="dual-route-breadcrumb" aria-label="页面位置">
+          <span>你的结果</span>
+          ${guideIconHTML("next")}
+          <strong>同频项目</strong>
+        </nav>
+        <header class="dual-route-book-heading">
+          <div>
+            <h1 id="dualRouteBookTitle" tabindex="-1">同频项目路线册</h1>
+            <p>从最同频的项目开始，逐个进入独立项目页</p>
+          </div>
+          <span class="dual-route-title-mark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
+        </header>
+        <section class="dual-route-primary" aria-label="最同频项目">
+          ${routeProjectCardHTML(primary, 0, sourceCode, originMode)}
+        </section>
         ${alternatives.length ? `
-          <section class="dual-project-alternatives" aria-labelledby="dualProjectAlternativesTitle">
+          <section class="dual-route-next" aria-labelledby="dualRouteNextTitle">
             <header>
-              <span id="dualProjectAlternativesTitle">另外两个可以顺路看</span>
-              <small>按匹配度排序</small>
+              <h2 id="dualRouteNextTitle">下一站 · 其他同频</h2>
+              <span>按匹配度排序</span>
             </header>
-            <div class="dual-project-alternative-grid">
-              ${alternatives.map((row, index) => recommendationCardHTML(row, index + 2)).join("")}
+            <div class="dual-route-list">
+              ${alternatives.map((row, index) => routeProjectCardHTML(row, index + 1, sourceCode, originMode)).join("")}
             </div>
           </section>
         ` : ""}
-        <section class="dual-project-recommendation-why">
-          <button data-dual-recommendation-why-toggle type="button" aria-expanded="false" aria-controls="${whyId}">为什么推荐给我 <b aria-hidden="true">⌄</b></button>
-          <div id="${whyId}" data-dual-recommendation-why hidden>
-            <p>${escapeHtml(whyCopy)}</p>
-            ${presentation.bestFor ? `<small>适合：${escapeHtml(presentation.bestFor)}</small>` : ""}
-            ${(presentation.risk || item.caution) ? `<small>别照搬：${escapeHtml(presentation.risk || item.caution)}</small>` : ""}
-          </div>
-        </section>
-      </section>
+        <p class="dual-route-footnote">
+          ${guideIconHTML("bookmark")}
+          <span>星标项目代表与你的 ${escapeHtml(sourceCode)} 高度同频，建议优先探索。</span>
+        </p>
+      </article>
     `;
+    focusHeading(document.getElementById("dualRouteBookTitle"));
+  }
+
+  function renderFieldGuide(origin, code, projectId) {
+    const originMode = MODES.includes(origin) ? origin : "self";
+    const sourceCode = String(code || "").toUpperCase();
+    const rows = projectRowsForCode(sourceCode);
+    const currentIndex = rows.findIndex(row => row.item?.id === projectId);
+    if (currentIndex < 0 || !elements.fieldGuide) {
+      navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`, true);
+      return;
+    }
+    const row = rows[currentIndex];
+    const model = projectGuideModel(row, sourceCode);
+    const item = model.item;
+    const nextRow = rows.length > 1 ? rows[(currentIndex + 1) % rows.length] : null;
+    const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`;
+    const nextHref = nextRow
+      ? `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(nextRow.item?.id || "")}`
+      : routesHref;
+    const observationIcons = ["location", "stay", "consume", "revisit"];
+    const observationPrefixes = ["先看", "再看", "接着看", "最后看"];
+
+    setVisiblePage("guide");
+    document.body.dataset.dualCode = sourceCode;
+    document.body.dataset.dualProject = item.id || "";
+    elements.fieldGuide.innerHTML = `
+      <article class="dual-field-guide" data-dual-project-page data-project-id="${escapeHtml(item.id || "")}" data-dual-code="${escapeHtml(sourceCode)}">
+        <header class="dual-field-guide-topbar">
+          <a href="${routesHref}" data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
+            ${guideIconHTML("back")}
+            <span>返回同频项目</span>
+          </a>
+          <strong>路线 <b>${String(currentIndex + 1).padStart(2, "0")}</b> / ${String(rows.length).padStart(2, "0")}</strong>
+        </header>
+        <section class="dual-field-guide-hero">
+          <header>
+            <div>
+              <h1 id="dualFieldGuideTitle" tabindex="-1">${escapeHtml(item.name || "项目观察手册")}</h1>
+              <strong>${escapeHtml(item.dna?.code || "")}</strong>
+              <span>${escapeHtml(recommendationMatchLabel(row))}</span>
+              <h2>${escapeHtml(model.valueTitle)}</h2>
+              ${model.tags.length ? `<div class="dual-project-tags">${model.tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
+            </div>
+            <span class="dual-route-title-mark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
+          </header>
+          <img src="${escapeHtml(item.image || "")}" decoding="async" fetchpriority="high" alt="${escapeHtml(item.name || "项目")}项目现场" />
+        </section>
+        <section class="dual-field-guide-why" aria-labelledby="dualFieldGuideWhyTitle">
+          <h2 id="dualFieldGuideWhyTitle">${guideIconHTML("observe")}为什么与你同频</h2>
+          <p>${escapeHtml(model.why)}</p>
+        </section>
+        <section class="dual-field-observations" aria-labelledby="dualFieldObservationTitle">
+          <h2 id="dualFieldObservationTitle">${guideIconHTML("observe")}现场观察路线</h2>
+          <ol>
+            ${model.mechanism.map((step, index) => `
+              <li>
+                <span class="dual-field-observation-icon">${guideIconHTML(observationIcons[index] || "observe")}</span>
+                <div>
+                  <h3>${escapeHtml(observationPrefixes[index] || "观察")}${escapeHtml(step.stage || "运营动作")}</h3>
+                  <p>${escapeHtml(step.body || "")}</p>
+                </div>
+              </li>
+            `).join("")}
+          </ol>
+        </section>
+        <section class="dual-field-takeaways" aria-labelledby="dualFieldTakeawayTitle">
+          <h2 id="dualFieldTakeawayTitle">${guideIconHTML("takeaway")}带走三件事</h2>
+          <ol>
+            ${model.learnPoints.map(point => `<li>${escapeHtml(point)}</li>`).join("")}
+          </ol>
+        </section>
+        <section class="dual-field-warning" aria-labelledby="dualFieldWarningTitle">
+          <h2 id="dualFieldWarningTitle">${guideIconHTML("warning")}不要直接照搬</h2>
+          <p>${escapeHtml(model.risk)}</p>
+          ${model.evidenceBoundary ? `<small>证据边界：${escapeHtml(model.evidenceBoundary)}</small>` : ""}
+        </section>
+        <footer class="dual-field-actions">
+          <a class="primary" href="${routesHref}" data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
+            ${guideIconHTML("back")}
+            <span>返回同频项目</span>
+          </a>
+          <a href="${nextHref}" ${nextRow ? `data-dual-open-guide data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}" data-project-id="${escapeHtml(nextRow.item?.id || "")}"` : `data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}"`}>
+            <span>${nextRow ? `下一站：${escapeHtml(nextRow.item?.name || "同频项目")}` : "返回路线册"}</span>
+            ${guideIconHTML("next")}
+          </a>
+        </footer>
+      </article>
+    `;
+    focusHeading(document.getElementById("dualFieldGuideTitle"));
   }
 
   function calculateMatch() {
@@ -801,8 +1079,12 @@
       recordHistory(mode, dualState.results[mode]);
       dualState.drafts[mode] = null;
       dualState.match = null;
+      const shouldOpenPendingMatch = mode === "self"
+        && dualState.pendingMatchAfterSelf
+        && Boolean(sanitizeResult(dualState.results.project, "project"));
+      dualState.pendingMatchAfterSelf = false;
       persistState();
-      navigate(`#result/${mode}`, true);
+      navigate(shouldOpenPendingMatch ? "#match" : `#result/${mode}`, true);
     } catch (error) {
       dualState.answerLocked = false;
       showToast(error.message || "答案还没有完成，请返回检查。");
@@ -853,21 +1135,14 @@
     elements.menuButton.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
   }
 
-  function toggleRecommendationPanel(target, selector) {
-    const scope = target.closest("[data-dual-recommendation-card], .dual-project-recommendation");
-    const panel = scope?.querySelector(selector);
-    if (!panel) return;
-    const opening = panel.hidden;
-    panel.hidden = !opening;
-    target.setAttribute("aria-expanded", String(opening));
-  }
-
-  function toggleRecommendationDetail(target) {
-    toggleRecommendationPanel(target, "[data-dual-project-detail]");
-  }
-
-  function toggleRecommendationWhy(target) {
-    toggleRecommendationPanel(target, "[data-dual-recommendation-why]");
+  function backToResult(origin, code) {
+    const mode = MODES.includes(origin) ? origin : "self";
+    const result = sanitizeResult(dualState.results[mode], mode);
+    if (result?.code === code) {
+      navigate(`#result/${mode}`);
+      return;
+    }
+    navigate("#home");
   }
 
   function retest(mode) {
@@ -877,6 +1152,7 @@
     dualState.results[mode] = null;
     dualState.drafts[mode] = createDraft(mode);
     dualState.match = null;
+    dualState.pendingMatchAfterSelf = false;
     dualState.selectedMode = mode;
     persistState();
     navigate(`#test/${mode}`);
@@ -906,9 +1182,32 @@
     const route = decodeURIComponent(String(hash || "#home")).replace(/^#/, "");
     if (!route || route === "home") return { screen: "home", mode: null };
     if (route === "match") return { screen: "match", mode: null };
-    const [screen, mode] = route.split("/");
+    const parts = route.split("/");
+    const [screen, mode] = parts;
     if (["test", "result"].includes(screen) && MODES.includes(mode)) {
       return { screen: screen === "test" ? "question" : "result", mode };
+    }
+    if (screen === "routes") {
+      const legacy = parts.length === 2;
+      const originMode = legacy ? "self" : parts[1];
+      const code = String(legacy ? parts[1] : parts[2] || "").toUpperCase();
+      if (MODES.includes(originMode) && DNA_CODE_PATTERN.test(code) && parts.length === (legacy ? 2 : 3)) {
+        return { screen: "routes", mode: null, originMode, code };
+      }
+    }
+    if (screen === "guide") {
+      const legacy = parts.length === 3;
+      const originMode = legacy ? "self" : parts[1];
+      const code = String(legacy ? parts[1] : parts[2] || "").toUpperCase();
+      const projectId = String(legacy ? parts[2] : parts[3] || "");
+      if (
+        MODES.includes(originMode)
+        && DNA_CODE_PATTERN.test(code)
+        && /^case-[a-zA-Z0-9_-]+$/.test(projectId)
+        && parts.length === (legacy ? 3 : 4)
+      ) {
+        return { screen: "guide", mode: null, originMode, code, projectId };
+      }
     }
     return { screen: "home", mode: null };
   }
@@ -947,6 +1246,14 @@
         return;
       }
       renderResult(route.mode);
+      return;
+    }
+    if (route.screen === "routes") {
+      renderProjectRoutes(route.originMode, route.code);
+      return;
+    }
+    if (route.screen === "guide") {
+      renderFieldGuide(route.originMode, route.code, route.projectId);
       return;
     }
     if (route.screen === "match") {
@@ -995,11 +1302,12 @@
   function handleOwnedClick(event) {
     const target = event.target.closest(
       "[data-dual-mode], [data-dual-start], [data-dual-back], [data-dual-skip], [data-dual-option], "
-      + "[data-dual-home], [data-dual-other], [data-dual-open-match], "
+      + "[data-dual-home], [data-dual-other], [data-dual-open-match], [data-dual-start-match], "
       + "[data-dual-view-result], [data-dual-retest], [data-dual-history-id], "
       + "[data-dual-menu], [data-dual-menu-close], "
       + "[data-dual-share], [data-dual-share-close], "
-      + "[data-dual-project-detail-toggle], [data-dual-recommendation-why-toggle], "
+      + "[data-dual-open-routes], [data-dual-open-guide], "
+      + "[data-dual-back-routes], [data-dual-back-result], "
       + ".brand[data-shell-page='home']",
     );
     if (!target) return;
@@ -1007,7 +1315,10 @@
     event.stopImmediatePropagation();
 
     if (target.matches("[data-dual-mode]")) selectMode(target.dataset.dualMode);
-    else if (target.matches("[data-dual-start]")) startTest(dualState.selectedMode);
+    else if (target.matches("[data-dual-start]")) {
+      dualState.pendingMatchAfterSelf = false;
+      startTest(dualState.selectedMode);
+    }
     else if (target.matches("[data-dual-back]")) backFromQuestion();
     else if (target.matches("[data-dual-skip]")) skipCurrentQuestion();
     else if (target.matches("[data-dual-option]")) answerCurrentQuestion(target.dataset.dualOption);
@@ -1015,8 +1326,31 @@
     else if (target.matches("[data-dual-menu-close]")) toggleQuickMenu(false);
     else if (target.matches("[data-dual-share]")) openShareDialog(target.dataset.shareHref);
     else if (target.matches("[data-dual-share-close]")) closeShareDialog();
-    else if (target.matches("[data-dual-project-detail-toggle]")) toggleRecommendationDetail(target);
-    else if (target.matches("[data-dual-recommendation-why-toggle]")) toggleRecommendationWhy(target);
+    else if (target.matches("[data-dual-start-match]")) {
+      dualState.pendingMatchAfterSelf = true;
+      persistState();
+      startTest("self");
+    }
+    else if (target.matches("[data-dual-open-routes]")) {
+      const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
+      navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}`);
+    }
+    else if (target.matches("[data-dual-open-guide]")) {
+      const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
+      navigate(
+        `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}/${encodeURIComponent(target.dataset.projectId || "")}`,
+      );
+    }
+    else if (target.matches("[data-dual-back-routes]")) {
+      const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
+      navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}`);
+    }
+    else if (target.matches("[data-dual-back-result]")) {
+      backToResult(
+        MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self",
+        String(target.dataset.dualCode || "").toUpperCase(),
+      );
+    }
     else if (target.matches("[data-dual-home], .brand[data-shell-page='home']")) navigate("#home");
     else if (target.matches("[data-dual-open-match]")) navigate("#match");
     else if (target.matches("[data-dual-view-result]")) navigate(`#result/${target.dataset.dualViewResult}`);
@@ -1038,6 +1372,7 @@
       results: dualState.results,
       history: dualState.history,
       match: dualState.match,
+      pendingMatchAfterSelf: dualState.pendingMatchAfterSelf,
       assetGate: dualState.assetGate,
       storageAvailable: dualState.storageAvailable,
     }));

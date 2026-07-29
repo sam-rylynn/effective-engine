@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "project-persona-poster-production-20260729-01",
+  "layout": "portrait-2x3-with-blank-qr-reserve",
+  "dimensions": {
+    "width": 1024,
+    "height": 1536
+  },
+  "assets": [
+    {
+      "assetId": "P01",
+      "representativeCode": "LSBE",
+      "resultCodes": ["LSBE", "LSBR", "LCBE"],
+      "personaName": "居委会",
+      "personaType": "街坊基本盘",
+      "animal": "水豚",
+      "file": "project-persona-assets/v0.1/webp/p01-lsbe-community-capybara-project-poster-v01.webp",
+      "bytes": 401384,
+      "sha256": "bb8b24949af273dc7a12fa702c3d00c066470a1494a8fdcfde847a0a47a79df2",
+      "alt": "项目动物人格“居委会”：一只穿社区服务背心的水豚，拿着三公里地图，在社区居民服务站记录熟客与便民服务。",
+      "status": "passed"
+    },
+    {
+      "assetId": "P02",
+      "representativeCode": "LSME",
+      "resultCodes": ["LSME", "LSMR", "LCME", "LCMR"],
+      "personaName": "文艺据点",
+      "personaType": "主理人慢熟盘",
+      "animal": "黑猫",
+      "file": "project-persona-assets/v0.1/webp/p02-lsme-art-cat-project-poster-v01.webp",
+      "bytes": 368120,
+      "sha256": "b731c305e17c2eb83e7ddb9586176e978348623edb8f62f9092461b3f1c41da6",
+      "alt": "项目动物人格“文艺据点”：一只戴紫色围巾的黑猫，站在社区文化空间里整理独立刊物、唱片和工作坊日历。",
+      "status": "passed"
+    },
+    {
+      "assetId": "P03",
+      "representativeCode": "LCBR",
+      "resultCodes": ["LCBR"],
+      "personaName": "周末限定",
+      "personaType": "周末续命盘",
+      "animal": "松鼠",
+      "file": "project-persona-assets/v0.1/webp/p03-lcbr-weekend-squirrel-project-poster-v01.webp",
+      "bytes": 413548,
+      "sha256": "8b9b70a1d63457e32c6b56463d2ba2597656c3325c2e459a87694a46c4124046",
+      "alt": "项目动物人格“周末限定”：一只穿黄色活动背心的松鼠，在周末市集拿着扩音器、签到表和固定栏目计划。",
+      "status": "passed"
+    },
+    {
+      "assetId": "P04",
+      "representativeCode": "DSBE",
+      "resultCodes": ["DSBE", "DSBR", "DCBE"],
+      "personaName": "中央车站",
+      "personaType": "流量过境盘",
+      "animal": "象",
+      "file": "project-persona-assets/v0.1/webp/p04-dsbe-station-elephant-project-poster-v01.webp",
+      "bytes": 369732,
+      "sha256": "3019c35a7038a001300142bb3dfa88f58ce345c74f72bec30007537d7b6617ac",
+      "alt": "项目动物人格“中央车站”：一只穿蓝色站务制服的象，在交通枢纽用放大镜检查客流、记忆路线和访客调研。",
+      "status": "passed"
+    },
+    {
+      "assetId": "P05",
+      "representativeCode": "DSME",
+      "resultCodes": ["DSME", "DSMR"],
+      "personaName": "同好会馆",
+      "personaType": "圈层据点盘",
+      "animal": "狐狸",
+      "file": "project-persona-assets/v0.1/webp/p05-dsme-club-fox-project-poster-v01.webp",
+      "bytes": 403666,
+      "sha256": "3f11d87ffa32fe8220af690110a8d36e217eb249724c5b541b5279f0e1c690aa",
+      "alt": "项目动物人格“同好会馆”：一只穿黑色会馆夹克的狐狸，在圈层据点整理唱片、模型、会员档案和入会邀请。",
+      "status": "passed"
+    },
+    {
+      "assetId": "P06",
+      "representativeCode": "DCBR",
+      "resultCodes": ["DCBR"],
+      "personaName": "顶流片场",
+      "personaType": "城市热搜盘",
+      "animal": "孔雀",
+      "file": "project-persona-assets/v0.1/webp/p06-dcbr-studio-peacock-project-poster-v01.webp",
+      "bytes": 388848,
+      "sha256": "dac329a6deab1f41a70c75467773086c562dc01344ea1409a56568f6eed68737",
+      "alt": "项目动物人格“顶流片场”：一只穿青绿色导演夹克的孔雀，在城市事件现场检查媒体机位、灯光控制和二刷通行证。",
+      "status": "passed-after-rerun"
+    },
+    {
+      "assetId": "P07",
+      "representativeCode": "DCME",
+      "resultCodes": ["DCME"],
+      "personaName": "新物种实验室",
+      "personaType": "首店试验盘",
+      "animal": "章鱼",
+      "file": "project-persona-assets/v0.1/webp/p07-dcme-lab-octopus-project-poster-v01.webp",
+      "bytes": 376810,
+      "sha256": "12f74ae17e16721f6037c9f883b6aed10ef79a3a10da3dd24c09e6ae023732c2",
+      "alt": "项目动物人格“新物种实验室”：一只戴圆框护目镜、穿实验工作服的紫色章鱼，正在首店验证场景中检查试管、空间图纸、运营账本和商业模型。",
+      "status": "passed"
+    },
+    {
+      "assetId": "P08",
+      "representativeCode": "DCMR",
+      "resultCodes": ["DCMR"],
+      "personaName": "内容永动机",
+      "personaType": "内容地标盘",
+      "animal": "蜜蜂",
+      "file": "project-persona-assets/v0.1/webp/p08-dcmr-engine-bee-project-poster-v01.webp",
+      "bytes": 384976,
+      "sha256": "3afa80ec061901b2c0f7892b5ffa7de2fa323fe44267711b736de922e288cacc",
+      "alt": "项目动物人格“内容永动机”：一只穿制作人背心的蜜蜂，在内容中控室检查全年矩阵、麦克风、电量表和成本账本。",
+      "status": "passed"
+    }
+  ]
+}

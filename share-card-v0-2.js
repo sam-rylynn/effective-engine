@@ -19,7 +19,7 @@
     }),
     barcode: "share-assets/reference-v0.3/barcode.png",
   });
-  const projectAssets = {
+  const projectIdentityAssets = {
     "居委会": "persona-assets/community-capybara-v1.webp",
     "文艺据点": "persona-assets/art-cat-v1.webp",
     "周末限定": "persona-assets/weekend-squirrel-v1.webp",
@@ -62,17 +62,22 @@
     });
   }
 
-  function projectPersona(code, projectSystem) {
+  function projectPersona(code, projectSystem, projectPosterSystem) {
     const name = projectSystem?.personas?.project?.[code];
     if (!name) throw new TypeError("项目人格不存在");
     const info = projectSystem.info?.[name] || ["项目人格", "这个项目还需要更多真实信息。"];
+    const poster = projectPosterSystem?.entryForResultCode?.(code)
+      || projectPosterSystem?.entryForPersona?.(name)
+      || null;
     return {
       code,
       name,
       label: info[0],
       roast: info[1],
       profile: projectSystem.projectProfiles?.[code] || {},
-      asset: projectAssets[name],
+      identityAsset: projectIdentityAssets[name],
+      posterAsset: poster?.asset || "",
+      posterAlt: poster?.assetAlt || `${name}项目动物人格`,
     };
   }
 
@@ -106,7 +111,8 @@
       });
     }
     if (request.type === "project") {
-      const persona = projectPersona(request.code, systems.project);
+      const persona = projectPersona(request.code, systems.project, systems.projectPosters);
+      if (!persona.posterAsset) throw new TypeError("项目人格正式海报不存在");
       return Object.freeze({
         type: "project",
         eyebrow: "项目动物人格",
@@ -121,13 +127,14 @@
         registrationAsset: referenceAssets.project.registration,
         stampAsset: referenceAssets.project.stamp,
         barcodeAsset: referenceAssets.barcode,
-        asset: persona.asset,
-        assetAlt: `${persona.name}项目动物人格`,
+        asset: persona.posterAsset,
+        assetAlt: persona.posterAlt,
       });
     }
 
     const self = selfPersona(request.selfCode, systems.operator, systems.assetsById);
-    const project = projectPersona(request.projectCode, systems.project);
+    const project = projectPersona(request.projectCode, systems.project, systems.projectPosters);
+    if (!project.identityAsset) throw new TypeError("项目人格身份图不存在");
     return Object.freeze({
       type: "match",
       eyebrow: "商业 DNA 同频度",
@@ -149,7 +156,7 @@
       project: {
         name: project.name,
         code: project.code,
-        asset: project.asset,
+        asset: project.identityAsset,
       },
     });
   }
@@ -375,9 +382,11 @@
     const status = document.getElementById("shareStatus");
     const pageParams = new URLSearchParams(location.search);
     const embedded = pageParams.get("embed") === "1";
+    const saveOnly = pageParams.get("saveOnly") === "1";
     const confirmationExport = pageParams.get("export") === "1";
     document.body.classList.toggle("is-embedded", embedded);
-    backButton.hidden = embedded;
+    backButton.hidden = embedded && !saveOnly;
+    shareButton.hidden = saveOnly;
     saveButton.disabled = true;
     shareButton.disabled = true;
     try {
@@ -386,6 +395,7 @@
       const model = createModel(request, {
         operator: globalScope.COMMERCIAL_DNA_OPERATOR_V1,
         project: globalScope.COMMERCIAL_DNA_PERSONA,
+        projectPosters: globalScope.COMMERCIAL_DNA_PROJECT_POSTERS_V0_1,
         assetsById,
       });
       stage.classList.add("is-preparing");
@@ -393,13 +403,15 @@
       await waitForCardImages(stage.querySelector(".share-card"));
       stage.classList.remove("is-preparing");
       saveButton.disabled = false;
-      shareButton.disabled = false;
+      shareButton.disabled = saveOnly;
       document.title = model.type === "match"
         ? `商业 DNA 同频度 ${model.score}%`
         : `商业 DNA · ${model.name}`;
       if (confirmationExport) await prepareConfirmationExport(model, stage, status);
       saveButton.addEventListener("click", () => saveCurrent(model, stage, status, saveButton));
-      shareButton.addEventListener("click", () => shareCurrent(model, stage, status, shareButton));
+      if (!saveOnly) {
+        shareButton.addEventListener("click", () => shareCurrent(model, stage, status, shareButton));
+      }
       backButton.addEventListener("click", () => history.back());
     } catch (error) {
       stage.classList.remove("is-preparing");
