@@ -1,12 +1,14 @@
 window.PARK_CASE_DATA = {
-  "updated": "2026-07-03",
+  "updated": "2026-07-29",
   "summary": {
-    "total": 25,
+    "total": 26,
     "priorityA": 7,
     "typical": 12,
     "boundary": 5,
     "converted": 8,
-    "convertedNote": "case-18~25 为暗数据线索转正样本(2026-07-03),置信度低于原生样本,待复核"
+    "convertedNote": "case-18~25 为暗数据线索转正样本(2026-07-03),置信度低于原生样本,待复核",
+    "userConfirmedRuntimeSamples": 1,
+    "userConfirmedRuntimeNote": "武汉咸安坊为用户确认的运行时样本，不计入六维正式证据库统计。"
   },
   "cases": [
     {
@@ -271,7 +273,7 @@ window.PARK_CASE_DATA = {
       "usable": "借鉴自营市集、菜场主力店和社区日常消费组织。",
       "caution": "不是典型公园商业，不参与主库横向排名。",
       "next": "转入边界样本，借鉴自营市集和15分钟生活圈。",
-      "image": "assets/05-鸿寿坊.webp",
+      "image": "assets/05-鸿寿坊.jpg",
       "applicableTypes": [
         "T2",
         "T6"
@@ -1385,6 +1387,114 @@ window.PARK_CASE_DATA = {
       "bestFor": "公园旁社区商业、办公区配套街巷和小体量非标项目",
       "typeFitLabel": "T1+T2 · 低门槛",
       "sourceNote": "暗数据线索转正｜2026-07-03｜待复核"
+    },
+    {
+      "id": "case-45",
+      "name": "武汉咸安坊",
+      "city": "武汉",
+      "location": "江岸区鄱阳街 21 号",
+      "opened": "2024 正式启幕／持续招商更新",
+      "operator": "武汉华发商业运营团队",
+      "scale": "约 1.4 万平方米、5 个片区 10 组历史建筑",
+      "format": "历史里弄开放街区",
+      "subtype": "历史建筑内容轮转型",
+      "audience": "武汉本地客群 + 城市文化访客 + 文旅到访",
+      "audienceTags": [
+        "城市文化",
+        "首店",
+        "文保",
+        "夜间"
+      ],
+      "parkRelation": "历史街区城市更新",
+      "sampleNature": "用户确认运行时样本｜历史里弄／内容运营型（非六维正式证据库）",
+      "priority": "A",
+      "recommendationBoost": 12,
+      "archetype": "历史空间首店内容轮转型",
+      "heroTags": [
+        "百年里弄",
+        "首店招商",
+        "内容日历"
+      ],
+      "leadFormats": [
+        "潮流零售",
+        "特色餐饮",
+        "艺术展览",
+        "夜间内容"
+      ],
+      "scenarioTags": [
+        "历史街巷",
+        "城市漫游",
+        "首店到访",
+        "夜间社交"
+      ],
+      "brands": "首店、潮流零售、生活方式、艺术与夜间餐饮组合",
+      "special": "用稀缺建筑守住识别，以首店与策展持续换新。",
+      "value": "历史建筑如何在保护约束下导入可经营业态，又持续制造新鲜感，避免修完只剩拍照、首店热度快速衰减。",
+      "pain": "首期招商极其重要；必须预留预算和空间，让在地商业慢慢生长。若为了开业率采用填铺式招商，整体调性会迅速下降。现有客流、销售增幅和首店数量多为运营方披露，不能外推出租率、利润或普通日转化。",
+      "usable": "在保护标准、品牌准入和内容排期之间建立同一套运营系统。",
+      "caution": "现有客流、销售增幅和首店数量多为运营方披露，不能外推出租率、利润或普通日转化。",
+      "next": "补足当前出租率、续租率、普通日客流和分区经营数据后，再评估正式六维证据入库。",
+      "image": "assets/45-武汉咸安坊.jpg",
+      "applicableTypes": [
+        "T6",
+        "T10"
+      ],
+      "copyThreshold": "高",
+      "copyConditions": "依赖稀缺历史建筑、专业修缮、统一招商、首店资源、在地品牌培育预算和持续策展团队",
+      "bestFor": "历史街区、文保建筑和希望建立首店与在地内容协同的操盘者。",
+      "typeFitLabel": "T6+T10 · 高门槛",
+      "sourceNote": "用户确认外部样本｜2026-07-29｜未纳入六维正式证据库",
+      "evidenceGate": {
+        "schemaVersion": "project-user-confirmed-runtime-v0.1",
+        "decision": "user-confirmed-external-runtime",
+        "formalIngestReady": false,
+        "evidenceCount": 5,
+        "lastChecked": "2026-07-29",
+        "projectScope": "仅纳入武汉市江岸区鄱阳街21号咸安坊约1.4万平方米、5个片区10组建筑及其中商业运营；不并入青岛路片区、巴公房子、武汉天地或华发其他项目",
+        "admissionBoundary": "用户确认可作为运行时样本呈现；尚未满足六维正式证据库的六维、数量与来源门槛。"
+      },
+      "presentation": {
+        "schemaVersion": "commercial-dna/project-presentation@0.1",
+        "approvedAt": "2026-07-29",
+        "valueTitle": "让百年里弄持续长出新店",
+        "oneLineValue": "用稀缺建筑守住识别，以首店与策展持续换新。",
+        "businessProblem": "历史建筑如何在保护约束下导入可经营业态，又持续制造新鲜感，避免修完只剩拍照、首店热度快速衰减。",
+        "mechanism": [
+          { "stage": "流量入口", "body": "百年里弄、首店、城市文化和文旅到访" },
+          { "stage": "停留机制", "body": "街巷、艺术空间、市集、展览和夜间场景" },
+          { "stage": "消费承接", "body": "潮流零售、餐饮、生活方式、艺术和夜经济" },
+          { "stage": "复访更新", "body": "首店迭代、在地商业生长、艺术展览、市集和品牌事件" }
+        ],
+        "learnPoints": [
+          "按品牌调性、空间适配、内容原创力和传播潜力筛选租户，不只看租金承受力。",
+          "在首期招商预算里同时配置标杆首店与在地品牌孵化，预留可渐进开放的空间。",
+          "用大型 IP、在地市集、艺术展览和夜间活动组成不同强度的内容日历。"
+        ],
+        "bestFor": "历史街区、文保建筑和希望建立首店与在地内容协同的操盘者。",
+        "notFor": "缺少稀缺建筑、专业修缮、首店资源、在地品牌培育预算和持续策展团队的普通商业街。",
+        "risk": "首期招商极其重要；必须预留预算和空间，让在地商业慢慢生长。若为了开业率采用填铺式招商，整体调性会迅速下降。现有客流、销售增幅和首店数量多为运营方披露，不能外推出租率、利润或普通日转化。",
+        "matchCalibration": {
+          "axes": {
+            "D": "本地消费与外地游客并存，历史建筑和首店构成跨区到访理由。",
+            "C": "历史空间、首店、展览和市集共同制造项目识别。",
+            "M": "国际首店与本地原创共存，招商强调原创、空间适配和内容共创。",
+            "R": "持续新增首店、展览、市集和夜间内容。"
+          },
+          "recommendedCodes": [
+            { "code": "DCMR", "relation": "高度同频", "learning": "用首店招商增强商业确定性" },
+            { "code": "LCMR", "relation": "互补学习", "learning": "把片区活动放大为城市级到访" },
+            { "code": "DCBR", "relation": "反差学习", "learning": "尊重历史空间与本地原创，而非只追求大牌落位" }
+          ],
+          "excluded": "只需稳态社区服务、没有内容更新和品牌培育预算的 LSBE 不适合照搬。"
+        },
+        "editorScore": {
+          "dna": 35,
+          "projectType": 23,
+          "operatingProblem": 19,
+          "evidence": 12,
+          "total": 89
+        }
+      }
     }
   ],
   "topics": [

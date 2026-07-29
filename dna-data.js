@@ -348,6 +348,12 @@
       brandFitTypes: ["精品咖啡", "餐酒社交", "骑行补给", "周末市集品牌", "社区生活方式小店"],
       brandFitNote: "在 LCMR/LCBR 里取 LCMR：Aokka/aftertaste 等主理人小店按时段分工（M），嵌入办公与公园日常路径靠市集活动做厚复访（L+R）；平峰落差是真实痛点。",
     },
+    "case-45": {
+      code: "DCMR",
+      confidence: 79,
+      brandFitTypes: ["历史空间零售", "首店餐饮", "在地原创", "艺术展览", "夜间内容"],
+      brandFitNote: "用户确认的运行时样本：历史里弄、首店与策展内容共同制造目的地；尚未纳入六维正式证据库，不能把运营方披露的首店、客流或销售增幅外推为稳定经营。",
+    },
   };
 
   const brandGroups = [

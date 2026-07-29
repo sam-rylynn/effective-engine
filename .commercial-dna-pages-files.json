@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "15b73808cee7d0e3bc3e41baafa32039e94ab616",
+  "sourceCommit": "07edb3c48d80dff1c7ef050e6f9193d6dd07c84e",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -9,7 +9,7 @@
     "assets/02-麓湖-麓坊中心.webp",
     "assets/03-重庆光环花园城.webp",
     "assets/04-重庆光环购物公园.webp",
-    "assets/05-鸿寿坊.webp",
+    "assets/05-鸿寿坊.jpg",
     "assets/06-上海新天地东台里.webp",
     "assets/07-上德银泰城.webp",
     "assets/08-嘉佰汇.webp",
@@ -32,8 +32,11 @@
     "assets/24-上生新所.webp",
     "assets/25-前滩公园巷.webp",
     "assets/26-苏州双塔市集.jpg",
+    "assets/31-阿那亚·秦皇岛.jpg",
     "assets/37-北京环球度假区一期.jpg",
     "assets/41-成都东郊记忆.jpg",
+    "assets/42-曼谷EMSPHERE.jpg",
+    "assets/45-武汉咸安坊.jpg",
     "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
     "assets/strategy-hero.png",
