@@ -737,6 +737,7 @@
     const model = projectGuideModel(row, sourceCode);
     const item = model.item;
     const isPrimary = index === 0;
+    const imageFitClass = item.imageFit === "contain" ? " is-contain" : "";
     const guideHref = `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(item.id || "")}`;
     return `
       <a
@@ -751,7 +752,7 @@
         data-match-percent="${escapeHtml(row.matchPercent || 0)}"
         aria-label="查看${escapeHtml(item.name || "推荐项目")}项目详情"
       >
-        <figure class="dual-route-card-media">
+        <figure class="dual-route-card-media${imageFitClass}">
           <img src="${escapeHtml(item.image || "")}" loading="${isPrimary ? "eager" : "lazy"}" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
           <span class="dual-route-bookmark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
         </figure>

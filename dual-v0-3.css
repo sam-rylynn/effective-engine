@@ -2176,6 +2176,17 @@ body[data-experience="dual-v01"] .dual-route-card-media > img {
   object-position: center;
 }
 
+body[data-experience="dual-v01"] .dual-route-card-media.is-contain {
+  display: grid;
+  place-items: center;
+  background: var(--dna-paper-deep);
+}
+
+body[data-experience="dual-v01"] .dual-route-card-media.is-contain > img {
+  min-height: 0;
+  object-fit: contain;
+}
+
 body[data-experience="dual-v01"] .dual-route-bookmark {
   position: absolute;
   top: 0;
@@ -2674,6 +2685,10 @@ body[data-experience="dual-v01"] .dual-field-actions a.primary .dual-line-icon {
 
   body[data-experience="dual-v01"] .dual-route-card {
     grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  }
+
+  body[data-experience="dual-v01"] .dual-route-card.is-primary {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   body[data-experience="dual-v01"] .dual-route-card.is-primary {

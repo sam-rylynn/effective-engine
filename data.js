@@ -1435,6 +1435,7 @@ window.PARK_CASE_DATA = {
       "caution": "现有客流、销售增幅和首店数量多为运营方披露，不能外推出租率、利润或普通日转化。",
       "next": "补足当前出租率、续租率、普通日客流和分区经营数据后，再评估正式六维证据入库。",
       "image": "assets/45-武汉咸安坊.jpg",
+      "imageFit": "contain",
       "applicableTypes": [
         "T6",
         "T10"

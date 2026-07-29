@@ -174,6 +174,7 @@
         "name": "苏州双塔市集",
         "city": "苏州",
         "image": "assets/26-苏州双塔市集.jpg",
+        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -1371,6 +1372,7 @@
         "name": "阿那亚·秦皇岛",
         "city": "秦皇岛",
         "image": "assets/31-阿那亚·秦皇岛.jpg",
+        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -2887,6 +2889,7 @@
         "name": "北京环球度假区一期",
         "city": "北京",
         "image": "assets/37-北京环球度假区一期.jpg",
+        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -4669,6 +4672,7 @@
         "name": "曼谷 EMSPHERE",
         "city": "曼谷",
         "image": "assets/42-曼谷EMSPHERE.jpg",
+        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
