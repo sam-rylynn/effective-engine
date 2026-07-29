@@ -1088,14 +1088,207 @@ body[data-experience="dual-v01"] .dual-project-tags i {
   font-weight: 900;
 }
 
-body[data-experience="dual-v01"] .dual-project-recommendation details {
-  border-top: 1px dashed var(--dna-ink);
-  padding-top: 7px;
+body[data-experience="dual-v01"] .dual-project-recommendation-card:focus-within {
+  outline: 2px solid var(--dna-blue);
+  outline-offset: 2px;
 }
 
-body[data-experience="dual-v01"] .dual-project-recommendation details small {
-  display: block;
-  margin-top: 5px;
+body[data-experience="dual-v01"] .dual-project-recommendation-main > .dual-project-detail {
+  grid-column: 1 / -1;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail {
+  gap: 8px;
+  border-top: 1px dashed rgba(17, 17, 17, .46);
+  background: #f5f0e6;
+  padding: 11px 13px 13px;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail[hidden],
+body[data-experience="dual-v01"] .dual-project-recommendation-why [hidden] {
+  display: none;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail > header {
+  min-height: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail > header span,
+body[data-experience="dual-v01"] .dual-project-learn-points > span {
+  color: var(--dna-red);
+  font-size: 8px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail > header strong {
+  color: var(--dna-blue);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail h4 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.28;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-main .dual-project-detail p,
+body[data-experience="dual-v01"] .dual-project-detail-problem,
+body[data-experience="dual-v01"] .dual-project-detail small,
+body[data-experience="dual-v01"] .dual-project-mechanism dd,
+body[data-experience="dual-v01"] .dual-project-learn-points li {
+  max-height: none;
+  overflow: visible;
+  margin: 0;
+  color: var(--dna-muted);
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.5;
+}
+
+body[data-experience="dual-v01"] .dual-project-mechanism > div {
+  grid-template-columns: 64px minmax(0, 1fr);
+  border-top-color: rgba(17, 17, 17, .2);
+}
+
+body[data-experience="dual-v01"] .dual-project-mechanism dt {
+  font-size: 9px;
+}
+
+body[data-experience="dual-v01"] .dual-project-detail small {
+  border-top-color: rgba(17, 17, 17, .2);
+}
+
+body[data-experience="dual-v01"] .dual-project-alternatives {
+  gap: 7px;
+  border-top: 1px solid rgba(17, 17, 17, .3);
+  margin-top: 2px;
+  padding-top: 9px;
+}
+
+body[data-experience="dual-v01"] .dual-project-alternatives > header {
+  min-height: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-project-alternatives > header span {
+  color: var(--dna-red);
+  font-size: 10px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-project-alternatives > header small {
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 760;
+}
+
+body[data-experience="dual-v01"] .dual-project-alternative-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative {
+  grid-template-columns: minmax(0, 1fr) 76px;
+  border: 1px solid rgba(17, 17, 17, .34);
+  border-radius: 3px;
+  background: var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative .dual-project-card-copy {
+  gap: 4px;
+  padding: 9px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative .dual-project-card-copy > span {
+  color: var(--dna-blue);
+  font-size: 8px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 950;
+  line-height: 1.12;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative strong,
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative .dual-project-value-title {
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative p {
+  display: -webkit-box;
+  max-height: none;
+  overflow: hidden;
+  margin: 0;
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 760;
+  line-height: 1.42;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative img {
+  min-height: 154px;
+  border-left: 1px dashed rgba(17, 17, 17, .28);
+  object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative .dual-project-tags {
+  gap: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative .dual-project-tags i {
+  padding: 2px 4px;
+  font-size: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-alternative button {
+  gap: 8px;
+  margin-top: 2px;
+  border: 1px solid var(--dna-ink);
+  padding: 5px 6px;
+  font-size: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-why {
+  gap: 6px;
+  border-top: 1px dashed var(--dna-ink);
+  padding-top: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-why > button {
+  gap: 7px;
+  font-size: 11px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-why > div {
+  gap: 5px;
+  border-left-color: var(--dna-blue);
+  background: rgba(37, 93, 255, .06);
+  padding: 8px 9px;
+}
+
+body[data-experience="dual-v01"] .dual-project-recommendation-why p,
+body[data-experience="dual-v01"] .dual-project-recommendation-why small {
+  color: var(--dna-muted);
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.5;
 }
 
 body[data-experience="dual-v01"] .dual-result-roast {
@@ -1589,6 +1782,14 @@ body[data-experience="dual-v01"] h2[tabindex="-1"]:focus {
 
   body[data-experience="dual-v01"] .dual-project-recommendation-main h3 {
     font-size: 21px;
+  }
+
+  body[data-experience="dual-v01"] .dual-project-alternative-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-experience="dual-v01"] .dual-project-recommendation-alternative {
+    grid-template-columns: minmax(0, 1fr) 88px;
   }
 
   body[data-experience="dual-v01"] .dual-match-result {

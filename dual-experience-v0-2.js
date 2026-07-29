@@ -25,18 +25,21 @@
     if (!Array.isArray(projectCases)) throw new TypeError("projectCases 必须是数组");
     const safeLimit = Math.max(1, Math.min(50, Number(limit) || 3));
 
-    return Object.freeze(projectCases
+    const candidates = projectCases
       .filter(item => item && CODE_PATTERN.test(String(item.dna?.code || "")))
       .map(item => {
         const projectCode = String(item.dna.code).toUpperCase();
         const exact = projectCode === sourceCode;
+        const affinityScore = affinity(sourceCode, projectCode);
+        const matchPercent = Math.round((affinityScore / 48) * 100);
         const priorityBonus = item.priority === "A" ? 6 : item.priority === "B" ? 3 : 0;
         const recommendationBoost = Math.max(0, Math.min(24, Number(item.recommendationBoost) || 0));
         return {
           item,
           exact,
-          affinity: affinity(sourceCode, projectCode),
-          score: affinity(sourceCode, projectCode) + priorityBonus + recommendationBoost,
+          affinity: affinityScore,
+          matchPercent,
+          score: affinityScore + priorityBonus + recommendationBoost,
           relationLabel: exact ? "同码项目" : "相邻同频项目",
         };
       })
@@ -45,7 +48,14 @@
         || right.score - left.score
         || String(left.item.name || "").localeCompare(String(right.item.name || ""), "zh-CN")
       ))
-      .slice(0, safeLimit)
+      .slice(0, safeLimit);
+
+    return Object.freeze(candidates
+      .sort((left, right) => (
+        right.matchPercent - left.matchPercent
+        || right.score - left.score
+        || String(left.item.name || "").localeCompare(String(right.item.name || ""), "zh-CN")
+      ))
       .map(row => Object.freeze(row)));
   }
 

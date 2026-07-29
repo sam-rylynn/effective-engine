@@ -794,44 +794,254 @@ body[data-experience="dual-v01"] .dual-match-page {
   font-weight: 900;
 }
 
-.dual-project-recommendation details {
-  border-top: 1.5px dashed var(--dual-ink);
+.dual-project-alternatives {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid rgba(17, 17, 17, .22);
+  margin-top: 9px;
   padding-top: 8px;
 }
 
-.dual-project-recommendation summary {
-  cursor: pointer;
-  font-size: 11px;
+.dual-project-alternatives > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dual-project-alternatives > header span {
+  color: var(--dual-red);
+  font-size: 9px;
   font-weight: 950;
 }
 
-.dual-project-recommendation details p,
-.dual-project-recommendation details small {
+.dual-project-alternatives > header small {
+  color: var(--dual-muted);
+  font-size: 9px;
+  font-weight: 760;
+}
+
+.dual-project-alternative-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dual-project-recommendation-card {
+  min-width: 0;
+}
+
+.dual-project-recommendation-alternative {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px;
+  overflow: hidden;
+  border: var(--dual-line);
+  background: var(--dual-paper);
+}
+
+.dual-project-recommendation-alternative .dual-project-card-copy {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  padding: 10px;
+}
+
+.dual-project-recommendation-alternative .dual-project-card-copy > span {
+  color: var(--dual-blue);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+.dual-project-recommendation-alternative h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.12;
+}
+
+.dual-project-recommendation-alternative strong,
+.dual-project-recommendation-alternative .dual-project-value-title {
+  color: var(--dual-muted);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.dual-project-recommendation-alternative p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--dual-muted);
+  font-size: 9px;
+  font-weight: 760;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.dual-project-recommendation-alternative img {
+  width: 100%;
+  height: 100%;
+  min-height: 154px;
   display: block;
-  margin: 8px 0 0;
+  object-fit: cover;
+}
+
+.dual-project-recommendation-card button {
+  width: max-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1.5px solid var(--dual-ink);
+  background: var(--dual-paper);
+  color: var(--dual-ink);
+  padding: 6px 8px;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.dual-project-recommendation-card button[aria-expanded="true"] b,
+.dual-project-recommendation-why button[aria-expanded="true"] b {
+  transform: rotate(90deg);
+}
+
+.dual-project-detail {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 9px;
+  border-top: 1.5px dashed var(--dual-ink);
+  background: #f6f1e8;
+  padding: 11px;
+}
+
+.dual-project-detail[hidden],
+.dual-project-recommendation-why [hidden] {
+  display: none;
+}
+
+.dual-project-detail > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dual-project-detail > header span,
+.dual-project-learn-points > span {
+  color: var(--dual-red);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+.dual-project-detail > header strong {
+  color: var(--dual-blue);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+.dual-project-detail h4,
+.dual-project-detail p {
+  margin: 0;
+}
+
+.dual-project-detail h4 {
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.dual-project-detail-problem,
+.dual-project-detail small,
+.dual-project-mechanism dd,
+.dual-project-learn-points li {
   color: var(--dual-muted);
   font-size: 10px;
   font-weight: 760;
   line-height: 1.5;
 }
 
-.dual-project-alternatives {
+.dual-project-mechanism {
   display: grid;
-  gap: 4px;
-  border-top: 1px solid rgba(17, 17, 17, .22);
-  margin-top: 9px;
-  padding-top: 8px;
+  gap: 5px;
+  margin: 0;
 }
 
-.dual-project-alternatives span {
-  color: var(--dual-red);
+.dual-project-mechanism > div {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: 7px;
+  border-top: 1px solid rgba(17, 17, 17, .16);
+  padding-top: 5px;
+}
+
+.dual-project-mechanism dt {
+  color: var(--dual-ink);
   font-size: 9px;
   font-weight: 950;
 }
 
-.dual-project-alternatives strong {
+.dual-project-mechanism dd {
+  margin: 0;
+}
+
+.dual-project-learn-points {
+  display: grid;
+  gap: 4px;
+}
+
+.dual-project-learn-points ul {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding-left: 16px;
+}
+
+.dual-project-detail small {
+  display: block;
+  border-top: 1px solid rgba(17, 17, 17, .16);
+  padding-top: 6px;
+}
+
+.dual-project-recommendation-why {
+  display: grid;
+  gap: 7px;
+  border-top: 1.5px dashed var(--dual-ink);
+  padding-top: 8px;
+}
+
+.dual-project-recommendation-why > button {
+  width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--dual-ink);
+  padding: 0;
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.dual-project-recommendation-why > button b {
+  transition: transform .16s ease;
+}
+
+.dual-project-recommendation-why > div {
+  display: grid;
+  gap: 5px;
+  border-left: 2px solid var(--dual-blue);
+  background: rgba(37, 93, 255, .06);
+  padding: 8px 9px;
+}
+
+.dual-project-recommendation-why p,
+.dual-project-recommendation-why small {
+  display: block;
+  margin: 0;
+  color: var(--dual-muted);
   font-size: 10px;
-  line-height: 1.4;
+  font-weight: 760;
+  line-height: 1.5;
 }
 
 .dual-result-actions {
@@ -1020,6 +1230,10 @@ body[data-experience="dual-v01"] summary:focus-visible {
 
   .dual-project-recommendation-main img {
     width: 102px;
+  }
+
+  .dual-project-alternative-grid {
+    grid-template-columns: 1fr;
   }
 
   .dual-match-score > strong {

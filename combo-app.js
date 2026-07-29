@@ -27,6 +27,9 @@ function updateFlowVisibility() {
 
 function restoreInitialAnchor() {
   const id = decodeURIComponent(window.location.hash || "").replace("#", "");
+  // Test/result/match routes are rendered by dual-v01. Do not let the legacy
+  // project-flow router hide that page while its own route handler is running.
+  if (/^(?:test|result)\/(?:self|project)$/.test(id) || id === "match") return;
   if (!id) {
     setAppPage("home", false);
     return;

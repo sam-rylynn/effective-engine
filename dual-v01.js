@@ -565,42 +565,110 @@
     resetShareDialog();
   }
 
+  function recommendationId(prefix, item) {
+    return `${prefix}-${String(item?.id || "project").replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  }
+
+  function recommendationMatchLabel(row) {
+    const percent = Number.isFinite(row?.matchPercent) ? row.matchPercent : 0;
+    return `${row?.relationLabel || "同频项目"} · ${percent}% 匹配`;
+  }
+
+  function recommendationDetailHTML(row) {
+    const item = row.item || {};
+    const presentation = item.presentation || {};
+    const businessProblem = presentation.businessProblem || item.value || item.usable || "先观察它如何把空间、内容与运营节奏放在一起。";
+    const mechanism = Array.isArray(presentation.mechanism) && presentation.mechanism.length
+      ? presentation.mechanism
+      : [
+        { stage: "可借鉴动作", body: item.usable || businessProblem },
+        { stage: "复制边界", body: presentation.risk || item.caution || item.copyConditions || "先补足现场经营数据，再决定是否照搬。" },
+      ];
+    const learnPoints = Array.isArray(presentation.learnPoints) && presentation.learnPoints.length
+      ? presentation.learnPoints
+      : [item.usable || item.bestFor || "先观察它的空间、内容与运营节奏如何协同。"];
+    const risk = presentation.risk || item.caution || item.copyConditions;
+    return `
+      <header>
+        <span>PROJECT NOTES</span>
+        <strong>${escapeHtml(recommendationMatchLabel(row))}</strong>
+      </header>
+      ${presentation.valueTitle ? `<h4>${escapeHtml(presentation.valueTitle)}</h4>` : ""}
+      <p class="dual-project-detail-problem">${escapeHtml(businessProblem)}</p>
+      <dl class="dual-project-mechanism">
+        ${mechanism.map(step => `<div><dt>${escapeHtml(step.stage || "操盘动作")}</dt><dd>${escapeHtml(step.body || "")}</dd></div>`).join("")}
+      </dl>
+      <div class="dual-project-learn-points">
+        <span>最值得看</span>
+        <ul>${learnPoints.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ul>
+      </div>
+      ${risk ? `<small>别照搬：${escapeHtml(risk)}</small>` : ""}
+    `;
+  }
+
+  function recommendationCardHTML(row, rank, primary = false) {
+    const item = row.item || {};
+    const presentation = item.presentation || {};
+    const detailId = recommendationId("dualProjectDetail", item);
+    const tags = (item.heroTags || item.scenarioTags || []).slice(0, primary ? 3 : 2);
+    const summary = presentation.oneLineValue || item.usable || item.value || "先观察它如何把空间、内容与运营节奏放在一起。";
+    const classes = primary
+      ? "dual-project-recommendation-main dual-project-recommendation-card is-primary"
+      : "dual-project-recommendation-card dual-project-recommendation-alternative";
+    return `
+      <article class="${classes}" data-dual-recommendation-card data-project-id="${escapeHtml(item.id || "")}" data-recommendation-rank="${rank}" data-match-percent="${escapeHtml(row.matchPercent || 0)}">
+        <div class="dual-project-card-copy">
+          <span>${escapeHtml(recommendationMatchLabel(row))}</span>
+          <h3>${escapeHtml(item.name || "推荐项目")}</h3>
+          <strong>${escapeHtml(item.dna?.code || "")}</strong>
+          ${presentation.valueTitle ? `<em class="dual-project-value-title">${escapeHtml(presentation.valueTitle)}</em>` : ""}
+          <p>${escapeHtml(summary)}</p>
+          ${tags.length ? `<div class="dual-project-tags">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
+          <button data-dual-project-detail-toggle type="button" aria-expanded="false" aria-controls="${detailId}">查看项目 <b aria-hidden="true">→</b></button>
+        </div>
+        <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
+        <section class="dual-project-detail" id="${detailId}" data-dual-project-detail hidden>
+          ${recommendationDetailHTML(row)}
+        </section>
+      </article>
+    `;
+  }
+
   function selfProjectRecommendationHTML(result) {
     const rows = experienceSystem.recommendProjects(result.code, globalScope.PARK_CASE_DATA?.cases || [], 3);
     if (!rows.length) return "";
     const [primary, ...alternatives] = rows;
-    const item = primary.item;
+    const item = primary.item || {};
     const presentation = item.presentation || {};
-    const tags = (item.heroTags || item.scenarioTags || []).slice(0, 3);
+    const whyId = recommendationId("dualRecommendationWhy", item);
+    const primaryMatch = recommendationMatchLabel(primary);
+    const whyCopy = `你的商业 DNA 是 ${result.code}；${item.name || "该项目"}是 ${item.dna?.code || "待核"}，属于${primaryMatch}。已选的三个项目按四轴匹配度排序；入选范围保留已确认样本的策展优先级。`;
     return `
       <section class="dual-project-recommendation" aria-labelledby="dualProjectRecommendationTitle">
         <header>
           <h2 id="dualProjectRecommendationTitle">适合你的同频项目</h2>
-          <span>项目推荐</span>
+          <span>按匹配度排序</span>
         </header>
-        <div class="dual-project-recommendation-main">
-          <div>
-            <h3>${escapeHtml(item.name || "推荐项目")}</h3>
-            <strong>${escapeHtml(item.dna?.code || "")}</strong>
-            ${presentation.valueTitle ? `<em class="dual-project-value-title">${escapeHtml(presentation.valueTitle)}</em>` : ""}
-            <p>${escapeHtml(presentation.oneLineValue || item.usable || item.value || "先观察它如何把空间、内容与运营节奏放在一起。")}</p>
-            <button data-dual-recommendation-detail type="button">查看项目 <b aria-hidden="true">→</b></button>
-          </div>
-          <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
-        </div>
-        ${tags.length ? `<div class="dual-project-tags">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
-        <details>
-          <summary>为什么推荐给我</summary>
-          <p>${escapeHtml(presentation.businessProblem || item.bestFor || item.copyConditions || "它与你的四轴倾向接近，适合作为现场观察样本。")}</p>
-          ${presentation.bestFor ? `<small>适合：${escapeHtml(presentation.bestFor)}</small>` : ""}
-          ${(presentation.risk || item.caution) ? `<small>别照搬：${escapeHtml(presentation.risk || item.caution)}</small>` : ""}
-          ${alternatives.length ? `
-            <div class="dual-project-alternatives">
-              <span>另外两个可以顺路看</span>
-              ${alternatives.map(row => `<strong>${escapeHtml(row.item.name || "")} · ${escapeHtml(row.relationLabel)}</strong>`).join("")}
+        ${recommendationCardHTML(primary, 1, true)}
+        ${alternatives.length ? `
+          <section class="dual-project-alternatives" aria-labelledby="dualProjectAlternativesTitle">
+            <header>
+              <span id="dualProjectAlternativesTitle">另外两个可以顺路看</span>
+              <small>按匹配度排序</small>
+            </header>
+            <div class="dual-project-alternative-grid">
+              ${alternatives.map((row, index) => recommendationCardHTML(row, index + 2)).join("")}
             </div>
-          ` : ""}
-        </details>
+          </section>
+        ` : ""}
+        <section class="dual-project-recommendation-why">
+          <button data-dual-recommendation-why-toggle type="button" aria-expanded="false" aria-controls="${whyId}">为什么推荐给我 <b aria-hidden="true">⌄</b></button>
+          <div id="${whyId}" data-dual-recommendation-why hidden>
+            <p>${escapeHtml(whyCopy)}</p>
+            ${presentation.bestFor ? `<small>适合：${escapeHtml(presentation.bestFor)}</small>` : ""}
+            ${(presentation.risk || item.caution) ? `<small>别照搬：${escapeHtml(presentation.risk || item.caution)}</small>` : ""}
+          </div>
+        </section>
       </section>
     `;
   }
@@ -785,14 +853,21 @@
     elements.menuButton.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
   }
 
+  function toggleRecommendationPanel(target, selector) {
+    const scope = target.closest("[data-dual-recommendation-card], .dual-project-recommendation");
+    const panel = scope?.querySelector(selector);
+    if (!panel) return;
+    const opening = panel.hidden;
+    panel.hidden = !opening;
+    target.setAttribute("aria-expanded", String(opening));
+  }
+
   function toggleRecommendationDetail(target) {
-    const recommendation = target.closest(".dual-project-recommendation");
-    const details = recommendation?.querySelector("details");
-    if (!details) return;
-    details.open = !details.open;
-    if (details.open) {
-      globalScope.requestAnimationFrame(() => details.scrollIntoView({ behavior: "smooth", block: "nearest" }));
-    }
+    toggleRecommendationPanel(target, "[data-dual-project-detail]");
+  }
+
+  function toggleRecommendationWhy(target) {
+    toggleRecommendationPanel(target, "[data-dual-recommendation-why]");
   }
 
   function retest(mode) {
@@ -924,7 +999,7 @@
       + "[data-dual-view-result], [data-dual-retest], [data-dual-history-id], "
       + "[data-dual-menu], [data-dual-menu-close], "
       + "[data-dual-share], [data-dual-share-close], "
-      + "[data-dual-recommendation-detail], "
+      + "[data-dual-project-detail-toggle], [data-dual-recommendation-why-toggle], "
       + ".brand[data-shell-page='home']",
     );
     if (!target) return;
@@ -940,7 +1015,8 @@
     else if (target.matches("[data-dual-menu-close]")) toggleQuickMenu(false);
     else if (target.matches("[data-dual-share]")) openShareDialog(target.dataset.shareHref);
     else if (target.matches("[data-dual-share-close]")) closeShareDialog();
-    else if (target.matches("[data-dual-recommendation-detail]")) toggleRecommendationDetail(target);
+    else if (target.matches("[data-dual-project-detail-toggle]")) toggleRecommendationDetail(target);
+    else if (target.matches("[data-dual-recommendation-why-toggle]")) toggleRecommendationWhy(target);
     else if (target.matches("[data-dual-home], .brand[data-shell-page='home']")) navigate("#home");
     else if (target.matches("[data-dual-open-match]")) navigate("#match");
     else if (target.matches("[data-dual-view-result]")) navigate(`#result/${target.dataset.dualViewResult}`);
