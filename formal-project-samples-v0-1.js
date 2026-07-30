@@ -56,6 +56,7 @@
     {
       "caseItem": {
         "id": "case-26",
+        "imageFit": "contain",
         "location": "主城核心／历史街区",
         "opened": "2019 改造后运营",
         "operator": "汇邻公司",
@@ -174,7 +175,6 @@
         "name": "苏州双塔市集",
         "city": "苏州",
         "image": "assets/26-苏州双塔市集.jpg",
-        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -380,11 +380,11 @@
           "持续共创"
         ],
         "brands": "灯彩博物馆、文化空间、24 小时书屋、精品民宿、轻餐饮与特色小吃",
-        "special": "通过长期经营权组织分散产权下的设计、改造、招商与维护",
-        "value": "以居民生活和历史风貌为底，通过小体量多元业态与持续共创完成渐进式活化。",
-        "pain": "资产增值不等于宜居提升，养老、生活成本和居住权风险必须持续评估。",
-        "usable": "学习分散产权历史街区如何用小尺度更新和长期运营权推进商业活化。",
-        "caution": "不能把游客体验、获奖或资产增值置于居民日常之前。",
+        "special": "用长期经营权把居民协商、微改造与小商业接成一体。",
+        "value": "分散产权历史街区如何在不赶走原住民、不一次性大拆大建的前提下，引入可持续经营的小商业。",
+        "pain": "资产增值和获奖不能证明宜居改善，养老、生活成本与居住权风险必须保留。",
+        "usable": "以改造投入换取长期经营权，让设计、招商、出租和维护由同一主体连续负责。",
+        "caution": "资产增值和获奖不能证明宜居改善，养老、生活成本与居住权风险必须保留。",
         "next": "跟踪店铺总量、空置率、居民服务和不同院落的真实经营表现。",
         "applicableTypes": [
           "T2",
@@ -392,11 +392,77 @@
         ],
         "copyThreshold": "高",
         "copyConditions": "依赖公共协调、长期经营权、居民协商和历史建筑微创改造能力",
-        "bestFor": "历史街区、分散产权更新和小体量在地生活方式项目",
+        "bestFor": "历史街区、分散产权更新和在地小商业操盘者",
         "typeFitLabel": "T2+T6 · 高门槛",
-        "name": "南京小西湖历史地段",
+        "presentation": {
+          "schemaVersion": "commercial-dna/project-presentation@0.1",
+          "approvedAt": "2026-07-30",
+          "valueTitle": "让历史街区生长出日常",
+          "oneLineValue": "用长期经营权把居民协商、微改造与小商业接成一体。",
+          "businessProblem": "分散产权历史街区如何在不赶走原住民、不一次性大拆大建的前提下，引入可持续经营的小商业。",
+          "mechanism": [
+            {
+              "stage": "流量入口",
+              "body": "原住民日常、历史风貌、文化访客与街巷漫游"
+            },
+            {
+              "stage": "停留机制",
+              "body": "微改造院落、文化空间、书店和半开放街巷"
+            },
+            {
+              "stage": "消费承接",
+              "body": "在地餐饮、精品民宿、地方小店与文化零售"
+            },
+            {
+              "stage": "复访更新",
+              "body": "长期经营权、居民共创和逐院渐进更新"
+            }
+          ],
+          "learnPoints": [
+            "以改造投入换取长期经营权，让设计、招商、出租和维护由同一主体连续负责。",
+            "按院落和沿街空间逐点改造，先验证结构、采光、动线和经营适配，再扩大范围。",
+            "把居民、商户与设计师纳入持续评审，商业内容必须同时回答居民服务问题。"
+          ],
+          "bestFor": "适合历史街区、分散产权更新和在地小商业操盘者。",
+          "notFor": "不适合只想快速收租、复制网红店或以游客替代居民的短周期项目。",
+          "risk": "资产增值和获奖不能证明宜居改善，养老、生活成本与居住权风险必须保留。",
+          "matchCalibration": {
+            "axes": {
+              "L": "原住民日常是底盘，文化访客和游客是增量。",
+              "C": "历史肌理、灯彩文化和院落体验形成识别，不是纯便民商业。",
+              "M": "业态以小体量在地餐饮、书店、民宿和主理店为主。",
+              "E": "成立依靠长期经营权和渐进更新，不依赖周周换展。"
+            },
+            "recommendedCodes": [
+              {
+                "code": "LCME",
+                "relation": "高度同频",
+                "learning": "把审美选择落实为长期经营权"
+              },
+              {
+                "code": "LCMR",
+                "relation": "互补学习",
+                "learning": "降低活动依赖，接受慢更新"
+              },
+              {
+                "code": "LSBE",
+                "relation": "反差学习",
+                "learning": "用文化和小店提升日常服务的独特性"
+              }
+            ],
+            "excluded": "只擅长城市首展、追求快速声量的 DCBR 不应把南京小西湖理解为文保版活动街区。"
+          },
+          "editorScore": {
+            "dna": 36,
+            "projectType": 24,
+            "operatingProblem": 18,
+            "evidence": 13,
+            "total": 91
+          }
+        },
+        "name": "南京小西湖",
         "city": "南京",
-        "image": "assets/formal-sample-evidence.svg",
+        "image": "assets/27-南京小西湖.jpg",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -428,7 +494,7 @@
           "isRisk": false,
           "id": "evidence-case-27-001",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "南京秦淮小西湖片区：从居民需求出发，老城更新留住烟火气",
           "url": "https://www.jsxc.gov.cn/wmxj/wmsj/sjzx/202606/t20260618_93534.shtml",
           "source": "南京市人民政府／江苏宣传网",
@@ -448,7 +514,7 @@
           "isRisk": false,
           "id": "evidence-case-27-002",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "税助老城焕新 南京小西湖获评全球标杆",
           "url": "https://jiangsu.chinatax.gov.cn/art/2026/7/21/art_8268_1763603.html",
           "source": "国家税务总局江苏省税务局",
@@ -468,7 +534,7 @@
           "isRisk": false,
           "id": "evidence-case-27-003",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "南京小西湖花迹文旅项目室内改造",
           "url": "https://www.hisheji.com/project/urban-renewal/2025/03/20/193557",
           "source": "Hi设计／实在建筑",
@@ -488,7 +554,7 @@
           "isRisk": false,
           "id": "evidence-case-27-004",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "尺度重构视域下城市历史地段更新改造的实现机制研究",
           "url": "https://www.jnr.ac.cn/CN/abstract/article/1000-3037/70104",
           "source": "《自然资源学报》",
@@ -508,7 +574,7 @@
           "isRisk": false,
           "id": "evidence-case-27-005",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "小西湖共创大晒把入围作品搬进巷陌广场",
           "url": "https://www.nanjing.gov.cn/zt/njcxtjcsgxdzyjrxzhcs/gxcx/202604/t20260413_5822197.html",
           "source": "南京市人民政府",
@@ -528,7 +594,7 @@
           "isRisk": true,
           "id": "evidence-case-27-006",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "Redeveloping ageing communities under state entrepreneurialism in China: Xiaoxihu",
           "url": "https://journals.sagepub.com/doi/abs/10.1177/00420980251357725",
           "source": "Urban Studies",
@@ -548,7 +614,7 @@
           "isRisk": false,
           "id": "evidence-case-27-007",
           "projectId": "case-27",
-          "projectName": "南京小西湖历史地段",
+          "projectName": "南京小西湖",
           "title": "南京小西湖景点到访页",
           "url": "https://you.ctrip.com/sight/nanjing9/131896951.html",
           "source": "携程",
@@ -823,11 +889,11 @@
           "夜间内容"
         ],
         "brands": "滨海商业、餐饮、艺术演艺、酒店、摩天轮与公共文化设施",
-        "special": "用免费公共空间和城市地标吸引跨区流量，再以商业节点和事件运营承接",
-        "value": "展示大体量公共空间流量必须通过品牌焕新、餐饮、停车政策和周期事件持续转化。",
-        "pain": "2024 年平均出租率 83%，招商缺口不能被假期峰值客流掩盖。",
-        "usable": "学习滨海地标如何组织公园、商业、交通和事件内容的复合动线。",
-        "caution": "假期客流不能外推平日，设计动线也不能替代实际热区和消费转化。",
+        "special": "用地标、立体动线和周期事件承接公共流量。",
+        "value": "大体量滨水公共空间如何让游客经过商业、延长停留并产生消费，而不是只有公园热闹、铺位经营偏冷。",
+        "pain": "2024年平均出租率为83%；假期峰值客流不能外推平日或全部铺位经营。",
+        "usable": "让公园、地铁、商业楼层和屋顶形成连续游线，减少“看完景观直接离开”。",
+        "caution": "2024年平均出租率为83%；假期峰值客流不能外推平日或全部铺位经营。",
         "next": "持续跟踪平日客流、冷区、出租率和品牌焕新后的经营表现。",
         "applicableTypes": [
           "T1",
@@ -836,11 +902,77 @@
         ],
         "copyThreshold": "高",
         "copyConditions": "依赖滨海公共资源、城市地标、持续事件运营和大体量招商能力",
-        "bestFor": "滨水公园、城市级公共地标和区域型大体量商业",
+        "bestFor": "滨水公园、城市级公共地标和大体量文旅商业操盘者",
         "typeFitLabel": "T1+T3+T9 · 高门槛",
+        "presentation": {
+          "schemaVersion": "commercial-dna/project-presentation@0.1",
+          "approvedAt": "2026-07-30",
+          "valueTitle": "把公园流量变成项目流量",
+          "oneLineValue": "用地标、立体动线和周期事件承接公共流量。",
+          "businessProblem": "大体量滨水公共空间如何让游客经过商业、延长停留并产生消费，而不是只有公园热闹、铺位经营偏冷。",
+          "mechanism": [
+            {
+              "stage": "流量入口",
+              "body": "滨海公园、地铁、摩天轮和跨区家庭游客"
+            },
+            {
+              "stage": "停留机制",
+              "body": "立体坡道、屋顶花园、文化演艺和夜游"
+            },
+            {
+              "stage": "消费承接",
+              "body": "滨水餐饮、商业零售、酒店、游客服务和付费体验"
+            },
+            {
+              "stage": "复访更新",
+              "body": "品牌焕新、停车政策、节庆演艺和周期事件"
+            }
+          ],
+          "learnPoints": [
+            "让公园、地铁、商业楼层和屋顶形成连续游线，减少“看完景观直接离开”。",
+            "如何利用符合公园滨水的业态充分转化景区客流。",
+            "对冷区同时使用品牌焕新、餐饮目的性和停车优惠，事件活动只作为阶段性放大器。"
+          ],
+          "bestFor": "适合滨水公园、城市级公共地标和大体量文旅商业操盘者。",
+          "notFor": "不适合缺少公共资源、交通连接、大型招商与长期活动预算的普通项目。",
+          "risk": "2024年平均出租率为83%；假期峰值客流不能外推平日或全部铺位经营。",
+          "matchCalibration": {
+            "axes": {
+              "D": "依靠滨海公园、摩天轮与公共文化设施吸引跨区到访。",
+              "S": "公园、家庭休闲、餐饮和旅游服务构成基本盘，事件是增量。",
+              "B": "大体量承接依赖成熟餐饮、娱乐和旅游服务品牌。",
+              "R": "西岸焕新、节庆、演艺与促销需要持续更新。"
+            },
+            "recommendedCodes": [
+              {
+                "code": "DSBR",
+                "relation": "高度同频",
+                "learning": "用出租率约束“客流成功”叙事"
+              },
+              {
+                "code": "DCBR",
+                "relation": "互补学习",
+                "learning": "先修复商业承接，再放大声量"
+              },
+              {
+                "code": "DCBE",
+                "relation": "反差学习",
+                "learning": "把建筑动线转成可核算的进店路径"
+              }
+            ],
+            "excluded": "依靠低租金小铺慢生长的 LSME 无法复制其公共资源和投资结构。"
+          },
+          "editorScore": {
+            "dna": 35,
+            "projectType": 23,
+            "operatingProblem": 19,
+            "evidence": 14,
+            "total": 91
+          }
+        },
         "name": "深圳前海欢乐港湾",
         "city": "深圳",
-        "image": "assets/formal-sample-evidence.svg",
+        "image": "assets/29-深圳前海欢乐港湾.jpg",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -1253,6 +1385,7 @@
     {
       "caseItem": {
         "id": "case-31",
+        "imageFit": "contain",
         "location": "秦皇岛北戴河新区",
         "opened": "持续运营与更新",
         "operator": "阿那亚",
@@ -1372,7 +1505,6 @@
         "name": "阿那亚·秦皇岛",
         "city": "秦皇岛",
         "image": "assets/31-阿那亚·秦皇岛.jpg",
-        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -2772,6 +2904,7 @@
     {
       "caseItem": {
         "id": "case-37",
+        "imageFit": "contain",
         "location": "北京通州文化旅游区",
         "opened": "2021 开园",
         "operator": "北京国际度假区有限公司",
@@ -2889,7 +3022,6 @@
         "name": "北京环球度假区一期",
         "city": "北京",
         "image": "assets/37-北京环球度假区一期.jpg",
-        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -4554,6 +4686,7 @@
     {
       "caseItem": {
         "id": "case-42",
+        "imageFit": "contain",
         "location": "曼谷 Sukhumvit 核心区",
         "opened": "2023 开业",
         "operator": "The Mall Group",
@@ -4672,7 +4805,6 @@
         "name": "曼谷 EMSPHERE",
         "city": "曼谷",
         "image": "assets/42-曼谷EMSPHERE.jpg",
-        "imageFit": "contain",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -5229,6 +5361,7 @@
     {
       "caseItem": {
         "id": "case-44",
+        "recommendationBoost": 12,
         "location": "深圳福田下梅林",
         "opened": "2024 开园／持续运营",
         "operator": "A Park 项目运营团队",
@@ -5264,11 +5397,11 @@
           "周期活动"
         ],
         "brands": "咖啡餐饮、主理零售、数字艺术、展览活动和办公配套的非标组合",
-        "special": "以工业更新、公园公共空间和数字艺术内容连接周边社区与青年客群",
-        "value": "展示新开非标园区如何用主理品牌、艺术内容和开放空间建立城市复访。",
-        "pain": "商户密度、工作日客流、同质咖啡餐饮和持续内容成本仍需长期验证。",
-        "usable": "学习工业园区如何将数字艺术与日常可消费内容结合。",
-        "caution": "专业来源确认项目在深圳而非广州；园区总量级不得写成营业面积。",
+        "special": "用数字艺术引流，也用稳定开店率检验非标成色。",
+        "value": "工业园更新如何把艺术曝光、主理人小店和社区客群转成普通日经营，而不是停在开园打卡和咖啡店拼盘。",
+        "pain": "园区量级不是营业面积，开园热度和艺术曝光不能证明出租、销售或盈利。",
+        "usable": "招商时同时检查品牌内容原创力和普通日经营能力，不能只看其它门店的业绩表现。",
+        "caution": "园区量级不是营业面积，开园热度和艺术曝光不能证明出租、销售或盈利。",
         "next": "持续跟踪普通日开店率、商户存续、空铺和活动投入回报。",
         "applicableTypes": [
           "T1",
@@ -5277,11 +5410,77 @@
         ],
         "copyThreshold": "高",
         "copyConditions": "依赖工业空间、周边社区、主理品牌网络和持续数字内容生产",
-        "bestFor": "工业园更新、数字艺术公园和青年主理人商业",
+        "bestFor": "工业园更新、数字艺术园区和青年主理人商业操盘者",
         "typeFitLabel": "T1+T7+T10 · 高门槛",
+        "presentation": {
+          "schemaVersion": "commercial-dna/project-presentation@0.1",
+          "approvedAt": "2026-07-30",
+          "valueTitle": "艺术公园的工作日模版项目",
+          "oneLineValue": "用数字艺术引流，也用稳定开店率检验非标成色。",
+          "businessProblem": "工业园更新如何把艺术曝光、主理人小店和社区客群转成普通日经营，而不是停在开园打卡和咖啡店拼盘。",
+          "mechanism": [
+            {
+              "stage": "流量入口",
+              "body": "工业遗存、数字艺术、周边社区和办公客群"
+            },
+            {
+              "stage": "停留机制",
+              "body": "公共空间、多栋厂房、展览活动和青年社交"
+            },
+            {
+              "stage": "消费承接",
+              "body": "主理餐饮、创意零售、办公配套和可复访内容"
+            },
+            {
+              "stage": "复访更新",
+              "body": "普通日经营、商户调改、活动排期和垂直办公联动"
+            }
+          ],
+          "learnPoints": [
+            "招商时同时检查品牌内容原创力和普通日经营能力，不能只看其它门店的业绩表现。",
+            "用公共空间把多栋厂房串联，每个内容节点旁必须配置可消费或可复访业态。",
+            "不止运营平面空间的面积，用活动和经营内容去串联垂直办公楼里的品牌以及客群。"
+          ],
+          "bestFor": "适合工业园更新、数字艺术园区和青年主理人商业操盘者。",
+          "notFor": "不适合只拥有旧厂房和草坪，却没有社区密度、办公客群、主理品牌网络或持续内容团队的项目。",
+          "risk": "园区量级不是营业面积，开园热度和艺术曝光不能证明出租、销售或盈利。",
+          "matchCalibration": {
+            "axes": {
+              "L": "周边社区、办公客群与深圳青年承担普通日复访，城市传播是增量。",
+              "C": "数字艺术、工业空间和青年活动形成识别。",
+              "M": "主理餐饮、创意零售与非标内容占据核心位置。",
+              "R": "需要持续展览、品牌事件、社群活动和招商调改。"
+            },
+            "recommendedCodes": [
+              {
+                "code": "LCMR",
+                "relation": "高度同频",
+                "learning": "用普通日经营数据约束审美判断"
+              },
+              {
+                "code": "DCMR",
+                "relation": "互补学习",
+                "learning": "从城市声量退回片区复访"
+              },
+              {
+                "code": "LCME",
+                "relation": "反差学习",
+                "learning": "增加数字艺术和周期事件的更新能力"
+              }
+            ],
+            "excluded": "只追求高效标准品牌组合的 DSBE 不适合照搬其孵化周期和非标招商方式。"
+          },
+          "editorScore": {
+            "dna": 36,
+            "projectType": 23,
+            "operatingProblem": 18,
+            "evidence": 13,
+            "total": 90
+          }
+        },
         "name": "深圳 A Park数字艺术公园",
         "city": "深圳",
-        "image": "assets/formal-sample-evidence.svg",
+        "image": "assets/44-深圳A-Park数字艺术公园.jpg",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",

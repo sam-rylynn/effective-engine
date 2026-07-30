@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a1ea0e16c096179eefb626dca3ee4cfa12263160",
+  "sourceCommit": "971c6f4aa5bcbbf8c9182c4d08598a24367f1cf6",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -32,10 +32,13 @@
     "assets/24-上生新所.webp",
     "assets/25-前滩公园巷.webp",
     "assets/26-苏州双塔市集.jpg",
+    "assets/27-南京小西湖.jpg",
+    "assets/29-深圳前海欢乐港湾.jpg",
     "assets/31-阿那亚·秦皇岛.jpg",
     "assets/37-北京环球度假区一期.jpg",
     "assets/41-成都东郊记忆.jpg",
     "assets/42-曼谷EMSPHERE.jpg",
+    "assets/44-深圳A-Park数字艺术公园.jpg",
     "assets/45-武汉咸安坊.jpg",
     "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
