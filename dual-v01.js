@@ -712,9 +712,11 @@
       ? `${whyPrefix}；最值得对照的是${calibration.learning}。`
       : `${whyPrefix}；可重点比较它如何组织空间、内容、品牌和持续运营。`;
     const risk = presentation.risk || item.caution || item.copyConditions || "先补足现场经营数据，再决定是否照搬。";
-    const evidenceBoundary = item.evidenceGate?.formalIngestReady === false
+    const titleBoundary = presentation.titleBoundary || "";
+    const sourceBoundary = item.evidenceGate?.formalIngestReady === false
       ? `${item.sourceNote || "用户确认运行时样本"}；当前不计入六维正式证据库。`
       : item.sourceNote || "";
+    const evidenceBoundary = [titleBoundary, sourceBoundary].filter(Boolean).join(" ");
     return {
       item,
       presentation,
@@ -793,7 +795,7 @@
           <h2 id="dualProjectRecommendationTitle">${title}</h2>
           <span>按匹配度排序</span>
         </header>
-        <article class="dual-project-recommendation-launch">
+        <article class="dual-project-recommendation-launch${item.imageFit === "contain" ? " is-contain" : ""}">
           <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "推荐项目")}" />
           <div>
             <span>${escapeHtml(recommendationMatchLabel(primary))}</span>
@@ -895,7 +897,7 @@
           </a>
           <strong>路线 <b>${String(currentIndex + 1).padStart(2, "0")}</b> / ${String(rows.length).padStart(2, "0")}</strong>
         </header>
-        <section class="dual-field-guide-hero">
+        <section class="dual-field-guide-hero${item.imageFit === "contain" ? " is-contain" : ""}">
           <header>
             <div>
               <h1 id="dualFieldGuideTitle" tabindex="-1">${escapeHtml(item.name || "项目观察手册")}</h1>

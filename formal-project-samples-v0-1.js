@@ -3232,6 +3232,7 @@
     {
       "caseItem": {
         "id": "case-38",
+        "imageFit": "contain",
         "location": "北京门头沟潭柘新区",
         "opened": "持续运营与更新",
         "operator": "北京京投瀛德置业有限公司",
@@ -3267,23 +3268,90 @@
           "商住共治"
         ],
         "brands": "户外、书店、餐饮、亲子、宠物与主理品牌的非标组合",
-        "special": "以山谷场地、主理品牌和开山节、音乐节、文学电影内容形成跨区复访",
-        "value": "展示近郊商业街区如何把非标招商、公共空间和年度内容 IP 组织成目的地。",
-        "pain": "停车、噪声、占道和商住失衡需要持续治理，活动高峰不能掩盖普通日经营。",
-        "usable": "学习近郊项目如何用主理品牌与年度内容建立城市微度假理由。",
-        "caution": "只纳入统一运营商业街区，不得混入住宅销售、潭柘寺景区或周边项目数据。",
-        "next": "持续跟踪出租率、品牌退出、非活动日销售和商住治理成本。",
+        "special": "把近郊山谷做成全年可复访的内容目的地。",
+        "value": "远离中心城区的开放街区，如何把一次性周末出游转化为有品牌承接、有年度内容、有重复理由的微度假消费。",
+        "pain": "活动客流不能替代非活动日店效，商住、停车和内容投入成本不可忽略。",
+        "usable": "先建立公园、商街、展厅、剧场和工坊的空间组合，再按场景选择品牌。",
+        "caution": "活动客流不能替代非活动日店效，商住、停车和内容投入成本不可忽略。",
+        "next": "持续补非活动日客流与销售、品牌退出和续租、当前出租率、内容投入及商住治理成本。",
         "applicableTypes": [
           "T9",
           "T10"
         ],
         "copyThreshold": "高",
         "copyConditions": "依赖近郊自然场地、非标招商、持续内容生产和商住协同治理",
-        "bestFor": "近郊商业街区、开放式微度假和主理人内容项目",
+        "bestFor": "近郊商业、开放街区和城市微度假项目操盘者",
         "typeFitLabel": "T9+T10 · 高门槛",
+        "presentation": {
+          "schemaVersion": "commercial-dna/project-presentation@0.1",
+          "approvedAt": "2026-08-01",
+          "valueTitle": "京西阿那亚的山谷作品",
+          "titleBoundary": "“京西阿那亚”是对产品气质、近郊目的地和内容运营打法的编辑类比，不表示檀谷与阿那亚存在股权、品牌、项目或运营归属关系。",
+          "oneLineValue": "把近郊山谷做成全年可复访的内容目的地。",
+          "businessProblem": "远离中心城区的开放街区，如何把一次性周末出游转化为有品牌承接、有年度内容、有重复理由的微度假消费。",
+          "mechanism": [
+            {
+              "stage": "流量入口",
+              "body": "京西山谷场地、跨区微度假与户外文化客群"
+            },
+            {
+              "stage": "停留机制",
+              "body": "公园、商街、展厅、剧场、工坊、书店和电影空间"
+            },
+            {
+              "stage": "消费承接",
+              "body": "主理餐饮、亲子、户外、宠物、书店与复合文化品牌"
+            },
+            {
+              "stage": "复访更新",
+              "body": "年度IP、季节内容、常态活动与品牌共创"
+            }
+          ],
+          "learnPoints": [
+            "先建立公园、商街、展厅、剧场和工坊的空间组合，再按场景选择品牌。",
+            "品牌需要同时提供日常经营和内容共创方案。",
+            "把小型常态活动与开山节、音乐节、文学节等年度IP分层排期，并同步设置交通和居民治理预案。"
+          ],
+          "bestFor": "适合近郊商业、开放街区和城市微度假项目操盘者。",
+          "notFor": "不适合没有自然场地、跨区交通和持续内容团队的项目。",
+          "risk": "活动客流不能替代非活动日店效，商住、停车和内容投入成本不可忽略。",
+          "matchCalibration": {
+            "axes": {
+              "D": "山系微度假定位和商业单体客流支持跨区专程到访。",
+              "S": "餐饮、书店、电影、亲子、户外、宠物和休闲服务形成消费闭环。",
+              "M": "山谷地貌、主理品牌与复合空间需要高度定制。",
+              "R": "开山节、音乐节、文学节、电影展和常态活动构成全年更新节奏。"
+            },
+            "recommendedCodes": [
+              {
+                "code": "DSMR",
+                "relation": "高度同频",
+                "learning": "把圈层内容变成全年运营系统"
+              },
+              {
+                "code": "DCMR",
+                "relation": "互补学习",
+                "learning": "用稳定服务闭环承接传播流量"
+              },
+              {
+                "code": "DSBR",
+                "relation": "反差学习",
+                "learning": "让品牌深度适配场地而非只做活动赞助"
+              }
+            ],
+            "excluded": "以小体量、低维护和近邻刚需为主的 LSBE，难以承担檀谷的内容生产和治理成本。"
+          },
+          "editorScore": {
+            "dna": 38,
+            "projectType": 25,
+            "operatingProblem": 19,
+            "evidence": 14,
+            "total": 96
+          }
+        },
         "name": "北京檀谷TANKO商业街区",
         "city": "北京",
-        "image": "assets/formal-sample-evidence.svg",
+        "image": "assets/38-北京檀谷TANKO商业街区.jpg",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -4990,23 +5058,89 @@
           "低频活动"
         ],
         "brands": "教育、文化艺术、书店、创意办公、酒店和餐饮的复合组合",
-        "special": "以长期文化教育和办公机构稳定使用老厂房，再叠加书店餐饮与低频活动",
-        "value": "补充非标园区不依赖高频换展，也能以稳定机构形成使用底盘的样本。",
-        "pain": "活跃商户密度、停车设备和服务体验存在当前风险信号。",
-        "usable": "学习文化教育、办公与商业在工业遗存中的稳态共生。",
-        "caution": "城市宣传中的园区企业收入不得写成项目商业收入。",
-        "next": "持续核验商户存续、停车维护、当前可租面积和普通日活跃度。",
+        "special": "用教育、办公和文化机构托住项目园区。",
+        "value": "工业遗存项目如何不依赖高频展览和游客打卡，也能依靠大体量教培、办公与文化使用形成稳定底盘。",
+        "pain": "单一大机构存续不等于整体活跃。按操盘判断，启动期可能经历租金收益偏低、开业率不足的阵痛，仍需经营数据验证。",
+        "usable": "寻找本地头部教培机构，重点核验长期口碑、招生能力和合规资质。",
+        "caution": "单一大机构存续不等于整体活跃；启动期租金收益和开业率仍需经营数据验证。",
+        "next": "持续补总铺位与在营率、机构租期及租金贡献、普通日消费、停车设备和其他商户存续率。",
         "applicableTypes": [
           "T7",
           "T8"
         ],
         "copyThreshold": "中高",
         "copyConditions": "依赖低成本工业空间、长期教育文化租户、统一招商和设施维护",
-        "bestFor": "工业遗存文创园、文化教育园区和低频稳定型非标项目",
+        "bestFor": "教培园区、工业遗存和低频稳定型小体量项目操盘者",
         "typeFitLabel": "T7+T8 · 中高门槛",
+        "presentation": {
+          "schemaVersion": "commercial-dna/project-presentation@0.1",
+          "approvedAt": "2026-08-01",
+          "valueTitle": "教培为主业态项目的终极形态",
+          "oneLineValue": "用教育、办公和文化机构托住项目园区。",
+          "businessProblem": "工业遗存项目如何不依赖高频展览和游客打卡，也能依靠大体量教培、办公与文化使用形成稳定底盘。",
+          "mechanism": [
+            {
+              "stage": "流量入口",
+              "body": "教育课程、办公使用、周边家庭与文化阅读需求"
+            },
+            {
+              "stage": "停留机制",
+              "body": "课程学习、亲子服务、书店、博物馆展与公共文化空间"
+            },
+            {
+              "stage": "消费承接",
+              "body": "课前课后餐饮、咖啡、书店零售及办公配套"
+            },
+            {
+              "stage": "复访更新",
+              "body": "长期课程、工作日办公、固定服务与低频必要活动"
+            }
+          ],
+          "learnPoints": [
+            "寻找类似阳光心霖儿童公社的本地头部教培机构，重点核验长期口碑、招生能力和合规资质；不要用十几家随时掉铺、资质不稳的小教培凑开业率。",
+            "用教育、办公等工作日需求托底，让餐饮和书店承接课前、课后及办公消费。",
+            "把人力和营销预算集中在主力机构维护、空间设备和固定服务上，用低频必要活动代替高频造节，建立小体量项目的长期竞争力。"
+          ],
+          "bestFor": "适合教培园区、工业遗存和低频稳定型小体量项目操盘者。",
+          "notFor": "不适合缺少强教育机构、只想依靠展览和周末游客的园区。",
+          "risk": "单一大机构存续不等于整体活跃。按操盘判断，启动期可能经历租金收益偏低、开业率不足的阵痛，仍需经营数据验证。",
+          "matchCalibration": {
+            "axes": {
+              "L": "教育、办公和周边家庭构成固定使用底盘，城市访客是增量。",
+              "C": "工业遗存、书店、博物馆展和教育内容形成空间识别。",
+              "M": "核心机构与老厂房深度适配，不是成熟连锁品牌的标准组合。",
+              "E": "长期课程、办公和固定服务优先，活动只承担低频增量。"
+            },
+            "recommendedCodes": [
+              {
+                "code": "LCME",
+                "relation": "高度同频",
+                "learning": "用主力机构稳定现金流，而非只强调主理气质"
+              },
+              {
+                "code": "LSBE",
+                "relation": "反差学习",
+                "learning": "让非标准教育内容承担锚店功能"
+              },
+              {
+                "code": "LCMR",
+                "relation": "互补学习",
+                "learning": "主动降低活动依赖，把预算留给机构与设施"
+              }
+            ],
+            "excluded": "依赖城市级流量、成熟品牌和高频事件的 DCBR，不应把 C86 理解为传播型目的地模板。"
+          },
+          "editorScore": {
+            "dna": 37,
+            "projectType": 23,
+            "operatingProblem": 19,
+            "evidence": 12,
+            "total": 91
+          }
+        },
         "name": "C86山茶坊",
         "city": "昆明",
-        "image": "assets/formal-sample-evidence.svg",
+        "image": "assets/43-C86山茶坊.jpg",
         "sourceNote": "六维证据终审入库｜2026-07-23",
         "evidenceGate": {
           "schemaVersion": "project-formal-gate-six-v1",
@@ -5657,15 +5791,16 @@
     scene.items.push(...row.evidence);
   });
 
-  data.updated = payload.lastChecked;
+  data.updated = [data.updated, payload.lastChecked].filter(Boolean).sort().at(-1);
   data.summary = {
     ...(data.summary || {}),
     total: data.cases.length,
+    priorityA: data.cases.filter(row => row.priority === "A").length,
     formalEvidenceSamples: payload.formalProjectCount,
     formalEvidenceNote: "22 个六维证据终审样本；case-1、5、24 原位升级，case-39~44 新增；城市与政府媒体不作正式证据",
   };
-  scene.updated = payload.lastChecked;
+  scene.updated = [scene.updated, payload.lastChecked].filter(Boolean).sort().at(-1);
   scene.itemCount = scene.items.length;
-  scene.status = "formal-twenty-two-added-20260723";
+  scene.status = "formal-twenty-two-plus-user-confirmed-runtime-20260801";
   globalScope.COMMERCIAL_DNA_FORMAL_PROJECT_SAMPLES_V0_1 = Object.freeze(payload);
 })(typeof window !== "undefined" ? window : globalThis);

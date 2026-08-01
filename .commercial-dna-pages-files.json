@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "971c6f4aa5bcbbf8c9182c4d08598a24367f1cf6",
+  "sourceCommit": "960dc5419f67724c97945f0d5f85bb7308b1164d",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -36,10 +36,13 @@
     "assets/29-深圳前海欢乐港湾.jpg",
     "assets/31-阿那亚·秦皇岛.jpg",
     "assets/37-北京环球度假区一期.jpg",
+    "assets/38-北京檀谷TANKO商业街区.jpg",
     "assets/41-成都东郊记忆.jpg",
     "assets/42-曼谷EMSPHERE.jpg",
+    "assets/43-C86山茶坊.jpg",
     "assets/44-深圳A-Park数字艺术公园.jpg",
     "assets/45-武汉咸安坊.jpg",
+    "assets/46-福州烟台山商业漫步街区.jpg",
     "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
     "assets/strategy-hero.png",

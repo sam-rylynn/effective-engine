@@ -1959,6 +1959,11 @@ body[data-experience="dual-v01"] .dual-project-recommendation-launch > img {
   object-fit: cover;
 }
 
+body[data-experience="dual-v01"] .dual-project-recommendation-launch.is-contain > img {
+  object-fit: contain;
+  background: var(--dna-paper-deep);
+}
+
 body[data-experience="dual-v01"] .dual-project-recommendation-launch > div {
   min-width: 0;
   display: grid;
@@ -2472,6 +2477,11 @@ body[data-experience="dual-v01"] .dual-field-guide-hero > img {
   border-radius: 3px;
   object-fit: cover;
   object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-field-guide-hero.is-contain > img {
+  object-fit: contain;
+  background: var(--dna-paper-deep);
 }
 
 body[data-experience="dual-v01"] .dual-field-guide-why {

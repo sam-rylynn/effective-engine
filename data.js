@@ -1,14 +1,14 @@
 window.PARK_CASE_DATA = {
-  "updated": "2026-07-29",
+  "updated": "2026-08-01",
   "summary": {
-    "total": 26,
-    "priorityA": 7,
+    "total": 27,
+    "priorityA": 9,
     "typical": 12,
     "boundary": 5,
     "converted": 8,
     "convertedNote": "case-18~25 为暗数据线索转正样本(2026-07-03),置信度低于原生样本,待复核",
-    "userConfirmedRuntimeSamples": 1,
-    "userConfirmedRuntimeNote": "武汉咸安坊为用户确认的运行时样本，不计入六维正式证据库统计。"
+    "userConfirmedRuntimeSamples": 2,
+    "userConfirmedRuntimeNote": "武汉咸安坊与福州烟台山商业漫步街区为用户确认的运行时样本，不计入六维正式证据库统计。"
   },
   "cases": [
     {
@@ -1494,6 +1494,116 @@ window.PARK_CASE_DATA = {
           "operatingProblem": 19,
           "evidence": 12,
           "total": 89
+        }
+      }
+    },
+    {
+      "id": "case-46",
+      "name": "福州烟台山商业漫步街区",
+      "city": "福州",
+      "location": "仓山区烟台山历史风貌区",
+      "opened": "持续运营与更新",
+      "operator": "万科／印力运营团队",
+      "scale": "商业漫步街区单体范围（面积待核）",
+      "format": "山地历史建筑开放街区",
+      "subtype": "历史街巷主理内容轮转型",
+      "audience": "福州本地客群 + 城市文化访客 + 跨区游客",
+      "audienceTags": [
+        "城市文化",
+        "主理人",
+        "历史建筑",
+        "游客"
+      ],
+      "parkRelation": "历史风貌区商业更新",
+      "sampleNature": "用户确认运行时样本｜历史街巷／主理内容型（非六维正式证据库）",
+      "priority": "A",
+      "recommendationBoost": 1,
+      "archetype": "历史街巷主理内容轮转型",
+      "heroTags": [
+        "历史建筑",
+        "一城一店",
+        "持续调店"
+      ],
+      "leadFormats": [
+        "主理小店",
+        "特色餐饮",
+        "设计零售",
+        "文化体验"
+      ],
+      "scenarioTags": [
+        "山地街巷",
+        "城市漫游",
+        "主理品牌",
+        "策展快闪"
+      ],
+      "brands": "主理小店、一城一店、特色餐饮、设计零售和文化体验组合",
+      "special": "让历史建筑、主理小店和内容更新互相供流。",
+      "value": "历史街区如何避免只剩建筑参观和同质餐饮，把分散老屋、山地动线与本地主理品牌组织成持续更新的商业目的地。",
+      "pain": "高频调店可能是主动迭代，也可能暴露租户稳定性和运营成本问题。",
+      "usable": "按建筑条件和街巷节点分配小店，不用购物中心的大铺逻辑填满老建筑。",
+      "caution": "高频调店可能是主动迭代，也可能暴露租户稳定性和运营成本问题。",
+      "next": "补足统一运营范围、当前商业面积、租户净增退出、普通工作日店效、租金与续约及历史建筑维护成本。",
+      "image": "assets/46-福州烟台山商业漫步街区.jpg",
+      "imageFit": "contain",
+      "applicableTypes": [
+        "T6",
+        "T9",
+        "T10"
+      ],
+      "copyThreshold": "高",
+      "copyConditions": "依赖文保建筑、统一运营权、主理人招商、内容团队、交通组织和长期维护预算",
+      "bestFor": "历史街区、山地商业和主理人密集型城市更新项目操盘者。",
+      "typeFitLabel": "T6+T9+T10 · 高门槛",
+      "sourceNote": "用户确认外部样本｜2026-08-01｜未纳入六维正式证据库",
+      "evidenceGate": {
+        "schemaVersion": "project-user-confirmed-runtime-v0.1",
+        "decision": "user-confirmed-external-runtime",
+        "formalIngestReady": false,
+        "evidenceCount": 5,
+        "lastChecked": "2026-08-01",
+        "projectScope": "仅纳入万科、印力统一招商运营的福州烟台山商业漫步街区；不并入烟台山历史风貌区全域、住宅、三坊七巷或上下杭",
+        "admissionBoundary": "用户确认可作为运行时样本呈现；尚未满足六维正式证据库的六维、数量与来源门槛。"
+      },
+      "presentation": {
+        "schemaVersion": "commercial-dna/project-presentation@0.1",
+        "approvedAt": "2026-08-01",
+        "valueTitle": "把老街巷变成主理人舞台",
+        "oneLineValue": "让历史建筑、主理小店和内容更新互相供流。",
+        "businessProblem": "历史街区如何避免只剩建筑参观和同质餐饮，把分散老屋、山地动线与本地主理品牌组织成持续更新的商业目的地。",
+        "mechanism": [
+          { "stage": "流量入口", "body": "历史建筑、城市游客、在地文化与山地街巷" },
+          { "stage": "停留机制", "body": "立体动线、转角场景、展陈、公共空间和文化体验" },
+          { "stage": "消费承接", "body": "主理小店、特色餐饮、设计零售、咖啡和文化内容" },
+          { "stage": "复访更新", "body": "持续调店、自制IP、策展、快闪和公共空间更新" }
+        ],
+        "learnPoints": [
+          "按建筑条件和街巷节点分配小店，不用购物中心的大铺逻辑填满老建筑。",
+          "把“一城一店”、本地主理人及场景定制写入招商要求，减少全国同款品牌。",
+          "用持续调店和自制IP维持新鲜感，同时调高交通和老建筑维护以及公共空间美化的预算。"
+        ],
+        "bestFor": "适合历史街区、山地商业和主理人密集型城市更新项目操盘者。",
+        "notFor": "不适合缺少文保资源、统一运营权或高频内容团队的普通仿古街。",
+        "risk": "高频调店可能是主动迭代，也可能暴露租户稳定性和运营成本问题。",
+        "matchCalibration": {
+          "axes": {
+            "D": "项目承担福州城市级文化商业目的地功能，吸引跨区及游客到访。",
+            "C": "老建筑、立体街巷、视觉场景和策展内容共同驱动传播。",
+            "M": "主理人品牌、一城一店和场地定制构成招商识别。",
+            "R": "自制IP、策展、快闪和持续调店构成高频运营节奏。"
+          },
+          "recommendedCodes": [
+            { "code": "DCMR", "relation": "高度同频", "learning": "把调店与资产维护放进同一预算" },
+            { "code": "LCMR", "relation": "互补学习", "learning": "学习城市级客流与公共空间承载" },
+            { "code": "DSBR", "relation": "反差学习", "learning": "从成熟品牌活动转向定制小店组合" }
+          ],
+          "excluded": "只需要低成本、低频维护和社区刚需的 LSBE，不适合复制烟台山的运营强度。"
+        },
+        "editorScore": {
+          "dna": 35,
+          "projectType": 24,
+          "operatingProblem": 19,
+          "evidence": 12,
+          "total": 90
         }
       }
     }
