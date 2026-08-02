@@ -705,13 +705,21 @@
     const calibration = presentation.matchCalibration?.recommendedCodes?.find(candidate => (
       String(candidate?.code || "").toUpperCase() === sourceCode
     ));
+    const exactNarrative = presentation.matchCalibration?.exactNarrative || "";
     const whyPrefix = row.exact
       ? `你的商业 DNA 与项目同为 ${sourceCode}`
       : `你的商业 DNA 是 ${sourceCode}，与项目的四轴匹配度为 ${row.matchPercent}%`;
-    const why = calibration?.learning
-      ? `${whyPrefix}；最值得对照的是${calibration.learning}。`
-      : `${whyPrefix}；可重点比较它如何组织空间、内容、品牌和持续运营。`;
+    const why = row.exact && exactNarrative
+      ? exactNarrative
+      : calibration?.learning
+        ? `${whyPrefix}；最值得对照的是${calibration.learning}。`
+        : `${whyPrefix}；可重点比较它如何组织空间、内容、品牌和持续运营。`;
     const risk = presentation.risk || item.caution || item.copyConditions || "先补足现场经营数据，再决定是否照搬。";
+    const riskItems = Array.isArray(presentation.riskItems)
+      ? presentation.riskItems
+        .map(candidate => typeof candidate === "string" ? candidate : candidate?.body)
+        .filter(Boolean)
+      : [];
     const titleBoundary = presentation.titleBoundary || "";
     const sourceBoundary = item.evidenceGate?.formalIngestReady === false
       ? `${item.sourceNote || "用户确认运行时样本"}；当前不计入六维正式证据库。`
@@ -724,6 +732,7 @@
       mechanism,
       learnPoints: learnPoints.filter(Boolean).slice(0, 3),
       risk,
+      riskItems,
       evidenceBoundary,
       why,
       valueTitle: presentation.valueTitle || item.special || item.usable || "项目观察手册",
@@ -910,6 +919,10 @@
           </header>
           <img src="${escapeHtml(item.image || "")}" decoding="async" fetchpriority="high" alt="${escapeHtml(item.name || "项目")}项目现场" />
         </section>
+        <section class="dual-field-problem" data-dual-business-problem aria-labelledby="dualFieldProblemTitle">
+          <h2 id="dualFieldProblemTitle">${guideIconHTML("observe")}它在解决什么商业问题</h2>
+          <p>${escapeHtml(model.businessProblem)}</p>
+        </section>
         <section class="dual-field-guide-why" aria-labelledby="dualFieldGuideWhyTitle">
           <h2 id="dualFieldGuideWhyTitle">${guideIconHTML("observe")}为什么与你同频</h2>
           <p>${escapeHtml(model.why)}</p>
@@ -936,7 +949,11 @@
         </section>
         <section class="dual-field-warning" aria-labelledby="dualFieldWarningTitle">
           <h2 id="dualFieldWarningTitle">${guideIconHTML("warning")}不要直接照搬</h2>
-          <p>${escapeHtml(model.risk)}</p>
+          ${model.riskItems.length ? `
+            <ol class="dual-field-risk-list">
+              ${model.riskItems.map(point => `<li data-dual-risk-item>${escapeHtml(point)}</li>`).join("")}
+            </ol>
+          ` : `<p>${escapeHtml(model.risk)}</p>`}
           ${model.evidenceBoundary ? `<small>证据边界：${escapeHtml(model.evidenceBoundary)}</small>` : ""}
         </section>
         <footer class="dual-field-actions">

@@ -2484,6 +2484,7 @@ body[data-experience="dual-v01"] .dual-field-guide-hero.is-contain > img {
   background: var(--dna-paper-deep);
 }
 
+body[data-experience="dual-v01"] .dual-field-problem,
 body[data-experience="dual-v01"] .dual-field-guide-why {
   display: grid;
   gap: 6px;
@@ -2491,6 +2492,14 @@ body[data-experience="dual-v01"] .dual-field-guide-why {
   padding: 2px 0 12px;
 }
 
+body[data-experience="dual-v01"] .dual-field-problem {
+  border: 1px solid rgba(17, 17, 17, .3);
+  border-left: 4px solid var(--dna-blue);
+  background: rgba(232, 225, 213, .4);
+  padding: 12px;
+}
+
+body[data-experience="dual-v01"] .dual-field-problem h2,
 body[data-experience="dual-v01"] .dual-field-guide-why h2,
 body[data-experience="dual-v01"] .dual-field-observations > h2,
 body[data-experience="dual-v01"] .dual-field-takeaways h2,
@@ -2510,6 +2519,14 @@ body[data-experience="dual-v01"] .dual-field-guide-why p {
   font-size: 12px;
   font-weight: 760;
   line-height: 1.55;
+}
+
+body[data-experience="dual-v01"] .dual-field-problem p {
+  margin: 0;
+  color: var(--dna-ink);
+  font-size: 12px;
+  font-weight: 820;
+  line-height: 1.6;
 }
 
 body[data-experience="dual-v01"] .dual-field-observations {
@@ -2633,6 +2650,26 @@ body[data-experience="dual-v01"] .dual-field-warning {
 
 body[data-experience="dual-v01"] .dual-field-warning h2 {
   color: var(--dna-red);
+}
+
+body[data-experience="dual-v01"] .dual-field-risk-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-experience="dual-v01"] .dual-field-risk-list li {
+  min-width: 0;
+  border-left: 3px solid var(--dna-red);
+  background: rgba(255, 255, 255, .62);
+  padding: 9px 10px;
+  color: var(--dna-ink);
+  font-size: 10.5px;
+  font-weight: 760;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 body[data-experience="dual-v01"] .dual-field-warning p,
