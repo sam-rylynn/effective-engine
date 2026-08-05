@@ -3,11 +3,11 @@
   "allowlistVersion": "commercial-dna-pages-v1",
   "sourceRepository": "local/commercial-dna-main",
   "sourceDirectory": "commercial_dna_web",
-  "sourceCommit": "c95d25e79acce4e1b7258e6c441bfa40579f75a9",
+  "sourceCommit": "3bf393455e7afc85448aea10603b1eaad8227630",
   "sourceRef": "main",
   "sourceDirty": false,
-  "generatedAt": "2026-08-03T10:07:31.594Z",
-  "packagedFileCount": 129,
-  "packagedBytes": 15838588,
-  "packagedFilesSha256": "6832a541099e7295940493ef1b3cef732cc67c83edf45c506335141b6db4618e"
+  "generatedAt": "2026-08-05T07:48:40.964Z",
+  "packagedFileCount": 131,
+  "packagedBytes": 16140738,
+  "packagedFilesSha256": "554c8e885cbf548d6ae5fbd73ef5ddfc0caca1f432117e551db50e12cccc537f"
 }

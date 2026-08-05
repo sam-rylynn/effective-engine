@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c95d25e79acce4e1b7258e6c441bfa40579f75a9",
+  "sourceCommit": "3bf393455e7afc85448aea10603b1eaad8227630",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
     ".commercial-dna-pages-output",
+    "assets/01-深业上城.jpg",
     "assets/01-深业上城.webp",
     "assets/02-麓湖-麓坊中心.webp",
     "assets/03-重庆光环花园城.webp",
@@ -46,6 +47,7 @@
     "assets/45-武汉咸安坊.jpg",
     "assets/46-福州烟台山商业漫步街区.jpg",
     "assets/47-景德镇陶溪川文创街区.jpg",
+    "assets/48-上海百联ZX创趣场.jpg",
     "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
     "assets/strategy-hero.png",

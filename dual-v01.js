@@ -878,15 +878,30 @@
     const originMode = MODES.includes(origin) ? origin : "self";
     const sourceCode = String(code || "").toUpperCase();
     const rows = projectRowsForCode(sourceCode);
-    const currentIndex = rows.findIndex(row => row.item?.id === projectId);
-    if (currentIndex < 0 || !elements.fieldGuide) {
+    let currentIndex = rows.findIndex(row => row.item?.id === projectId);
+    let row = currentIndex >= 0 ? rows[currentIndex] : null;
+    let routeIndex = currentIndex;
+    let routeTotal = rows.length;
+    if (!row) {
+      try {
+        const allCases = globalScope.PARK_CASE_DATA?.cases || [];
+        const allRows = experienceSystem.recommendProjects(sourceCode, allCases, allCases.length);
+        routeIndex = allRows.findIndex(candidate => candidate.item?.id === projectId);
+        routeTotal = allRows.length;
+        row = routeIndex >= 0 ? allRows[routeIndex] : null;
+      } catch (error) {
+        row = null;
+      }
+    }
+    if (!row || !elements.fieldGuide) {
       navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`, true);
       return;
     }
-    const row = rows[currentIndex];
     const model = projectGuideModel(row, sourceCode);
     const item = model.item;
-    const nextRow = rows.length > 1 ? rows[(currentIndex + 1) % rows.length] : null;
+    const nextRow = rows.length > 1
+      ? rows[currentIndex >= 0 ? (currentIndex + 1) % rows.length : 0]
+      : null;
     const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`;
     const nextHref = nextRow
       ? `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(nextRow.item?.id || "")}`
@@ -904,7 +919,7 @@
             ${guideIconHTML("back")}
             <span>返回同频项目</span>
           </a>
-          <strong>路线 <b>${String(currentIndex + 1).padStart(2, "0")}</b> / ${String(rows.length).padStart(2, "0")}</strong>
+          <strong>路线 <b>${String(routeIndex + 1).padStart(2, "0")}</b> / ${String(routeTotal).padStart(2, "0")}</strong>
         </header>
         <section class="dual-field-guide-hero${item.imageFit === "contain" ? " is-contain" : ""}">
           <header>
