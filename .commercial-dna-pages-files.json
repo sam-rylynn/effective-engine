@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3bf393455e7afc85448aea10603b1eaad8227630",
+  "sourceCommit": "c3772da792230e7908c77dc3cefdc1ce45e80f73",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -48,6 +48,8 @@
     "assets/46-福州烟台山商业漫步街区.jpg",
     "assets/47-景德镇陶溪川文创街区.jpg",
     "assets/48-上海百联ZX创趣场.jpg",
+    "assets/49-北京小站公园.jpg",
+    "assets/50-长春这有山.jpg",
     "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
     "assets/strategy-hero.png",

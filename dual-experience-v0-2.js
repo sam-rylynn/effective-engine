@@ -23,7 +23,7 @@
   function recommendProjects(code, projectCases, limit = 3) {
     const sourceCode = validateCode(code, "人物 code");
     if (!Array.isArray(projectCases)) throw new TypeError("projectCases 必须是数组");
-    const safeLimit = Math.max(1, Math.min(50, Number(limit) || 3));
+    const safeLimit = Math.max(1, Math.min(projectCases.length || 1, Number(limit) || 3));
 
     const candidates = projectCases
       .filter(item => item && CODE_PATTERN.test(String(item.dna?.code || "")))

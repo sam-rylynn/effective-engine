@@ -2031,19 +2031,48 @@ body[data-experience="dual-v01"] .dual-project-recommendation-note {
   line-height: 1.45;
 }
 
+body[data-experience="dual-v01"] .dual-project-all-samples {
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1.5px solid var(--dna-blue);
+  background: var(--dna-paper);
+  color: var(--dna-blue);
+  padding: 9px 11px;
+  font-size: 10px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-project-all-samples > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-project-all-samples .dual-line-icon {
+  width: 16px;
+  height: 16px;
+}
+
 /* Shared standalone route-book pages */
 body[data-experience="dual-v01"][data-dual-screen="routes"] .topbar,
+body[data-experience="dual-v01"][data-dual-screen="samples"] .topbar,
 body[data-experience="dual-v01"][data-dual-screen="guide"] .topbar {
   display: none;
 }
 
 body[data-experience="dual-v01"][data-app-page="dual-project-routes"] main,
+body[data-experience="dual-v01"][data-app-page="dual-all-projects"] main,
 body[data-experience="dual-v01"][data-app-page="dual-field-guide"] main {
   min-height: 100svh;
   padding: 0 18px 30px;
 }
 
 body[data-experience="dual-v01"] .dual-project-routes-page,
+body[data-experience="dual-v01"] .dual-all-projects-page,
 body[data-experience="dual-v01"] .dual-field-guide-page {
   width: 100%;
   padding: 0;
@@ -2386,6 +2415,361 @@ body[data-experience="dual-v01"] .dual-route-footnote .dual-line-icon {
   height: 18px;
 }
 
+body[data-experience="dual-v01"] .dual-route-all-samples {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1.5px solid var(--dna-blue);
+  background: #eef2ff;
+  color: var(--dna-ink);
+  padding: 14px;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-route-all-samples > span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-route-all-samples small {
+  color: var(--dna-red);
+  font-size: 8px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+body[data-experience="dual-v01"] .dual-route-all-samples strong {
+  font-size: 18px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-route-all-samples em {
+  color: var(--dna-muted);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.4;
+}
+
+body[data-experience="dual-v01"] .dual-route-all-samples > b {
+  min-width: 58px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: var(--dna-blue);
+  color: var(--dna-paper);
+  font-size: 18px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-route-all-samples > b .dual-line-icon {
+  width: 16px;
+  height: 16px;
+  filter: invert(1);
+}
+
+/* Match-aware all-project atlas */
+body[data-experience="dual-v01"] .dual-all-samples {
+  display: grid;
+  gap: 15px;
+  padding: 11px 0 8px;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 5px;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-heading > div > span {
+  color: var(--dna-blue);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-heading h1 {
+  margin: 5px 0 0;
+  color: var(--dna-ink);
+  font-size: clamp(34px, 10vw, 44px);
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-heading p {
+  max-width: 315px;
+  margin: 9px 0 0;
+  color: var(--dna-muted);
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.5;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1.5px solid var(--dna-ink);
+  margin: 0;
+  background: var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-summary > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-summary > div + div {
+  border-left: 1px solid rgba(17, 17, 17, .32);
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-summary dt,
+body[data-experience="dual-v01"] .dual-all-samples-summary dd {
+  margin: 0;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-summary dt {
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 850;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-summary dd {
+  color: var(--dna-ink);
+  font-size: 22px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-search {
+  display: grid;
+  gap: 6px;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-search > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dna-ink);
+  font-size: 9px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-search > span .dual-line-icon {
+  width: 14px;
+  height: 14px;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-search input {
+  width: 100%;
+  min-height: 46px;
+  border: 1.5px solid var(--dna-ink);
+  border-radius: 0;
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  padding: 0 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-count {
+  margin: -7px 0 0;
+  color: var(--dna-blue);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-section {
+  display: grid;
+  gap: 9px;
+  padding-top: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-section > header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--dna-red);
+  padding-bottom: 6px;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-section > header span {
+  color: var(--dna-red);
+  font-size: 8px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-section > header h2 {
+  margin: 2px 0 0;
+  color: var(--dna-ink);
+  font-size: 20px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-section > header strong {
+  color: var(--dna-red);
+  font-size: 22px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-section > p {
+  margin: 0;
+  color: var(--dna-muted);
+  font-size: 9px;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-grid {
+  display: grid;
+  gap: 9px;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-card {
+  min-height: 174px;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  overflow: hidden;
+  border: 1.5px solid rgba(17, 17, 17, .48);
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-card[hidden] {
+  display: none;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-media {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-right: 1px dashed rgba(17, 17, 17, .36);
+  margin: 0;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-media > img {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-media.is-contain {
+  display: grid;
+  place-items: center;
+  background: var(--dna-paper-deep);
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-media.is-contain > img {
+  min-height: 0;
+  object-fit: contain;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-media > span {
+  position: absolute;
+  left: 7px;
+  bottom: 7px;
+  border: 1px solid var(--dna-ink);
+  background: var(--dna-yellow);
+  color: var(--dna-ink);
+  padding: 4px 6px;
+  font-size: 7px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 12px 11px;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > span {
+  color: var(--dna-blue);
+  font-size: 8px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy h3 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 950;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > div strong {
+  font-size: 9px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > div small {
+  overflow: hidden;
+  color: var(--dna-muted);
+  font-size: 8px;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 2px 0;
+  color: var(--dna-muted);
+  font-size: 9px;
+  font-weight: 760;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(17, 17, 17, .22);
+  color: var(--dna-ink);
+  padding-top: 7px;
+  font-size: 9px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-all-sample-copy > b .dual-line-icon {
+  width: 15px;
+  height: 15px;
+}
+
+body[data-experience="dual-v01"] .dual-all-samples-empty {
+  border: 1.5px dashed var(--dna-ink);
+  margin: 0;
+  padding: 20px;
+  color: var(--dna-muted);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.5;
+  text-align: center;
+}
+
 /* Field observation guide */
 body[data-experience="dual-v01"] .dual-field-guide {
   display: grid;
@@ -2722,6 +3106,7 @@ body[data-experience="dual-v01"] .dual-field-actions a.primary .dual-line-icon {
 
 @media (max-width: 380px) {
   body[data-experience="dual-v01"][data-app-page="dual-project-routes"] main,
+  body[data-experience="dual-v01"][data-app-page="dual-all-projects"] main,
   body[data-experience="dual-v01"][data-app-page="dual-field-guide"] main {
     padding-inline: 11px;
   }
@@ -2752,6 +3137,18 @@ body[data-experience="dual-v01"] .dual-field-actions a.primary .dual-line-icon {
 
   body[data-experience="dual-v01"] .dual-route-card-copy {
     padding: 12px 10px;
+  }
+
+  body[data-experience="dual-v01"] .dual-all-sample-card {
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  }
+
+  body[data-experience="dual-v01"] .dual-all-sample-copy {
+    padding: 10px 9px;
+  }
+
+  body[data-experience="dual-v01"] .dual-all-sample-copy h3 {
+    font-size: 17px;
   }
 
   body[data-experience="dual-v01"] .dual-route-card-meta dd {

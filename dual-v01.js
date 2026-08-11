@@ -59,6 +59,7 @@
     resultPage: document.getElementById("personality-result"),
     matchPage: document.getElementById("dual-match"),
     projectRoutesPage: document.getElementById("dual-project-routes"),
+    allProjectsPage: document.getElementById("dual-all-projects"),
     fieldGuidePage: document.getElementById("dual-field-guide"),
     progress: document.getElementById("personaProgress"),
     count: document.getElementById("personaCount"),
@@ -68,6 +69,7 @@
     result: document.getElementById("personaResult"),
     match: document.getElementById("dualMatchResult"),
     projectRoutes: document.getElementById("dualProjectRoutes"),
+    allProjects: document.getElementById("dualAllProjects"),
     fieldGuide: document.getElementById("dualFieldGuide"),
     toast: document.getElementById("dualToast"),
     shareDialog: document.getElementById("dualShareDialog"),
@@ -340,9 +342,10 @@
       result: "personality-result",
       match: "dual-match",
       routes: "dual-project-routes",
+      samples: "dual-all-projects",
       guide: "dual-field-guide",
     }[screen] || "home";
-    if (!["routes", "guide"].includes(screen)) {
+    if (!["routes", "samples", "guide"].includes(screen)) {
       delete document.body.dataset.dualCode;
       delete document.body.dataset.dualProject;
     }
@@ -355,6 +358,7 @@
       result: "personality-result",
       match: "dual-match",
       routes: "dual-project-routes",
+      samples: "dual-all-projects",
       guide: "dual-field-guide",
     }[screen];
     document.querySelectorAll(".app-page").forEach(section => {
@@ -657,18 +661,23 @@
     return `<img class="dual-line-icon ${escapeHtml(className)}" src="${escapeHtml(source)}" alt="" aria-hidden="true" />`;
   }
 
-  function projectRowsForCode(code) {
+  function projectRowsForCode(code, limit = 3) {
     const normalizedCode = String(code || "").toUpperCase();
     if (!DNA_CODE_PATTERN.test(normalizedCode)) return [];
     try {
       return experienceSystem.recommendProjects(
         normalizedCode,
         globalScope.PARK_CASE_DATA?.cases || [],
-        3,
+        limit,
       );
     } catch (error) {
       return [];
     }
+  }
+
+  function allProjectRowsForCode(code) {
+    const allCases = globalScope.PARK_CASE_DATA?.cases || [];
+    return projectRowsForCode(code, allCases.length);
   }
 
   function projectGuideModel(row, sourceCode) {
@@ -790,13 +799,67 @@
     `;
   }
 
+  function allSampleGroupForRow(row) {
+    if (row?.exact) return "exact";
+    return Number(row?.matchPercent || 0) >= 58 ? "near" : "explore";
+  }
+
+  function isFormalProjectSample(item) {
+    return Boolean(globalScope.COMMERCIAL_DNA_FORMAL_PROJECT_SAMPLES_V0_1?.projects?.some(
+      row => row?.caseItem?.id === item?.id,
+    ));
+  }
+
+  function allSampleCardHTML(row, index, sourceCode, originMode = "self") {
+    const model = projectGuideModel(row, sourceCode);
+    const item = model.item;
+    const imageFitClass = item.imageFit === "contain" ? " is-contain" : "";
+    const guideHref = `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(item.id || "")}/all`;
+    const sampleStatus = isFormalProjectSample(item) ? "六维正式样本" : "参考样本";
+    const searchText = [item.name, item.city, item.dna?.code, item.subtype, item.format, model.summary]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return `
+      <a
+        class="dual-all-sample-card"
+        href="${guideHref}"
+        data-dual-all-sample-card
+        data-dual-open-guide
+        data-dual-guide-scope="all"
+        data-dual-origin="${escapeHtml(originMode)}"
+        data-dual-code="${escapeHtml(sourceCode)}"
+        data-project-id="${escapeHtml(item.id || "")}"
+        data-sample-group="${allSampleGroupForRow(row)}"
+        data-sample-search="${escapeHtml(searchText)}"
+        data-match-percent="${escapeHtml(row.matchPercent || 0)}"
+        data-recommendation-rank="${index + 1}"
+        aria-label="查看${escapeHtml(item.name || "项目样本")}独立项目页"
+      >
+        <figure class="dual-all-sample-media${imageFitClass}">
+          <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "项目样本")}" />
+          <span>${escapeHtml(sampleStatus)}</span>
+        </figure>
+        <div class="dual-all-sample-copy">
+          <span>${escapeHtml(recommendationMatchLabel(row))}</span>
+          <h3>${escapeHtml(item.name || "项目样本")}</h3>
+          <div><strong>${escapeHtml(item.dna?.code || "")}</strong><small>${escapeHtml(item.city || "城市待核")}</small></div>
+          <p>${escapeHtml(model.summary)}</p>
+          <b>查看项目${guideIconHTML("next")}</b>
+        </div>
+      </a>
+    `;
+  }
+
   function projectRecommendationHTML(result, originMode = "self") {
     const rows = projectRowsForCode(result.code);
     if (!rows.length) return "";
+    const allRows = allProjectRowsForCode(result.code);
     const [primary] = rows;
     const item = primary.item || {};
     const model = projectGuideModel(primary, result.code);
     const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(result.code)}`;
+    const samplesHref = `#samples/${encodeURIComponent(originMode)}/${encodeURIComponent(result.code)}`;
     const title = originMode === "project" ? "与这个项目同频的参考项目" : "适合你的同频项目";
     return `
       <section class="dual-project-recommendation" aria-labelledby="dualProjectRecommendationTitle">
@@ -817,7 +880,11 @@
             </a>
           </div>
         </article>
-        <p class="dual-project-recommendation-note">共 ${rows.length} 个独立项目页；进入路线册后按匹配度逐个查看，不在结果页展开。</p>
+        <p class="dual-project-recommendation-note">优先推荐 ${rows.length} 个独立项目页；进入路线册后按匹配度逐个查看，不在结果页展开。</p>
+        <a class="dual-project-all-samples" href="${samplesHref}" data-dual-open-samples data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(result.code)}">
+          <span>${guideIconHTML("bookmark")}浏览全部 ${allRows.length} 个项目样本</span>
+          ${guideIconHTML("next")}
+        </a>
       </section>
     `;
   }
@@ -826,6 +893,7 @@
     const originMode = MODES.includes(origin) ? origin : "self";
     const sourceCode = String(code || "").toUpperCase();
     const rows = projectRowsForCode(sourceCode);
+    const allRows = allProjectRowsForCode(sourceCode);
     if (!rows.length || !elements.projectRoutes) {
       navigate("#home", true);
       return;
@@ -869,23 +937,150 @@
           ${guideIconHTML("bookmark")}
           <span>星标项目代表与你的 ${escapeHtml(sourceCode)} 高度同频，建议优先探索。</span>
         </p>
+        <a class="dual-route-all-samples" href="#samples/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}" data-dual-open-samples data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
+          <span>
+            <small>不只看前三</small>
+            <strong>浏览全部项目样本</strong>
+            <em>同码优先，其余按四轴匹配度排序</em>
+          </span>
+          <b>${allRows.length}${guideIconHTML("next")}</b>
+        </a>
       </article>
     `;
     focusHeading(document.getElementById("dualRouteBookTitle"));
   }
 
-  function renderFieldGuide(origin, code, projectId) {
+  function allSampleSectionHTML({ id, eyebrow, title, description, rows }, sourceCode, originMode, startIndex) {
+    if (!rows.length) return "";
+    return `
+      <section class="dual-all-sample-section" data-dual-sample-section="${id}" aria-labelledby="dualAllSamples${id}Title">
+        <header>
+          <div>
+            <span>${escapeHtml(eyebrow)}</span>
+            <h2 id="dualAllSamples${id}Title">${escapeHtml(title)}</h2>
+          </div>
+          <strong>${rows.length}</strong>
+        </header>
+        <p>${escapeHtml(description)}</p>
+        <div class="dual-all-sample-grid">
+          ${rows.map((row, index) => allSampleCardHTML(row, startIndex + index, sourceCode, originMode)).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function filterAllProjectSamples(input) {
+    const root = input?.closest?.("[data-dual-all-samples-page]");
+    if (!root) return;
+    const keyword = String(input.value || "").trim().toLowerCase();
+    let visibleCount = 0;
+    root.querySelectorAll("[data-dual-all-sample-card]").forEach(card => {
+      const visible = !keyword || String(card.dataset.sampleSearch || "").includes(keyword);
+      card.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+    root.querySelectorAll("[data-dual-sample-section]").forEach(section => {
+      section.hidden = ![...section.querySelectorAll("[data-dual-all-sample-card]")]
+        .some(card => !card.hidden);
+    });
+    const status = root.querySelector("[data-dual-sample-count]");
+    if (status) status.textContent = keyword ? `找到 ${visibleCount} 个样本` : `显示全部 ${visibleCount} 个样本`;
+    const empty = root.querySelector("[data-dual-sample-empty]");
+    if (empty) empty.hidden = visibleCount > 0;
+  }
+
+  function renderAllProjectSamples(origin, code) {
     const originMode = MODES.includes(origin) ? origin : "self";
     const sourceCode = String(code || "").toUpperCase();
-    const rows = projectRowsForCode(sourceCode);
+    const rows = allProjectRowsForCode(sourceCode);
+    if (!rows.length || !elements.allProjects) {
+      navigate("#home", true);
+      return;
+    }
+    const exactRows = rows.filter(row => row.exact);
+    const nearRows = rows.filter(row => !row.exact && row.matchPercent >= 58);
+    const exploreRows = rows.filter(row => !row.exact && row.matchPercent < 58);
+    const formalCount = rows.filter(row => isFormalProjectSample(row.item)).length;
+    const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`;
+    let startIndex = 0;
+    const exactSection = allSampleSectionHTML({
+      id: "Exact",
+      eyebrow: "100% MATCH",
+      title: "同码样本",
+      description: `与 ${sourceCode} 四轴完全同码，先看同类怎样走出不同经营路径。`,
+      rows: exactRows,
+    }, sourceCode, originMode, startIndex);
+    startIndex += exactRows.length;
+    const nearSection = allSampleSectionHTML({
+      id: "Near",
+      eyebrow: "NEARBY",
+      title: "高度相近",
+      description: "有一至两条轴不同，适合补看相邻打法与经营条件。",
+      rows: nearRows,
+    }, sourceCode, originMode, startIndex);
+    startIndex += nearRows.length;
+    const exploreSection = allSampleSectionHTML({
+      id: "Explore",
+      eyebrow: "EXPLORE",
+      title: "延伸参考",
+      description: "匹配度更低不等于没有价值；这里保留差异更大的项目，供你主动跨类型找灵感。",
+      rows: exploreRows,
+    }, sourceCode, originMode, startIndex);
+
+    setVisiblePage("samples");
+    document.body.dataset.dualCode = sourceCode;
+    elements.allProjects.innerHTML = `
+      <article class="dual-all-samples" data-dual-all-samples-page data-dual-code="${escapeHtml(sourceCode)}">
+        <a class="dual-page-back" href="${routesHref}" data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
+          ${guideIconHTML("back")}
+          <span>返回同频项目</span>
+        </a>
+        <nav class="dual-route-breadcrumb" aria-label="页面位置">
+          <span>你的结果</span>
+          ${guideIconHTML("next")}
+          <span>同频项目</span>
+          ${guideIconHTML("next")}
+          <strong>全部样本</strong>
+        </nav>
+        <header class="dual-all-samples-heading">
+          <div>
+            <span>PROJECT ATLAS · ${escapeHtml(sourceCode)}</span>
+            <h1 id="dualAllSamplesTitle" tabindex="-1">全部项目样本</h1>
+            <p>不只看最匹配的前三。全部样本先按真实匹配度排序，再按策展优先级和项目名稳定排列。</p>
+          </div>
+          <span class="dual-route-title-mark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
+        </header>
+        <dl class="dual-all-samples-summary">
+          <div><dt>全部样本</dt><dd>${rows.length}</dd></div>
+          <div><dt>同码样本</dt><dd>${exactRows.length}</dd></div>
+          <div><dt>六维正式</dt><dd>${formalCount}</dd></div>
+        </dl>
+        <label class="dual-all-samples-search">
+          <span>${guideIconHTML("observe")}搜索项目、城市或 DNA</span>
+          <input type="search" data-dual-sample-search autocomplete="off" placeholder="例如：这有山 / 长春 / DCMR" />
+        </label>
+        <p class="dual-all-samples-count" data-dual-sample-count role="status">显示全部 ${rows.length} 个样本</p>
+        ${exactSection}
+        ${nearSection}
+        ${exploreSection}
+        <p class="dual-all-samples-empty" data-dual-sample-empty hidden>没有找到匹配的样本，换个项目名、城市或 DNA 试试。</p>
+      </article>
+    `;
+    focusHeading(document.getElementById("dualAllSamplesTitle"));
+  }
+
+  function renderFieldGuide(origin, code, projectId, scope = "routes") {
+    const originMode = MODES.includes(origin) ? origin : "self";
+    const sourceCode = String(code || "").toUpperCase();
+    const allScope = scope === "all";
+    const rows = allScope ? allProjectRowsForCode(sourceCode) : projectRowsForCode(sourceCode);
     let currentIndex = rows.findIndex(row => row.item?.id === projectId);
     let row = currentIndex >= 0 ? rows[currentIndex] : null;
     let routeIndex = currentIndex;
     let routeTotal = rows.length;
     if (!row) {
       try {
-        const allCases = globalScope.PARK_CASE_DATA?.cases || [];
-        const allRows = experienceSystem.recommendProjects(sourceCode, allCases, allCases.length);
+        const allRows = allProjectRowsForCode(sourceCode);
         routeIndex = allRows.findIndex(candidate => candidate.item?.id === projectId);
         routeTotal = allRows.length;
         row = routeIndex >= 0 ? allRows[routeIndex] : null;
@@ -894,7 +1089,7 @@
       }
     }
     if (!row || !elements.fieldGuide) {
-      navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`, true);
+      navigate(`${allScope ? "#samples" : "#routes"}/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`, true);
       return;
     }
     const model = projectGuideModel(row, sourceCode);
@@ -902,9 +1097,11 @@
     const nextRow = rows.length > 1
       ? rows[currentIndex >= 0 ? (currentIndex + 1) % rows.length : 0]
       : null;
-    const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`;
+    const routesHref = `${allScope ? "#samples" : "#routes"}/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`;
+    const backData = allScope ? "data-dual-back-samples" : "data-dual-back-routes";
+    const backLabel = allScope ? "返回全部样本" : "返回同频项目";
     const nextHref = nextRow
-      ? `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(nextRow.item?.id || "")}`
+      ? `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(nextRow.item?.id || "")}${allScope ? "/all" : ""}`
       : routesHref;
     const observationIcons = ["location", "stay", "consume", "revisit"];
     const observationPrefixes = ["先看", "再看", "接着看", "最后看"];
@@ -915,9 +1112,9 @@
     elements.fieldGuide.innerHTML = `
       <article class="dual-field-guide" data-dual-project-page data-project-id="${escapeHtml(item.id || "")}" data-dual-code="${escapeHtml(sourceCode)}">
         <header class="dual-field-guide-topbar">
-          <a href="${routesHref}" data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
+          <a href="${routesHref}" ${backData} data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
             ${guideIconHTML("back")}
-            <span>返回同频项目</span>
+            <span>${backLabel}</span>
           </a>
           <strong>路线 <b>${String(routeIndex + 1).padStart(2, "0")}</b> / ${String(routeTotal).padStart(2, "0")}</strong>
         </header>
@@ -972,12 +1169,12 @@
           ${model.evidenceBoundary ? `<small>证据边界：${escapeHtml(model.evidenceBoundary)}</small>` : ""}
         </section>
         <footer class="dual-field-actions">
-          <a class="primary" href="${routesHref}" data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
+          <a class="primary" href="${routesHref}" ${backData} data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
             ${guideIconHTML("back")}
-            <span>返回同频项目</span>
+            <span>${backLabel}</span>
           </a>
-          <a href="${nextHref}" ${nextRow ? `data-dual-open-guide data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}" data-project-id="${escapeHtml(nextRow.item?.id || "")}"` : `data-dual-back-routes data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}"`}>
-            <span>${nextRow ? `下一站：${escapeHtml(nextRow.item?.name || "同频项目")}` : "返回路线册"}</span>
+          <a href="${nextHref}" ${nextRow ? `data-dual-open-guide data-dual-guide-scope="${allScope ? "all" : "routes"}" data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}" data-project-id="${escapeHtml(nextRow.item?.id || "")}"` : `${backData} data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}"`}>
+            <span>${nextRow ? `下一站：${escapeHtml(nextRow.item?.name || "同频项目")}` : backLabel}</span>
             ${guideIconHTML("next")}
           </a>
         </footer>
@@ -1230,18 +1427,28 @@
         return { screen: "routes", mode: null, originMode, code };
       }
     }
+    if (screen === "samples") {
+      const originMode = parts[1];
+      const code = String(parts[2] || "").toUpperCase();
+      if (MODES.includes(originMode) && DNA_CODE_PATTERN.test(code) && parts.length === 3) {
+        return { screen: "samples", mode: null, originMode, code };
+      }
+    }
     if (screen === "guide") {
       const legacy = parts.length === 3;
       const originMode = legacy ? "self" : parts[1];
       const code = String(legacy ? parts[1] : parts[2] || "").toUpperCase();
       const projectId = String(legacy ? parts[2] : parts[3] || "");
+      const scope = !legacy && parts[4] === "all" ? "all" : "routes";
       if (
         MODES.includes(originMode)
         && DNA_CODE_PATTERN.test(code)
         && /^case-[a-zA-Z0-9_-]+$/.test(projectId)
-        && parts.length === (legacy ? 3 : 4)
+        && parts.length === (legacy ? 3 : (scope === "all" ? 5 : 4))
       ) {
-        return { screen: "guide", mode: null, originMode, code, projectId };
+        return scope === "all"
+          ? { screen: "guide", mode: null, originMode, code, projectId, scope }
+          : { screen: "guide", mode: null, originMode, code, projectId };
       }
     }
     return { screen: "home", mode: null };
@@ -1287,8 +1494,12 @@
       renderProjectRoutes(route.originMode, route.code);
       return;
     }
+    if (route.screen === "samples") {
+      renderAllProjectSamples(route.originMode, route.code);
+      return;
+    }
     if (route.screen === "guide") {
-      renderFieldGuide(route.originMode, route.code, route.projectId);
+      renderFieldGuide(route.originMode, route.code, route.projectId, route.scope);
       return;
     }
     if (route.screen === "match") {
@@ -1341,8 +1552,8 @@
       + "[data-dual-view-result], [data-dual-retest], [data-dual-history-id], "
       + "[data-dual-menu], [data-dual-menu-close], "
       + "[data-dual-share], [data-dual-share-close], "
-      + "[data-dual-open-routes], [data-dual-open-guide], "
-      + "[data-dual-back-routes], [data-dual-back-result], "
+      + "[data-dual-open-routes], [data-dual-open-samples], [data-dual-open-guide], "
+      + "[data-dual-back-routes], [data-dual-back-samples], [data-dual-back-result], "
       + ".brand[data-shell-page='home']",
     );
     if (!target) return;
@@ -1370,15 +1581,24 @@
       const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
       navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}`);
     }
+    else if (target.matches("[data-dual-open-samples]")) {
+      const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
+      navigate(`#samples/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}`);
+    }
     else if (target.matches("[data-dual-open-guide]")) {
       const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
+      const scope = target.dataset.dualGuideScope === "all" ? "/all" : "";
       navigate(
-        `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}/${encodeURIComponent(target.dataset.projectId || "")}`,
+        `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}/${encodeURIComponent(target.dataset.projectId || "")}${scope}`,
       );
     }
     else if (target.matches("[data-dual-back-routes]")) {
       const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
       navigate(`#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}`);
+    }
+    else if (target.matches("[data-dual-back-samples]")) {
+      const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
+      navigate(`#samples/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}`);
     }
     else if (target.matches("[data-dual-back-result]")) {
       backToResult(
@@ -1416,6 +1636,9 @@
   async function init() {
     hydratePersistedState();
     document.addEventListener("click", handleOwnedClick, true);
+    document.addEventListener("input", event => {
+      if (event.target.matches?.("[data-dual-sample-search]")) filterAllProjectSamples(event.target);
+    });
     elements.shareDialog?.addEventListener("click", event => {
       if (event.target === elements.shareDialog) closeShareDialog();
     });
