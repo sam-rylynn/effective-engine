@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c3772da792230e7908c77dc3cefdc1ce45e80f73",
+  "sourceCommit": "5a25ec7a39457bca6e86ab63b96ef2d2db30bd78",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -50,6 +50,7 @@
     "assets/48-上海百联ZX创趣场.jpg",
     "assets/49-北京小站公园.jpg",
     "assets/50-长春这有山.jpg",
+    "assets/51-上海PAC.jpg",
     "assets/dna-home-hero-direction-01-v01.webp",
     "assets/formal-sample-evidence.svg",
     "assets/strategy-hero.png",
