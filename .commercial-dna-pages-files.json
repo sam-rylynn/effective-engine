@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "e415576bf38f6e0f7b2e877040fa3f5e7a039fde",
+  "sourceCommit": "7681f63f2e57f8b3f25ee630513908f166525eca",
   "allowlistVersion": "commercial-dna-pages-v1",
   "managedFiles": [
     ".commercial-dna-pages-files.json",
@@ -66,6 +66,9 @@
     "assets/vendor/bootstrap-icons/geo-alt.svg",
     "assets/vendor/bootstrap-icons/house-fill.svg",
     "assets/vendor/bootstrap-icons/shop.svg",
+    "brand-editorial-v0-1.js",
+    "brand-gallery-local-review-loader-v0-1.js",
+    "brand-removals-v0-1.js",
     "combo-app.js",
     "combo-core.js",
     "combo-logic.js",
@@ -125,6 +128,7 @@
     "project-persona-assets/v0.1/webp/p08-dcmr-engine-bee-project-poster-v01.webp",
     "project-persona-poster-data-v0-1.js",
     "release-metadata.json",
+    "sample-atlas-v0-1.js",
     "scene-evidence-v1.js",
     "share-assets/reference-v0.3/barcode.png",
     "share-assets/reference-v0.3/paper-texture.png",

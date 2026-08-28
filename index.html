@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>商业 DNA｜从不同中，找到同类</title>
-  <meta name="description" content="用 16 道情境题测试你的操盘怪物，或测出一个项目的动物人格；两份结果还能生成商业 DNA 同频度。" />
+  <meta name="description" content="测试你的商业 DNA，也可以直接浏览项目样本与品牌样本，认识真实项目、品牌业态与所在城市。" />
   <!-- 部署后把 og:url / og:image 换成线上绝对地址 -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="商业 DNA｜从不同中，找到同类" />
@@ -15,7 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111111'/%3E%3Ccircle cx='21' cy='20' r='8' fill='%23ffd13d'/%3E%3Ccircle cx='43' cy='32' r='8' fill='%23ff5a3d'/%3E%3Ccircle cx='21' cy='44' r='8' fill='%23255dff'/%3E%3Cpath d='M28 20c12 0 4 24 16 24M28 44c12 0 4-24 16-24' fill='none' stroke='%23fff8eb' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="combo.css?v=20260716-dual-v02-01" />
   <link rel="stylesheet" href="dual-v0-2.css?v=20260729-project-results-01" />
-  <link rel="stylesheet" href="dual-v0-3.css?v=20260802-project-copy-p1-01" />
+  <link rel="stylesheet" href="dual-v0-3.css?v=20260827-xhs-deep-read-01" />
   <link rel="preload" as="image" href="assets/dna-home-hero-direction-01-v01.webp" type="image/webp" fetchpriority="high" />
 </head>
 <body data-app-page="home" data-experience="dual-v01">
@@ -31,6 +31,8 @@
     <div class="dual-quick-menu" id="dualQuickMenu" hidden>
       <button data-dual-mode="self" type="button">测我</button>
       <button data-dual-mode="project" type="button">测项目</button>
+      <button data-dual-open-project-library type="button">项目样本</button>
+      <button data-dual-open-brand-library type="button">品牌样本</button>
       <button data-dual-menu-close type="button">关闭</button>
     </div>
   </header>
@@ -64,10 +66,44 @@
         </div>
         <div class="dual-home-action">
           <button id="dualStartButton" data-dual-start type="button" disabled>正在准备测我</button>
-          <p id="dualGateNote" role="status" aria-live="polite">正在核对 16 张正式操盘怪物资产。</p>
+          <p id="dualGateNote" role="status" aria-live="polite">正在准备测试。</p>
         </div>
       </article>
       <section class="dual-history-shelf" id="dualHistoryShelf" hidden aria-labelledby="dualHistoryTitle"></section>
+      <section class="dual-home-sample-atlas" aria-labelledby="dualHomeSampleAtlasTitle">
+        <header class="dual-home-sample-heading">
+          <span>SAMPLE ATLAS</span>
+          <h2 id="dualHomeSampleAtlasTitle">样本区</h2>
+          <p>不做测试，也可以直接认识真实项目和品牌。</p>
+        </header>
+        <section class="dual-home-sample-group" aria-labelledby="dualHomeProjectSampleTitle">
+          <header>
+            <div>
+              <span>PROJECT SAMPLES</span>
+              <h3 id="dualHomeProjectSampleTitle">项目样本</h3>
+            </div>
+            <small>看空间与运营如何发生</small>
+          </header>
+          <div class="dual-home-sample-list" id="dualHomeProjectSamples"></div>
+          <a class="dual-home-sample-more" href="#samples/projects" data-dual-open-project-library>
+            <span>浏览全部项目样本</span><b aria-hidden="true">→</b>
+          </a>
+        </section>
+        <section class="dual-home-sample-group is-brand" aria-labelledby="dualHomeBrandSampleTitle">
+          <header>
+            <div>
+              <span>BRAND SAMPLES</span>
+              <h3 id="dualHomeBrandSampleTitle">品牌样本</h3>
+            </div>
+            <small>先认识品牌，再讨论项目</small>
+          </header>
+          <div class="dual-home-sample-list" id="dualHomeBrandSamples"></div>
+          <a class="dual-home-sample-more" href="#samples/brands" data-dual-open-brand-library>
+            <span>浏览全部品牌样本</span><b aria-hidden="true">→</b>
+          </a>
+          <p class="dual-home-brand-question">先问这里生活的人、来到这里的人需要什么，再看品牌能提供什么。</p>
+        </section>
+      </section>
     </section>
 
     <section class="app-page app-library" id="sample-library" hidden>
@@ -95,17 +131,12 @@
       <div class="library-head">
         <span>PLAYBOOK</span>
         <h2>操盘库</h2>
-        <p>把样本拆成可借鉴动作、复制门槛和适合谁看，先看判断，再补证据。</p>
+        <p>把项目拆成可借鉴动作、复制门槛和适合谁看，先看判断，再看现场与经营条件。</p>
       </div>
       <div class="library-filters">
         <input id="opsSearch" placeholder="搜索项目 / 操盘动作 / 维度" />
         <select id="opsDimensionFilter">
           <option value="">全部维度</option>
-        </select>
-        <select id="opsStatusFilter">
-          <option value="">全部状态</option>
-          <option>操盘推断</option>
-          <option>待核验</option>
         </select>
       </div>
       <div class="ops-list" id="opsLibraryList"></div>
@@ -199,6 +230,22 @@
 
     <section class="app-page dual-field-guide-page" id="dual-field-guide" hidden>
       <div id="dualFieldGuide" aria-live="polite"></div>
+    </section>
+
+    <section class="app-page dual-project-library-page" id="dual-project-library" hidden>
+      <div id="dualProjectLibrary"></div>
+    </section>
+
+    <section class="app-page dual-project-sample-detail-page" id="dual-project-sample-detail" hidden>
+      <div id="dualProjectSampleDetail" aria-live="polite"></div>
+    </section>
+
+    <section class="app-page dual-brand-library-page" id="dual-brand-library" hidden>
+      <div id="dualBrandLibrary"></div>
+    </section>
+
+    <section class="app-page dual-brand-detail-page" id="dual-brand-detail" hidden>
+      <div id="dualBrandDetail" aria-live="polite"></div>
     </section>
 
     <section class="hero" id="diagnose">
@@ -343,7 +390,7 @@
       <figure class="cover-image sample-collage" id="coverImage">
         <div class="collage-top">
           <span>SAMPLE RADAR</span>
-          <strong id="targetCountLabel">100 个非标商业参考样本</strong>
+          <strong id="targetCountLabel">100 个非标商业项目</strong>
         </div>
         <div class="logo-cloud" id="sampleCloud"></div>
         <div class="dna-primer">
@@ -358,7 +405,7 @@
         </div>
         <figcaption>
           <span>当前锁定</span>
-          <strong id="coverCaseName">正在匹配参考样本</strong>
+          <strong id="coverCaseName">正在匹配项目</strong>
         </figcaption>
       </figure>
 
@@ -402,7 +449,7 @@
             <span>下一步</span>
             <strong id="resultConfidence">看样本</strong>
           </div>
-        <p id="resultSummary">先看一个最像的参考样本，再看它背后的操盘动作。</p>
+        <p id="resultSummary">先看一个最接近的项目，再看它背后的操盘动作。</p>
         </article>
 
         <div class="strategy-grid" id="strategyGrid"></div>
@@ -471,7 +518,7 @@
     <section class="report-band" hidden aria-hidden="true">
       <div>
         <p class="eyebrow">WHY</p>
-        <h2 id="reportTitle">观山湖商业项目 · 初筛核验</h2>
+        <h2 id="reportTitle">观山湖商业项目 · 初步判断</h2>
       </div>
       <div class="metrics" id="metricGrid"></div>
     </section>
@@ -480,9 +527,9 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">REFERENCE</p>
-          <h2 id="caseSectionTitle">推荐参考样本</h2>
+          <h2 id="caseSectionTitle">推荐项目</h2>
         </div>
-        <p id="recommendHint">左右滑动查看相近参考样本。</p>
+        <p id="recommendHint">左右滑动查看相近项目。</p>
       </div>
       <div class="case-grid" id="caseGrid"></div>
       <a class="result-next case-next" id="caseNext" href="#evidence">查看操盘解读</a>
@@ -531,8 +578,12 @@
   <script src="daily-confirmed-20260703.js?v=20260801-yantaishan-dcmr-01"></script>
   <script src="daily-confirmed-20260704.js?v=20260704-01"></script>
   <script src="daily-confirmed-20260705.js?v=20260705-01"></script>
+  <script src="brand-removals-v0-1.js?v=20260828-user-selection-01"></script>
+  <script src="brand-editorial-v0-1.js?v=20260827-xhs-deep-read-01"></script>
   <script src="scene-evidence-v1.js?v=20260813-pac-yuanye-01"></script>
   <script src="formal-project-samples-v0-1.js?v=20260813-retire-seven-01"></script>
+  <script src="brand-gallery-local-review-loader-v0-1.js?v=20260826-local-review-01"></script>
+  <script src="sample-atlas-v0-1.js?v=20260827-public-copy-01"></script>
   <script src="persona-data-v1.js?v=20260712-mainline-01"></script>
   <script src="project-persona-poster-data-v0-1.js?v=20260729-project-results-01"></script>
   <script src="operator-persona-data-v1.js?v=20260801-p0-dna-evaluation-01"></script>
@@ -543,7 +594,7 @@
   <script src="combo-logic.js?v=20260716-dual-v01-01"></script>
   <script src="combo-render.js?v=20260728-approved-four-01"></script>
   <script src="combo-app.js?v=20260811-all-samples-01"></script>
-  <script src="dual-v01.js?v=20260811-all-samples-01"></script>
+  <script src="dual-v01.js?v=20260827-public-copy-01"></script>
   <script src="feedback-v1.js?v=20260706-01"></script>
 </body>
 </html>

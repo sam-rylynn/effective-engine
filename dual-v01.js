@@ -7,9 +7,12 @@
   const projectPosterSystem = globalScope.COMMERCIAL_DNA_PROJECT_POSTERS_V0_1;
   const matchSystem = globalScope.COMMERCIAL_DNA_OPERATOR_MATCH_V0_1;
   const experienceSystem = globalScope.COMMERCIAL_DNA_DUAL_EXPERIENCE_V0_2;
-  if (!dualLogic || !operatorSystem || !projectSystem || !projectPosterSystem || !matchSystem || !experienceSystem) return;
+  const sampleAtlas = globalScope.COMMERCIAL_DNA_SAMPLE_ATLAS_V0_1;
+  if (!dualLogic || !operatorSystem || !projectSystem || !projectPosterSystem || !matchSystem || !experienceSystem || !sampleAtlas) return;
 
   const STORAGE_KEY = "commercial_dna_dual_test_v1";
+  const DIRECTORY_HISTORY_STATE_KEY = "commercialDnaDirectoryScrollV1";
+  const DIRECTORY_SESSION_KEY_PREFIX = "commercial_dna_directory_scroll_v1:";
   const PROJECT_CONTENT_VERSION = "project-persona-v1";
   const MODES = ["self", "project"];
   const DNA_CODE_PATTERN = /^[LD][SC][BM][ER]$/;
@@ -55,12 +58,18 @@
     startButton: document.getElementById("dualStartButton"),
     gateNote: document.getElementById("dualGateNote"),
     historyShelf: document.getElementById("dualHistoryShelf"),
+    homeProjectSamples: document.getElementById("dualHomeProjectSamples"),
+    homeBrandSamples: document.getElementById("dualHomeBrandSamples"),
     testPage: document.getElementById("personality-test"),
     resultPage: document.getElementById("personality-result"),
     matchPage: document.getElementById("dual-match"),
     projectRoutesPage: document.getElementById("dual-project-routes"),
     allProjectsPage: document.getElementById("dual-all-projects"),
     fieldGuidePage: document.getElementById("dual-field-guide"),
+    projectLibraryPage: document.getElementById("dual-project-library"),
+    projectSampleDetailPage: document.getElementById("dual-project-sample-detail"),
+    brandLibraryPage: document.getElementById("dual-brand-library"),
+    brandDetailPage: document.getElementById("dual-brand-detail"),
     progress: document.getElementById("personaProgress"),
     count: document.getElementById("personaCount"),
     axis: document.getElementById("personaAxis"),
@@ -71,6 +80,10 @@
     projectRoutes: document.getElementById("dualProjectRoutes"),
     allProjects: document.getElementById("dualAllProjects"),
     fieldGuide: document.getElementById("dualFieldGuide"),
+    projectLibrary: document.getElementById("dualProjectLibrary"),
+    projectSampleDetail: document.getElementById("dualProjectSampleDetail"),
+    brandLibrary: document.getElementById("dualBrandLibrary"),
+    brandDetail: document.getElementById("dualBrandDetail"),
     toast: document.getElementById("dualToast"),
     shareDialog: document.getElementById("dualShareDialog"),
     shareFrame: document.getElementById("dualShareFrame"),
@@ -112,6 +125,31 @@
       '"': "&quot;",
       "'": "&#039;",
     }[character]));
+  }
+
+  function safeHttpUrl(value = "") {
+    const raw = String(value || "").trim();
+    if (!/^https?:\/\//i.test(raw)) return "";
+    try {
+      const url = new URL(raw);
+      return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function safeBrandImageUrl(value = "") {
+    const raw = String(value || "").trim();
+    return /^(?:brand-assets|brand-review-assets|assets)\/[^\x00<>"'`]+\.(?:avif|webp|png|jpe?g)(?:[?#][^\x00<>"'`]*)?$/i.test(raw) && !raw.includes("..")
+      ? raw
+      : "";
+  }
+
+  function safeProjectImageUrl(value = "") {
+    const raw = String(value || "").trim();
+    return /^assets\/[^\x00<>"'`]+\.(?:avif|webp|png|jpe?g)(?:[?#][^\x00<>"'`]*)?$/i.test(raw) && !raw.includes("..")
+      ? raw
+      : "";
   }
 
   function currentContentVersion(mode) {
@@ -322,12 +360,39 @@
     try {
       definitionFor(mode);
     } catch (error) {
-      return { ready: false, reason: error.message };
+      return { ready: false, reason: "测试暂时无法开始，请稍后重试。" };
     }
     if (mode === "self" && dualState.assetGate.status !== "ready") {
       return { ready: false, reason: dualState.assetGate.reason };
     }
     return { ready: true, reason: "" };
+  }
+
+  function publicProjectValueTitle(item, presentation = {}) {
+    const candidate = String(
+      presentation.valueTitle
+      || item?.special
+      || item?.usable
+      || "",
+    ).trim();
+    if (
+      !candidate
+      || /六维正式|参考样本|待核样本|运行时样本|证据库|终审入库|用户确认/.test(candidate)
+    ) {
+      return item?.subtype || item?.format || item?.archetype || "项目观察";
+    }
+    return candidate;
+  }
+
+  function publicProjectText(value = "") {
+    return String(value || "")
+      .replace(/用户提出的内部经营底线/g, "观察目标")
+      .replace(/内部经营底线/g, "观察目标")
+      .replace(/当前审计事实/g, "当前经营现状")
+      .replace(/仍待补/g, "还看不出")
+      .replace(/待补/g, "尚不明确")
+      .replace(/待核/g, "尚不明确")
+      .replace(/核验/g, "确认");
   }
 
   function setVisiblePage(screen, mode = null) {
@@ -344,11 +409,16 @@
       routes: "dual-project-routes",
       samples: "dual-all-projects",
       guide: "dual-field-guide",
+      projectLibrary: "dual-project-library",
+      projectDetail: "dual-project-sample-detail",
+      brandLibrary: "dual-brand-library",
+      brandDetail: "dual-brand-detail",
     }[screen] || "home";
-    if (!["routes", "samples", "guide"].includes(screen)) {
+    if (!["routes", "samples", "guide", "projectDetail"].includes(screen)) {
       delete document.body.dataset.dualCode;
       delete document.body.dataset.dualProject;
     }
+    if (screen !== "brandDetail") delete document.body.dataset.dualBrand;
     if (elements.quickMenu) elements.quickMenu.hidden = true;
     if (elements.menuButton) elements.menuButton.setAttribute("aria-expanded", "false");
 
@@ -360,6 +430,10 @@
       routes: "dual-project-routes",
       samples: "dual-all-projects",
       guide: "dual-field-guide",
+      projectLibrary: "dual-project-library",
+      projectDetail: "dual-project-sample-detail",
+      brandLibrary: "dual-brand-library",
+      brandDetail: "dual-brand-detail",
     }[screen];
     document.querySelectorAll(".app-page").forEach(section => {
       section.hidden = section.id !== visibleId;
@@ -383,6 +457,170 @@
       } catch (error) {
         element.focus();
       }
+    });
+  }
+
+  function directoryRouteKey(route) {
+    if (route?.screen === "projectLibrary") return "samples/projects";
+    if (route?.screen === "brandLibrary") return "samples/brands";
+    return "";
+  }
+
+  function detailDirectoryRouteKey(route) {
+    if (route?.screen === "projectDetail") return "samples/projects";
+    if (route?.screen === "brandDetail") return "samples/brands";
+    return "";
+  }
+
+  function sanitizeDirectorySnapshot(value, expectedRouteKey = "") {
+    if (!value || typeof value !== "object") return null;
+    const routeKey = String(value.routeKey || "");
+    if (!["samples/projects", "samples/brands"].includes(routeKey)) return null;
+    if (expectedRouteKey && routeKey !== expectedRouteKey) return null;
+    const scrollY = Number(value.scrollY);
+    const anchorTop = Number(value.anchorTop);
+    if (!Number.isFinite(scrollY) || scrollY < 0 || scrollY > 10_000_000) return null;
+    return {
+      routeKey,
+      scrollY,
+      anchorId: /^[a-zA-Z0-9_-]+$/.test(String(value.anchorId || ""))
+        ? String(value.anchorId)
+        : "",
+      anchorTop: Number.isFinite(anchorTop) && anchorTop > -10_000 && anchorTop < 10_000
+        ? anchorTop
+        : null,
+      query: String(value.query || "").slice(0, 200),
+      category: routeKey === "samples/brands" ? String(value.category || "").slice(0, 120) : "",
+    };
+  }
+
+  function historyDirectoryContext() {
+    const state = globalScope.history?.state;
+    if (!state || typeof state !== "object" || Array.isArray(state)) return null;
+    const context = state[DIRECTORY_HISTORY_STATE_KEY];
+    return context && typeof context === "object" ? context : null;
+  }
+
+  function writeDirectorySessionSnapshot(snapshot) {
+    try {
+      globalScope.sessionStorage?.setItem(
+        `${DIRECTORY_SESSION_KEY_PREFIX}${snapshot.routeKey}`,
+        JSON.stringify(snapshot),
+      );
+    } catch (error) {
+      // History state remains the primary restoration path when session storage is unavailable.
+    }
+  }
+
+  function readDirectorySessionSnapshot(routeKey) {
+    try {
+      return sanitizeDirectorySnapshot(
+        JSON.parse(globalScope.sessionStorage?.getItem(`${DIRECTORY_SESSION_KEY_PREFIX}${routeKey}`) || "null"),
+        routeKey,
+      );
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function currentScrollTop() {
+    const candidates = [
+      globalScope.scrollY,
+      document.documentElement?.scrollTop,
+      document.body?.scrollTop,
+    ];
+    return Math.max(0, Number(candidates.find(Number.isFinite)) || 0);
+  }
+
+  function directorySnapshot(route = parseRoute()) {
+    const routeKey = directoryRouteKey(route);
+    if (!routeKey) return null;
+    const root = routeKey === "samples/projects" ? elements.projectLibrary : elements.brandLibrary;
+    if (!root?.querySelectorAll) return null;
+    const cardSelector = routeKey === "samples/projects"
+      ? "[data-project-library-card]"
+      : "[data-brand-library-card]";
+    const visibleCards = [...root.querySelectorAll(cardSelector)].filter(card => !card.hidden);
+    const anchor = visibleCards.find(card => card.getBoundingClientRect().bottom > 0) || null;
+    const anchorId = anchor
+      ? String(routeKey === "samples/projects" ? anchor.dataset.projectId || "" : anchor.dataset.brandId || "")
+      : "";
+    const anchorTop = anchor ? anchor.getBoundingClientRect().top : null;
+    return sanitizeDirectorySnapshot({
+      routeKey,
+      scrollY: currentScrollTop(),
+      anchorId,
+      anchorTop,
+      query: root.querySelector(
+        routeKey === "samples/projects"
+          ? "[data-dual-project-library-search]"
+          : "[data-dual-brand-library-search]",
+      )?.value || "",
+      category: routeKey === "samples/brands"
+        ? root.querySelector("[data-dual-brand-library-category]")?.value || ""
+        : "",
+    }, routeKey);
+  }
+
+  function captureDirectorySnapshot(route = parseRoute()) {
+    const snapshot = directorySnapshot(route);
+    if (!snapshot) return null;
+    const previousState = globalScope.history?.state;
+    const state = previousState && typeof previousState === "object" && !Array.isArray(previousState)
+      ? previousState
+      : {};
+    globalScope.history.replaceState({
+      ...state,
+      [DIRECTORY_HISTORY_STATE_KEY]: {
+        kind: "directory",
+        routeKey: snapshot.routeKey,
+        snapshot,
+      },
+    }, "", globalScope.location.href || globalScope.location.hash);
+    writeDirectorySessionSnapshot(snapshot);
+    return snapshot;
+  }
+
+  function directorySnapshotToRestore(routeKey) {
+    const context = historyDirectoryContext();
+    if (context?.kind !== "directory" || context.routeKey !== routeKey) return null;
+    return sanitizeDirectorySnapshot(context.snapshot, routeKey);
+  }
+
+  function restoreDirectorySnapshot(routeKey, root) {
+    const snapshot = directorySnapshotToRestore(routeKey);
+    if (!snapshot || !root?.querySelectorAll) return;
+    const search = root.querySelector(
+      routeKey === "samples/projects"
+        ? "[data-dual-project-library-search]"
+        : "[data-dual-brand-library-search]",
+    );
+    if (search) search.value = snapshot.query;
+    if (routeKey === "samples/brands") {
+      const category = root.querySelector("[data-dual-brand-library-category]");
+      if (category && [...category.options].some(option => option.value === snapshot.category)) {
+        category.value = snapshot.category;
+      }
+      filterBrandLibrary(root);
+    } else {
+      filterProjectLibrary(search);
+    }
+
+    globalScope.requestAnimationFrame(() => {
+      globalScope.requestAnimationFrame(() => {
+        if (directoryRouteKey(parseRoute()) !== routeKey) return;
+        const cardSelector = routeKey === "samples/projects"
+          ? "[data-project-library-card]"
+          : "[data-brand-library-card]";
+        const anchor = [...root.querySelectorAll(cardSelector)].find(card => (
+          !card.hidden
+          && String(routeKey === "samples/projects" ? card.dataset.projectId || "" : card.dataset.brandId || "") === snapshot.anchorId
+        ));
+        const targetY = anchor && snapshot.anchorTop !== null
+          ? currentScrollTop() + anchor.getBoundingClientRect().top - snapshot.anchorTop
+          : snapshot.scrollY;
+        globalScope.scrollTo(0, Math.max(0, targetY));
+      });
     });
   }
 
@@ -419,6 +657,7 @@
         : readiness.reason;
     }
     renderHomeHistory();
+    renderHomeSamples();
   }
 
   function renderQuestion() {
@@ -485,7 +724,7 @@
     };
     const markError = () => {
       figure.classList.add("is-error");
-      figure.innerHTML = "<p>角色资产加载失败，分享已暂停。请刷新后重试。</p>";
+      figure.innerHTML = "<p>角色图片加载失败，分享已暂停。请刷新后重试。</p>";
     };
     image.addEventListener("load", markReady, { once: true });
     image.addEventListener("error", markError, { once: true });
@@ -521,7 +760,6 @@
           <span>DNA 锐评</span>
           <p>${escapeHtml(judgment.roast)}</p>
         </blockquote>
-        <p class="dual-visually-hidden">项目人格代表码为 ${escapeHtml(persona.representativeCode)}；同频项目排序继续使用完整测评码 ${escapeHtml(result.code)}。</p>
       </section>
     `;
   }
@@ -561,7 +799,7 @@
     const persona = personaForResult(result);
     const asset = resultAssetFor(mode, persona);
     if (!asset) {
-      showToast("当前人格缺少正式动物资产，结果暂时不能展示。");
+      showToast("角色图片暂时无法加载，请稍后重试。");
       navigate("#home", true);
       return;
     }
@@ -737,20 +975,469 @@
     return {
       item,
       presentation,
-      businessProblem,
-      mechanism,
-      learnPoints: learnPoints.filter(Boolean).slice(0, 3),
-      risk,
-      riskItems,
+      businessProblem: publicProjectText(businessProblem),
+      mechanism: mechanism.map(step => ({
+        ...step,
+        stage: publicProjectText(step?.stage),
+        body: publicProjectText(step?.body),
+      })),
+      learnPoints: learnPoints.filter(Boolean).map(publicProjectText).slice(0, 3),
+      risk: publicProjectText(risk),
+      riskItems: riskItems.map(publicProjectText),
       evidenceBoundary,
-      why,
-      valueTitle: presentation.valueTitle || item.special || item.usable || "项目观察手册",
-      summary: presentation.oneLineValue || item.usable || item.value || businessProblem,
-      tags: (item.heroTags || item.scenarioTags || []).slice(0, 3),
-      location: [item.city, item.location].filter(Boolean).join(" · ") || "地点待核",
+      publicNotice: publicProjectText(titleBoundary),
+      why: publicProjectText(why),
+      valueTitle: publicProjectValueTitle(item, presentation),
+      summary: publicProjectText(presentation.oneLineValue || item.usable || item.value || businessProblem),
+      tags: (item.heroTags || item.scenarioTags || [])
+        .filter(tag => !/六维正式|参考样本|待核样本|运行时样本|证据库|终审入库|用户确认/.test(String(tag || "")))
+        .slice(0, 3),
+      location: [item.city, item.location].filter(Boolean).join(" · "),
       type: item.format || item.subtype || item.archetype || "非标商业项目",
       operation: item.operator || item.archetype || "持续内容运营",
     };
+  }
+
+  function sampleProjectCardHTML(item, context = "home") {
+    const summary = publicProjectText(sampleAtlas.projectSummary(item));
+    const code = String(item?.dna?.code || "").toUpperCase();
+    const meta = [item?.city, item?.subtype || item?.format].filter(Boolean).join(" · ");
+    const headingTag = context === "home" ? "h4" : "h3";
+    const searchText = [item?.name, item?.city, item?.subtype, item?.format, code, summary]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    const libraryAttributes = context === "library"
+      ? `data-project-library-card data-project-search="${escapeHtml(searchText)}"`
+      : "";
+    return `
+      <a
+        class="dual-sample-card is-project"
+        href="#samples/projects/${encodeURIComponent(item?.id || "")}"
+        data-dual-open-project-sample
+        data-project-id="${escapeHtml(item?.id || "")}"
+        ${libraryAttributes}
+        aria-label="查看${escapeHtml(item?.name || "项目")}项目样本"
+      >
+        <figure class="dual-sample-card-media${item?.imageFit === "contain" ? " is-contain" : ""}">
+          <img src="${escapeHtml(item?.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item?.name || "项目")}项目现场" />
+        </figure>
+        <div class="dual-sample-card-copy">
+          ${meta ? `<span>${escapeHtml(meta)}</span>` : ""}
+          <${headingTag}>${escapeHtml(item?.name || "项目样本")}</${headingTag}>
+          ${code ? `<div><strong>${escapeHtml(code)}</strong><small>项目 DNA</small></div>` : ""}
+          <p>${escapeHtml(summary)}</p>
+          <b><span>查看项目</span><span aria-hidden="true">→</span></b>
+        </div>
+      </a>
+    `;
+  }
+
+  function sampleBrandCardHTML(item, context = "home") {
+    const summary = sampleAtlas.brandSummary(item);
+    const recordedCity = sampleAtlas.recordedCity(item);
+    const city = /^(?:待补|城市待补)$/u.test(recordedCity) ? "" : recordedCity;
+    const category = sampleAtlas.brandCategoryLabel(item).replace(/类$/u, "") || "品牌";
+    const headingTag = context === "home" ? "h4" : "h3";
+    const coverImage = sampleAtlas.brandEntryImageModel(item);
+    const coverImageUrl = safeBrandImageUrl(coverImage?.localSrc);
+    const searchText = [item?.name, city, item?.category, item?.subCategory, ...(item?.tags || [])]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    const libraryAttributes = context === "library"
+      ? `data-brand-library-card data-brand-category="${escapeHtml(item?.category || "未分类")}" data-brand-search="${escapeHtml(searchText)}"`
+      : "";
+    return `
+      <a
+        class="dual-sample-card is-brand"
+        href="#samples/brands/${encodeURIComponent(item?.id || "")}"
+        data-dual-open-brand-sample
+        data-brand-id="${escapeHtml(item?.id || "")}"
+        ${libraryAttributes}
+        aria-label="查看${escapeHtml(item?.name || "品牌")}品牌样本"
+      >
+        ${coverImageUrl ? `
+          <figure
+            class="dual-brand-card-media"
+            data-brand-card-image
+            data-entry-image-selection="${escapeHtml(coverImage?.selection || "fallback")}"
+            data-reuse-status="${escapeHtml(coverImage?.reuseStatus || "unknown")}"
+          >
+            <img
+              src="${escapeHtml(coverImageUrl)}"
+              alt="${escapeHtml(coverImage?.alt || `${item?.name || "品牌"}门店形象`)}"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <strong>${escapeHtml(category)}</strong>
+              ${city ? `<small>${escapeHtml(city)}</small>` : ""}
+            </figcaption>
+          </figure>
+        ` : `
+          <div class="dual-brand-fact-panel">
+            <strong>${escapeHtml(category)}</strong>
+            ${city ? `<small>所在城市</small><b>${escapeHtml(city)}</b>` : ""}
+          </div>
+        `}
+        <div class="dual-sample-card-copy">
+          <${headingTag}>${escapeHtml(item?.name || "品牌样本")}</${headingTag}>
+          <p>${escapeHtml(summary)}</p>
+          <b><span>查看品牌</span><span aria-hidden="true">→</span></b>
+        </div>
+      </a>
+    `;
+  }
+
+  function renderHomeSamples() {
+    const projects = sampleAtlas.featuredProjects(
+      globalScope.PARK_CASE_DATA,
+      globalScope.COMMERCIAL_DNA_FORMAL_PROJECT_SAMPLES_V0_1,
+      2,
+    );
+    const brands = sampleAtlas.featuredBrands(globalScope.COMMERCIAL_DNA_SYSTEM, 2);
+    if (elements.homeProjectSamples) {
+      elements.homeProjectSamples.innerHTML = projects.length
+        ? projects.map(item => sampleProjectCardHTML(item, "home")).join("")
+        : `<p class="dual-sample-empty">暂时没有项目可看。</p>`;
+    }
+    if (elements.homeBrandSamples) {
+      elements.homeBrandSamples.innerHTML = brands.length
+        ? brands.map(item => sampleBrandCardHTML(item, "home")).join("")
+        : `<p class="dual-sample-empty">暂时没有品牌可看。</p>`;
+    }
+  }
+
+  function filterProjectLibrary(input) {
+    const root = input?.closest?.("[data-dual-project-library]");
+    if (!root) return;
+    const query = String(input.value || "").trim().toLowerCase();
+    const cards = [...root.querySelectorAll("[data-project-library-card]")];
+    let visible = 0;
+    cards.forEach(card => {
+      const matched = !query || String(card.dataset.projectSearch || "").includes(query);
+      card.hidden = !matched;
+      if (matched) visible += 1;
+    });
+    const count = root.querySelector("[data-project-library-count]");
+    const empty = root.querySelector("[data-project-library-empty]");
+    if (count) count.textContent = `显示 ${visible} 个项目样本`;
+    if (empty) empty.hidden = visible !== 0;
+  }
+
+  function renderProjectLibrary() {
+    if (!elements.projectLibrary) return;
+    const rows = sampleAtlas.projectRows(globalScope.PARK_CASE_DATA);
+    const typeCount = new Set(rows.map(item => item?.subtype || item?.format).filter(Boolean)).size;
+    const cityCount = new Set(rows.map(item => item?.city).filter(Boolean)).size;
+    setVisiblePage("projectLibrary");
+    elements.projectLibrary.innerHTML = `
+      <article class="dual-sample-library" data-dual-project-library>
+        <header class="dual-sample-library-topbar">
+          <a href="#home" data-dual-home>${guideIconHTML("back")}<span>返回首页</span></a>
+          <strong>PROJECT SAMPLES</strong>
+        </header>
+        <header class="dual-sample-library-heading">
+          <span>SAMPLE ATLAS / 01</span>
+          <h1 id="dualProjectLibraryTitle" tabindex="-1">项目样本</h1>
+          <p>不依赖测试结果，直接浏览项目。这里讲项目如何组织空间、内容与持续运营，不提供万能答案。</p>
+        </header>
+        <dl class="dual-sample-library-summary">
+          <div><dt>项目数量</dt><dd>${rows.length}</dd></div>
+          <div><dt>项目类型</dt><dd>${typeCount}</dd></div>
+          <div><dt>所在城市</dt><dd>${cityCount}</dd></div>
+        </dl>
+        <label class="dual-sample-library-search">
+          <span>${guideIconHTML("observe")}搜索项目、城市、类型或 DNA</span>
+          <input type="search" data-dual-project-library-search autocomplete="off" placeholder="例如：小西湖 / 南京 / 历史更新" />
+        </label>
+        <p class="dual-sample-library-count" data-project-library-count role="status">显示 ${rows.length} 个项目样本</p>
+        <div class="dual-sample-library-grid">
+          ${rows.map(item => sampleProjectCardHTML(item, "library")).join("")}
+        </div>
+        <p class="dual-sample-empty" data-project-library-empty hidden>没有找到对应项目，换个名称、城市或类型试试。</p>
+      </article>
+    `;
+    focusHeading(document.getElementById("dualProjectLibraryTitle"));
+    restoreDirectorySnapshot("samples/projects", elements.projectLibrary);
+  }
+
+  function renderProjectSampleDetail(projectId) {
+    const item = sampleAtlas.projectById(projectId, globalScope.PARK_CASE_DATA);
+    if (!item || !elements.projectSampleDetail) {
+      navigate("#samples/projects", true);
+      return;
+    }
+    const code = String(item?.dna?.code || "").toUpperCase();
+    const model = projectGuideModel({ item, exact: true, matchPercent: 100 }, code);
+    const observationIcons = ["location", "stay", "consume", "revisit"];
+    const observationPrefixes = ["先看", "再看", "接着看", "最后看"];
+    setVisiblePage("projectDetail");
+    document.body.dataset.dualCode = code;
+    document.body.dataset.dualProject = item.id || "";
+    elements.projectSampleDetail.innerHTML = `
+      <article class="dual-field-guide dual-project-sample-detail" data-dual-project-sample-detail data-project-id="${escapeHtml(item.id || "")}">
+        <header class="dual-field-guide-topbar">
+          <a href="#samples/projects" data-dual-open-project-library>${guideIconHTML("back")}<span>返回项目样本</span></a>
+          <strong>PROJECT PROFILE</strong>
+        </header>
+        <section class="dual-field-guide-hero${item.imageFit === "contain" ? " is-contain" : ""}">
+          <header>
+            <div>
+              <h1 id="dualProjectSampleDetailTitle" tabindex="-1">${escapeHtml(item.name || "项目观察手册")}</h1>
+              ${code ? `<strong>${escapeHtml(code)}</strong>` : ""}
+              ${item.city ? `<span>项目样本 · ${escapeHtml(item.city)}</span>` : ""}
+              <h2>${escapeHtml(model.valueTitle)}</h2>
+              ${model.tags.length ? `<div class="dual-project-tags">${model.tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
+            </div>
+            <span class="dual-route-title-mark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
+          </header>
+          ${item.image ? `<img src="${escapeHtml(item.image)}" decoding="async" fetchpriority="high" alt="${escapeHtml(item.name || "项目")}项目现场" />` : ""}
+        </section>
+        <section class="dual-field-problem" aria-labelledby="dualProjectProblemTitle">
+          <h2 id="dualProjectProblemTitle">${guideIconHTML("observe")}它在解决什么商业问题</h2>
+          <p>${escapeHtml(model.businessProblem)}</p>
+        </section>
+        <section class="dual-field-observations" aria-labelledby="dualProjectObservationTitle">
+          <h2 id="dualProjectObservationTitle">${guideIconHTML("observe")}现场观察路线</h2>
+          <ol>
+            ${model.mechanism.map((step, index) => `
+              <li>
+                <span class="dual-field-observation-icon">${guideIconHTML(observationIcons[index] || "observe")}</span>
+                <div><h3>${escapeHtml(observationPrefixes[index] || "观察")}${escapeHtml(step.stage || "运营动作")}</h3><p>${escapeHtml(step.body || "")}</p></div>
+              </li>
+            `).join("")}
+          </ol>
+        </section>
+        <section class="dual-field-takeaways" aria-labelledby="dualProjectTakeawayTitle">
+          <h2 id="dualProjectTakeawayTitle">${guideIconHTML("takeaway")}带走三件事</h2>
+          <ol>${model.learnPoints.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ol>
+        </section>
+        <section class="dual-field-warning" aria-labelledby="dualProjectWarningTitle">
+          <h2 id="dualProjectWarningTitle">${guideIconHTML("warning")}不要直接照搬</h2>
+          ${model.riskItems.length
+            ? `<ol class="dual-field-risk-list">${model.riskItems.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ol>`
+            : `<p>${escapeHtml(model.risk)}</p>`}
+          ${model.publicNotice ? `<small class="dual-field-context-note">需要注意：${escapeHtml(model.publicNotice)}</small>` : ""}
+        </section>
+        <footer class="dual-field-actions">
+          <a class="primary" href="#samples/projects" data-dual-open-project-library>${guideIconHTML("back")}<span>返回项目样本</span></a>
+          <a href="#samples/brands" data-dual-open-brand-library><span>继续看品牌样本</span>${guideIconHTML("next")}</a>
+        </footer>
+      </article>
+    `;
+    focusHeading(document.getElementById("dualProjectSampleDetailTitle"));
+  }
+
+  function filterBrandLibrary(root) {
+    const library = root?.closest?.("[data-dual-brand-library]") || root;
+    if (!library?.querySelectorAll) return;
+    const query = String(library.querySelector("[data-dual-brand-library-search]")?.value || "").trim().toLowerCase();
+    const category = String(library.querySelector("[data-dual-brand-library-category]")?.value || "");
+    const cards = [...library.querySelectorAll("[data-brand-library-card]")];
+    let visible = 0;
+    cards.forEach(card => {
+      const queryMatched = !query || String(card.dataset.brandSearch || "").includes(query);
+      const categoryMatched = !category || card.dataset.brandCategory === category;
+      card.hidden = !(queryMatched && categoryMatched);
+      if (!card.hidden) visible += 1;
+    });
+    const count = library.querySelector("[data-brand-library-count]");
+    const empty = library.querySelector("[data-brand-library-empty]");
+    if (count) count.textContent = `显示 ${visible} 个品牌样本`;
+    if (empty) empty.hidden = visible !== 0;
+  }
+
+  function renderBrandLibrary() {
+    if (!elements.brandLibrary) return;
+    const rows = sampleAtlas.brandRows(globalScope.COMMERCIAL_DNA_SYSTEM);
+    const categories = Array.from(new Set(rows.map(item => item?.category).filter(Boolean))).sort((a, b) => a.localeCompare(b, "zh-CN"));
+    const cityCount = new Set(rows.map(item => sampleAtlas.recordedCity(item)).filter(city => city !== "待补")).size;
+    setVisiblePage("brandLibrary");
+    elements.brandLibrary.innerHTML = `
+      <article class="dual-sample-library dual-brand-library" data-dual-brand-library>
+        <header class="dual-sample-library-topbar">
+          <a href="#home" data-dual-home>${guideIconHTML("back")}<span>返回首页</span></a>
+          <strong>BRAND SAMPLES</strong>
+        </header>
+        <header class="dual-sample-library-heading">
+          <span>SAMPLE ATLAS / 02</span>
+          <h1 id="dualBrandLibraryTitle" tabindex="-1">品牌样本</h1>
+          <p>先认识品牌在做什么、在哪些城市出现。这里建立品牌认知，不给品牌预设固定项目。</p>
+        </header>
+        <dl class="dual-sample-library-summary">
+          <div><dt>品牌数量</dt><dd>${rows.length}</dd></div>
+          <div><dt>品牌品类</dt><dd>${categories.length}</dd></div>
+          <div><dt>所在城市</dt><dd>${cityCount}</dd></div>
+        </dl>
+        <div class="dual-brand-library-filters">
+          <label class="dual-sample-library-search">
+            <span>${guideIconHTML("observe")}搜索品牌、品类或城市</span>
+            <input type="search" data-dual-brand-library-search autocomplete="off" placeholder="例如：荒石公园 / 咖啡 / 成都" />
+          </label>
+          <label class="dual-brand-category-filter">
+            <span>按品类浏览</span>
+            <select data-dual-brand-library-category>
+              <option value="">全部品类</option>
+              ${categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+        <p class="dual-sample-library-count" data-brand-library-count role="status">显示 ${rows.length} 个品牌样本</p>
+        <div class="dual-sample-library-grid">
+          ${rows.map(item => sampleBrandCardHTML(item, "library")).join("")}
+        </div>
+        <p class="dual-sample-empty" data-brand-library-empty hidden>没有找到对应品牌，换个名称、品类或城市试试。</p>
+      </article>
+    `;
+    focusHeading(document.getElementById("dualBrandLibraryTitle"));
+    restoreDirectorySnapshot("samples/brands", elements.brandLibrary);
+  }
+
+  function recommendedProjectCardHTML(item) {
+    const code = String(item?.dna?.code || "").toUpperCase();
+    const imageUrl = safeProjectImageUrl(item?.image);
+    if (!imageUrl) return "";
+    const projectType = item?.subtype || item?.format || "非标项目";
+    return `
+      <a class="dual-brand-project-card${item?.imageFit === "contain" ? " is-contain" : ""}" href="#samples/projects/${encodeURIComponent(item?.id || "")}" data-dual-open-project-sample data-project-id="${escapeHtml(item?.id || "")}" aria-label="查看${escapeHtml(item?.name || "项目")}项目样本">
+        <figure>
+          <img src="${escapeHtml(imageUrl)}" loading="lazy" decoding="async" alt="${escapeHtml(item?.name || "项目")}项目现场" />
+          <figcaption>
+            <h3>${escapeHtml(item?.name || "项目样本")}</h3>
+            <div>${code ? `<strong>DNA · ${escapeHtml(code)}</strong>` : ""}<span>${escapeHtml(projectType)}</span></div>
+          </figcaption>
+        </figure>
+      </a>
+    `;
+  }
+
+  function brandGalleryImageHTML(image) {
+    const imageUrl = safeBrandImageUrl(image?.localSrc);
+    if (!imageUrl) return "";
+    return `
+      <figure class="dual-brand-gallery-item" data-brand-gallery-image data-reuse-status="${escapeHtml(image?.reuseStatus || "unknown")}" role="listitem">
+        <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(image?.alt || "品牌图片")}" loading="lazy" decoding="async" />
+      </figure>
+    `;
+  }
+
+  function brandLearnMoreCardHTML(entry) {
+    const destinationUrl = safeHttpUrl(entry?.url);
+    const coverUrl = safeHttpUrl(entry?.coverUrl);
+    const title = String(entry?.title || "").trim();
+    if (!destinationUrl || !coverUrl || !title) return "";
+    const contentType = entry?.contentType === "video" ? "video" : "article";
+    const displayTitle = String(entry?.displayTitle || title).trim();
+    return `
+      <a class="dual-brand-learn-more-card is-${contentType}" href="${escapeHtml(destinationUrl)}" target="_blank" rel="noopener noreferrer external" data-brand-learn-more-card data-content-type="${contentType}" aria-label="在外部打开：${escapeHtml(title)}">
+        <figure>
+          <img src="${escapeHtml(coverUrl)}" alt="${escapeHtml(title)}封面" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        </figure>
+        <h3 lang="zh-CN">${escapeHtml(displayTitle)}</h3>
+      </a>
+    `;
+  }
+
+  function monitorBrandLearnMoreCovers(root) {
+    const section = root?.querySelector?.("[data-brand-learn-more]");
+    const grid = section?.querySelector?.(".dual-brand-learn-more-grid");
+    const cards = Array.from(section?.querySelectorAll?.("[data-brand-learn-more-card]") || []);
+    if (!section || !grid || !cards.length) return;
+    const reconcile = () => {
+      const visibleCards = cards.filter(card => !card.hidden);
+      grid.classList.toggle("is-single", visibleCards.length === 1);
+      section.hidden = visibleCards.length === 0;
+    };
+    cards.forEach(card => {
+      const image = card.querySelector("img");
+      if (!image) return;
+      image.addEventListener("error", () => {
+        card.hidden = true;
+        reconcile();
+      }, { once: true });
+    });
+    reconcile();
+  }
+
+  function renderBrandDetail(brandId) {
+    const item = sampleAtlas.brandById(brandId, globalScope.COMMERCIAL_DNA_SYSTEM);
+    if (!item || !elements.brandDetail) {
+      navigate("#samples/brands", true);
+      return;
+    }
+    const model = sampleAtlas.brandDetailModel(item, globalScope.COMMERCIAL_DNA_SYSTEM);
+    const relatedProjects = sampleAtlas.relatedProjects(
+      item,
+      globalScope.PARK_CASE_DATA,
+      globalScope.COMMERCIAL_DNA_FORMAL_PROJECT_SAMPLES_V0_1,
+      2,
+    );
+    const relatedProjectCards = relatedProjects
+      .map(recommendedProjectCardHTML)
+      .filter(Boolean)
+      .slice(0, 2);
+    const learnMoreCards = model.learnMore
+      .map(brandLearnMoreCardHTML)
+      .filter(Boolean);
+    const footprintUrl = safeHttpUrl(model.footprint.publicUrl);
+    const brandLogoUrl = safeBrandImageUrl(model.gallery.logo?.localSrc);
+    const hasStoreSection = model.footprint.count !== null || Boolean(footprintUrl);
+    const storeLocationLabels = Array.isArray(model.footprint.locationLabels)
+      ? model.footprint.locationLabels
+      : model.footprint.cities;
+    const hasPhilosophy = model.philosophy.verified === true;
+    setVisiblePage("brandDetail");
+    document.body.dataset.dualBrand = item.id || "";
+    elements.brandDetail.innerHTML = `
+      <article class="dual-brand-detail" data-dual-brand-detail data-brand-id="${escapeHtml(item.id || "")}">
+        <header class="dual-sample-library-topbar">
+          <a href="#samples/brands" data-dual-open-brand-library>${guideIconHTML("back")}<span>返回品牌样本</span></a>
+          <strong>BRAND PROFILE</strong>
+        </header>
+        <header class="dual-brand-detail-hero">
+          <span>BRAND SAMPLE</span>
+          <h1 id="dualBrandDetailTitle" tabindex="-1">${escapeHtml(item.name || "品牌样本")}</h1>
+          <div class="dual-brand-category-chip" data-brand-category-label>${guideIconHTML("stay")}<span>${escapeHtml(model.categoryLabel)}</span></div>
+        </header>
+        ${hasStoreSection ? `<section class="dual-brand-store" aria-labelledby="dualBrandStoreTitle" data-brand-store data-store-scope="${escapeHtml(model.footprint.scope)}" data-store-scope-code="${escapeHtml(model.footprint.scopeCode)}" data-store-count-kind="${escapeHtml(model.footprint.countKind)}" data-store-qualifier="${escapeHtml(model.footprint.qualifier)}" data-store-cities-status="${escapeHtml(model.footprint.citiesStatus)}">
+          <h2 class="dual-visually-hidden" id="dualBrandStoreTitle">门店信息</h2>
+          ${model.footprint.count !== null ? `<div class="dual-brand-store-count" data-brand-store-count>
+            ${model.footprint.countPrefix ? `<span class="dual-brand-store-prefix">${escapeHtml(model.footprint.countPrefix)}</span>` : ""}
+            <strong>${escapeHtml(model.footprint.countDisplay)}</strong>
+            ${model.footprint.unit ? `<span class="dual-brand-store-unit">${escapeHtml(model.footprint.unit)}</span>` : ""}
+            ${storeLocationLabels.length ? `<span class="dual-brand-store-cities" data-brand-store-cities>${storeLocationLabels.map(escapeHtml).join(" · ")}</span>` : ""}
+          </div>` : ""}
+          ${footprintUrl ? `<div class="dual-brand-store-location"><span>${escapeHtml(model.footprint.publicUrlLabel)}</span><a class="dual-brand-store-link" href="${escapeHtml(footprintUrl)}" target="_blank" rel="noopener noreferrer"><span>查看地址</span><span aria-hidden="true">↗</span></a></div>` : ""}
+        </section>` : ""}
+        ${hasPhilosophy ? `<section class="dual-brand-philosophy" aria-labelledby="dualBrandPhilosophyTitle">
+          <div class="dual-brand-philosophy-topline">
+            <h2 id="dualBrandPhilosophyTitle">品牌理念</h2>
+            ${brandLogoUrl
+              ? `<img class="dual-brand-philosophy-logo" data-brand-logo data-reuse-status="${escapeHtml(model.gallery.logo.reuseStatus || "unknown")}" src="${escapeHtml(brandLogoUrl)}" alt="${escapeHtml(model.gallery.logo.alt)}" loading="lazy" decoding="async" />`
+              : `<span aria-hidden="true">“</span>`}
+          </div>
+          <strong class="dual-brand-philosophy-headline" data-brand-philosophy-headline>${escapeHtml(model.philosophy.headline)}</strong>
+          <p>${escapeHtml(model.philosophy.summary)}</p>
+        </section>` : ""}
+        ${model.gallery.images.length ? `<section class="dual-brand-gallery" data-brand-gallery-mode="${escapeHtml(model.gallery.mode || "unavailable")}" aria-label="品牌图片"><div class="dual-brand-gallery-track" data-brand-gallery-track role="list" tabindex="0" aria-label="左右滑动浏览品牌图片">${model.gallery.images.map(brandGalleryImageHTML).join("")}</div></section>` : ""}
+        ${learnMoreCards.length ? `<section class="dual-brand-learn-more" data-brand-learn-more aria-labelledby="dualBrandLearnMoreTitle"><h2 id="dualBrandLearnMoreTitle">深入了解品牌</h2><div class="dual-brand-learn-more-grid">${learnMoreCards.join("")}</div></section>` : ""}
+        <section class="dual-brand-recommendations" aria-labelledby="dualBrandRecommendationTitle">
+          <p class="dual-brand-mother-question">${escapeHtml(sampleAtlas.brandNeedQuestion)}</p>
+          <h2 id="dualBrandRecommendationTitle">DNA 推荐项目</h2>
+          ${relatedProjectCards.length
+            ? `<div class="dual-brand-project-grid">${relatedProjectCards.join("")}</div>`
+            : `<p class="dual-brand-project-empty">暂时没有可推荐的项目。先回到区域人群与真实需求，再决定需要什么品牌。</p>`}
+        </section>
+        <footer class="dual-brand-detail-actions">
+          <a href="#samples/brands" data-dual-open-brand-library>${guideIconHTML("back")}<span>返回品牌样本</span></a>
+          <a href="#samples/projects" data-dual-open-project-library><span>浏览项目样本</span>${guideIconHTML("next")}</a>
+        </footer>
+      </article>
+    `;
+    monitorBrandLearnMoreCovers(elements.brandDetail);
+    focusHeading(document.getElementById("dualBrandDetailTitle"));
   }
 
   function routeProjectCardHTML(row, index, sourceCode, originMode = "self") {
@@ -783,7 +1470,7 @@
           <p>${escapeHtml(model.summary)}</p>
           ${model.tags.length ? `<div class="dual-project-tags">${model.tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}
           <dl class="dual-route-card-meta">
-            <div>${guideIconHTML("location")}<dt>城市</dt><dd>${escapeHtml(item.city || "待核")}</dd></div>
+            ${item.city ? `<div>${guideIconHTML("location")}<dt>城市</dt><dd>${escapeHtml(item.city)}</dd></div>` : ""}
             <div>${guideIconHTML("type")}<dt>类型</dt><dd>${escapeHtml(item.subtype || item.format || "非标项目")}</dd></div>
             <div>${guideIconHTML("revisit")}<dt>机制</dt><dd>${escapeHtml(item.archetype || "持续运营")}</dd></div>
           </dl>
@@ -804,18 +1491,11 @@
     return Number(row?.matchPercent || 0) >= 58 ? "near" : "explore";
   }
 
-  function isFormalProjectSample(item) {
-    return Boolean(globalScope.COMMERCIAL_DNA_FORMAL_PROJECT_SAMPLES_V0_1?.projects?.some(
-      row => row?.caseItem?.id === item?.id,
-    ));
-  }
-
   function allSampleCardHTML(row, index, sourceCode, originMode = "self") {
     const model = projectGuideModel(row, sourceCode);
     const item = model.item;
     const imageFitClass = item.imageFit === "contain" ? " is-contain" : "";
     const guideHref = `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}/${encodeURIComponent(item.id || "")}/all`;
-    const sampleStatus = isFormalProjectSample(item) ? "六维正式样本" : "参考样本";
     const searchText = [item.name, item.city, item.dna?.code, item.subtype, item.format, model.summary]
       .filter(Boolean)
       .join(" ")
@@ -838,12 +1518,11 @@
       >
         <figure class="dual-all-sample-media${imageFitClass}">
           <img src="${escapeHtml(item.image || "")}" loading="lazy" decoding="async" alt="${escapeHtml(item.name || "项目样本")}" />
-          <span>${escapeHtml(sampleStatus)}</span>
         </figure>
         <div class="dual-all-sample-copy">
           <span>${escapeHtml(recommendationMatchLabel(row))}</span>
           <h3>${escapeHtml(item.name || "项目样本")}</h3>
-          <div><strong>${escapeHtml(item.dna?.code || "")}</strong><small>${escapeHtml(item.city || "城市待核")}</small></div>
+          <div><strong>${escapeHtml(item.dna?.code || "")}</strong>${item.city ? `<small>${escapeHtml(item.city)}</small>` : ""}</div>
           <p>${escapeHtml(model.summary)}</p>
           <b>查看项目${guideIconHTML("next")}</b>
         </div>
@@ -880,7 +1559,7 @@
             </a>
           </div>
         </article>
-        <p class="dual-project-recommendation-note">优先推荐 ${rows.length} 个独立项目页；进入路线册后按匹配度逐个查看，不在结果页展开。</p>
+        <p class="dual-project-recommendation-note">优先推荐 ${rows.length} 个项目；进入路线册后可按匹配度逐个查看。</p>
         <a class="dual-project-all-samples" href="${samplesHref}" data-dual-open-samples data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(result.code)}">
           <span>${guideIconHTML("bookmark")}浏览全部 ${allRows.length} 个项目样本</span>
           ${guideIconHTML("next")}
@@ -1000,7 +1679,7 @@
     const exactRows = rows.filter(row => row.exact);
     const nearRows = rows.filter(row => !row.exact && row.matchPercent >= 58);
     const exploreRows = rows.filter(row => !row.exact && row.matchPercent < 58);
-    const formalCount = rows.filter(row => isFormalProjectSample(row.item)).length;
+    const cityCount = new Set(rows.map(row => row.item?.city).filter(Boolean)).size;
     const routesHref = `#routes/${encodeURIComponent(originMode)}/${encodeURIComponent(sourceCode)}`;
     let startIndex = 0;
     const exactSection = allSampleSectionHTML({
@@ -1046,14 +1725,14 @@
           <div>
             <span>PROJECT ATLAS · ${escapeHtml(sourceCode)}</span>
             <h1 id="dualAllSamplesTitle" tabindex="-1">全部项目样本</h1>
-            <p>不只看最匹配的前三。全部样本先按真实匹配度排序，再按策展优先级和项目名稳定排列。</p>
+            <p>不只看最匹配的前三。这里从同类项目一路展开到更多延伸方向。</p>
           </div>
           <span class="dual-route-title-mark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
         </header>
         <dl class="dual-all-samples-summary">
           <div><dt>全部样本</dt><dd>${rows.length}</dd></div>
           <div><dt>同码样本</dt><dd>${exactRows.length}</dd></div>
-          <div><dt>六维正式</dt><dd>${formalCount}</dd></div>
+          <div><dt>所在城市</dt><dd>${cityCount}</dd></div>
         </dl>
         <label class="dual-all-samples-search">
           <span>${guideIconHTML("observe")}搜索项目、城市或 DNA</span>
@@ -1166,7 +1845,7 @@
               ${model.riskItems.map(point => `<li data-dual-risk-item>${escapeHtml(point)}</li>`).join("")}
             </ol>
           ` : `<p>${escapeHtml(model.risk)}</p>`}
-          ${model.evidenceBoundary ? `<small>证据边界：${escapeHtml(model.evidenceBoundary)}</small>` : ""}
+          ${model.publicNotice ? `<small class="dual-field-context-note">需要注意：${escapeHtml(model.publicNotice)}</small>` : ""}
         </section>
         <footer class="dual-field-actions">
           <a class="primary" href="${routesHref}" ${backData} data-dual-origin="${escapeHtml(originMode)}" data-dual-code="${escapeHtml(sourceCode)}">
@@ -1428,6 +2107,22 @@
       }
     }
     if (screen === "samples") {
+      if (parts[1] === "projects") {
+        if (parts.length === 2) return { screen: "projectLibrary", mode: null };
+        const projectId = String(parts[2] || "");
+        if (parts.length === 3 && /^case-[a-zA-Z0-9_-]+$/.test(projectId)) {
+          return { screen: "projectDetail", mode: null, projectId };
+        }
+        return { screen: "home", mode: null };
+      }
+      if (parts[1] === "brands") {
+        if (parts.length === 2) return { screen: "brandLibrary", mode: null };
+        const brandId = String(parts[2] || "");
+        if (parts.length === 3 && /^[a-zA-Z0-9_-]+$/.test(brandId)) {
+          return { screen: "brandDetail", mode: null, brandId };
+        }
+        return { screen: "home", mode: null };
+      }
       const originMode = parts[1];
       const code = String(parts[2] || "").toUpperCase();
       if (MODES.includes(originMode) && DNA_CODE_PATTERN.test(code) && parts.length === 3) {
@@ -1455,8 +2150,40 @@
   }
 
   function navigate(hash, replace = false) {
+    const currentRoute = parseRoute();
+    const nextRoute = parseRoute(hash);
+    const currentDirectoryKey = directoryRouteKey(currentRoute);
+    const nextDirectoryKey = directoryRouteKey(nextRoute);
+    const currentDetailKey = detailDirectoryRouteKey(currentRoute);
+    const nextDetailKey = detailDirectoryRouteKey(nextRoute);
+    const capturedSnapshot = currentDirectoryKey ? captureDirectorySnapshot(currentRoute) : null;
+    let nextState = null;
+    if (capturedSnapshot && nextDetailKey === currentDirectoryKey) {
+      nextState = {
+        [DIRECTORY_HISTORY_STATE_KEY]: {
+          kind: "detail",
+          routeKey: currentDirectoryKey,
+          returnSnapshot: capturedSnapshot,
+        },
+      };
+    } else if (currentDetailKey && nextDirectoryKey === currentDetailKey) {
+      const context = historyDirectoryContext();
+      const returnSnapshot = context?.kind === "detail" && context.routeKey === nextDirectoryKey
+        ? sanitizeDirectorySnapshot(context.returnSnapshot, nextDirectoryKey)
+          || readDirectorySessionSnapshot(nextDirectoryKey)
+        : null;
+      if (returnSnapshot) {
+        nextState = {
+          [DIRECTORY_HISTORY_STATE_KEY]: {
+            kind: "directory",
+            routeKey: nextDirectoryKey,
+            snapshot: returnSnapshot,
+          },
+        };
+      }
+    }
     const method = replace ? "replaceState" : "pushState";
-    globalScope.history[method](null, "", hash);
+    globalScope.history[method](nextState, "", hash);
     handleRoute();
   }
 
@@ -1502,6 +2229,22 @@
       renderFieldGuide(route.originMode, route.code, route.projectId, route.scope);
       return;
     }
+    if (route.screen === "projectLibrary") {
+      renderProjectLibrary();
+      return;
+    }
+    if (route.screen === "projectDetail") {
+      renderProjectSampleDetail(route.projectId);
+      return;
+    }
+    if (route.screen === "brandLibrary") {
+      renderBrandLibrary();
+      return;
+    }
+    if (route.screen === "brandDetail") {
+      renderBrandDetail(route.brandId);
+      return;
+    }
     if (route.screen === "match") {
       if (!canMatch()) {
         globalScope.history.replaceState(null, "", "#home");
@@ -1515,7 +2258,7 @@
   async function loadAssetManifest() {
     dualState.assetGate = {
       status: "checking",
-      reason: "正在读取操盘怪物资产清单。",
+      reason: "正在准备测试。",
       assetsById: {},
     };
     const initialRoute = parseRoute();
@@ -1538,7 +2281,7 @@
     } catch (error) {
       dualState.assetGate = {
         status: "error",
-        reason: error.message || "人的角色资产尚未准备完成。",
+        reason: "测试暂时无法开始，请稍后重试。",
         assetsById: {},
       };
     }
@@ -1547,12 +2290,14 @@
 
   function handleOwnedClick(event) {
     const target = event.target.closest(
-      "[data-dual-mode], [data-dual-start], [data-dual-back], [data-dual-skip], [data-dual-option], "
+      "button[data-dual-mode], [data-dual-start], [data-dual-back], [data-dual-skip], [data-dual-option], "
       + "[data-dual-home], [data-dual-other], [data-dual-open-match], [data-dual-start-match], "
       + "[data-dual-view-result], [data-dual-retest], [data-dual-history-id], "
       + "[data-dual-menu], [data-dual-menu-close], "
       + "[data-dual-share], [data-dual-share-close], "
       + "[data-dual-open-routes], [data-dual-open-samples], [data-dual-open-guide], "
+      + "[data-dual-open-project-library], [data-dual-open-project-sample], "
+      + "[data-dual-open-brand-library], [data-dual-open-brand-sample], "
       + "[data-dual-back-routes], [data-dual-back-samples], [data-dual-back-result], "
       + ".brand[data-shell-page='home']",
     );
@@ -1560,7 +2305,7 @@
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    if (target.matches("[data-dual-mode]")) selectMode(target.dataset.dualMode);
+    if (target.matches("button[data-dual-mode]")) selectMode(target.dataset.dualMode);
     else if (target.matches("[data-dual-start]")) {
       dualState.pendingMatchAfterSelf = false;
       startTest(dualState.selectedMode);
@@ -1591,6 +2336,14 @@
       navigate(
         `#guide/${encodeURIComponent(originMode)}/${encodeURIComponent(String(target.dataset.dualCode || "").toUpperCase())}/${encodeURIComponent(target.dataset.projectId || "")}${scope}`,
       );
+    }
+    else if (target.matches("[data-dual-open-project-library]")) navigate("#samples/projects");
+    else if (target.matches("[data-dual-open-project-sample]")) {
+      navigate(`#samples/projects/${encodeURIComponent(target.dataset.projectId || "")}`);
+    }
+    else if (target.matches("[data-dual-open-brand-library]")) navigate("#samples/brands");
+    else if (target.matches("[data-dual-open-brand-sample]")) {
+      navigate(`#samples/brands/${encodeURIComponent(target.dataset.brandId || "")}`);
     }
     else if (target.matches("[data-dual-back-routes]")) {
       const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
@@ -1638,6 +2391,11 @@
     document.addEventListener("click", handleOwnedClick, true);
     document.addEventListener("input", event => {
       if (event.target.matches?.("[data-dual-sample-search]")) filterAllProjectSamples(event.target);
+      else if (event.target.matches?.("[data-dual-project-library-search]")) filterProjectLibrary(event.target);
+      else if (event.target.matches?.("[data-dual-brand-library-search]")) filterBrandLibrary(event.target);
+    });
+    document.addEventListener("change", event => {
+      if (event.target.matches?.("[data-dual-brand-library-category]")) filterBrandLibrary(event.target);
     });
     elements.shareDialog?.addEventListener("click", event => {
       if (event.target === elements.shareDialog) closeShareDialog();

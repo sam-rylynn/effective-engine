@@ -4,6 +4,7 @@
   --dna-canvas: #e7e3dc;
   --dna-ink: #111111;
   --dna-red: #d94336;
+  --dna-red-text: #c4382d;
   --dna-blue: #2149cf;
   --dna-green: #2e693d;
   --dna-yellow: #f5ce35;
@@ -3104,10 +3105,1007 @@ body[data-experience="dual-v01"] .dual-field-actions a.primary .dual-line-icon {
   filter: invert(1);
 }
 
+/* Home and standalone project / brand sample atlas */
+body[data-experience="dual-v01"][data-dual-screen="projectLibrary"] .topbar,
+body[data-experience="dual-v01"][data-dual-screen="projectDetail"] .topbar,
+body[data-experience="dual-v01"][data-dual-screen="brandLibrary"] .topbar,
+body[data-experience="dual-v01"][data-dual-screen="brandDetail"] .topbar {
+  display: none;
+}
+
+body[data-experience="dual-v01"][data-app-page="dual-project-library"] main,
+body[data-experience="dual-v01"][data-app-page="dual-project-sample-detail"] main,
+body[data-experience="dual-v01"][data-app-page="dual-brand-library"] main,
+body[data-experience="dual-v01"][data-app-page="dual-brand-detail"] main {
+  min-height: 100svh;
+  padding: 0 18px 30px;
+}
+
+body[data-experience="dual-v01"] .dual-project-library-page,
+body[data-experience="dual-v01"] .dual-project-sample-detail-page,
+body[data-experience="dual-v01"] .dual-brand-library-page,
+body[data-experience="dual-v01"] .dual-brand-detail-page {
+  width: 100%;
+  padding: 0;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-atlas {
+  display: grid;
+  gap: 22px;
+  border-top: 2px solid var(--dna-ink);
+  margin-top: 24px;
+  padding: 20px 0 8px;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-heading {
+  display: grid;
+  gap: 5px;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-heading > span,
+body[data-experience="dual-v01"] .dual-home-sample-group > header span {
+  color: var(--dna-blue);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: .04em;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-heading h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-heading p {
+  margin: 2px 0 0;
+  color: var(--dna-muted);
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.5;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-group {
+  display: grid;
+  gap: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-group > header {
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1.5px solid var(--dna-blue);
+  padding-bottom: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-group.is-brand > header {
+  border-color: var(--dna-red);
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-group.is-brand > header span {
+  color: var(--dna-red-text);
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-group > header h3 {
+  margin: 3px 0 0;
+  font-size: 23px;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-group > header small {
+  max-width: 145px;
+  color: var(--dna-muted);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.35;
+  text-align: right;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-list,
+body[data-experience="dual-v01"] .dual-sample-library-grid {
+  display: grid;
+  gap: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card {
+  min-width: 0;
+  min-height: 190px;
+  display: grid;
+  grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+  overflow: hidden;
+  border: 1.5px solid rgba(17, 17, 17, .58);
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card[hidden] {
+  display: none;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-media {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-right: 1px dashed rgba(17, 17, 17, .4);
+  margin: 0;
+  background: var(--dna-paper-deep);
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-media.is-contain img {
+  object-fit: contain;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-media > span {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  left: 7px;
+  border: 1px solid var(--dna-ink);
+  background: var(--dna-yellow);
+  padding: 5px 6px;
+  color: var(--dna-ink);
+  font-size: 11px;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 13px 12px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy > span {
+  color: var(--dna-blue);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card.is-brand .dual-sample-card-copy > span {
+  color: var(--dna-red-text);
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy h3,
+body[data-experience="dual-v01"] .dual-sample-card-copy h4 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 950;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy > div {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy > div strong {
+  font-size: 13px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy > div small,
+body[data-experience="dual-v01"] .dual-sample-card-copy > small {
+  color: var(--dna-muted);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy > p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--dna-muted);
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card-copy > b {
+  min-height: 34px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid rgba(17, 17, 17, .24);
+  padding-top: 7px;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-brand-fact-panel {
+  min-width: 0;
+  display: grid;
+  align-content: space-between;
+  gap: 8px;
+  border-right: 1px dashed rgba(17, 17, 17, .4);
+  background: var(--dna-blue);
+  color: #fff;
+  padding: 13px 11px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-fact-panel > span {
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, .72);
+  padding: 4px 5px;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+body[data-experience="dual-v01"] .dual-brand-fact-panel > strong {
+  font-size: 16px;
+  font-weight: 950;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-brand-fact-panel > small {
+  align-self: end;
+  color: rgba(255, 255, 255, .78);
+  font-size: 11px;
+  font-weight: 760;
+}
+
+body[data-experience="dual-v01"] .dual-brand-fact-panel > b {
+  font-size: 19px;
+  font-weight: 950;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-brand-card-media {
+  position: relative;
+  min-width: 0;
+  min-height: 190px;
+  overflow: hidden;
+  border-right: 1px dashed rgba(17, 17, 17, .4);
+  margin: 0;
+  background: var(--dna-blue);
+  color: #fff;
+}
+
+body[data-experience="dual-v01"] .dual-brand-card-media > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+body[data-experience="dual-v01"] .dual-brand-card-media > span {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, .86);
+  background: var(--dna-ink);
+  padding: 5px 6px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+body[data-experience="dual-v01"] .dual-brand-card-media > figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  gap: 4px;
+  background: var(--dna-blue);
+  padding: 9px 10px 10px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-card-media > figcaption strong {
+  font-size: 16px;
+  font-weight: 950;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-brand-card-media > figcaption small {
+  color: rgba(255, 255, 255, .84);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-more {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.5px solid var(--dna-ink);
+  background: var(--dna-ink);
+  color: var(--dna-paper);
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-home-sample-more b {
+  font-size: 22px;
+}
+
+body[data-experience="dual-v01"] .dual-home-brand-question {
+  border-left: 4px solid var(--dna-red);
+  margin: 2px 0 0;
+  background: rgba(217, 67, 54, .08);
+  padding: 11px 12px;
+  color: var(--dna-ink);
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.5;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library,
+body[data-experience="dual-v01"] .dual-brand-detail {
+  display: grid;
+  gap: 16px;
+  padding: 10px 0 8px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-topbar {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: var(--dna-hairline);
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-topbar > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dna-ink);
+  font-size: 13px;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-topbar > a .dual-line-icon {
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-topbar > strong {
+  color: var(--dna-blue);
+  font-size: 11px;
+  font-weight: 950;
+  text-align: right;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-heading {
+  display: grid;
+  gap: 6px;
+  padding-top: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-heading > span,
+body[data-experience="dual-v01"] .dual-brand-detail-hero > span {
+  color: var(--dna-blue);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: .04em;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-heading h1,
+body[data-experience="dual-v01"] .dual-brand-detail-hero h1 {
+  margin: 0;
+  color: var(--dna-ink);
+  font-size: clamp(36px, 11vw, 48px);
+  font-weight: 950;
+  line-height: .98;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-heading p,
+body[data-experience="dual-v01"] .dual-brand-detail-hero p {
+  margin: 2px 0 0;
+  color: var(--dna-muted);
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1.5px solid var(--dna-ink);
+  margin: 0;
+  background: var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-summary > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-summary > div + div {
+  border-left: 1px solid rgba(17, 17, 17, .28);
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-summary dt,
+body[data-experience="dual-v01"] .dual-sample-library-summary dd {
+  margin: 0;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-summary dt {
+  color: var(--dna-muted);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-summary dd {
+  font-size: 24px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-brand-library-filters {
+  display: grid;
+  gap: 11px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-search,
+body[data-experience="dual-v01"] .dual-brand-category-filter {
+  display: grid;
+  gap: 7px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-search > span,
+body[data-experience="dual-v01"] .dual-brand-category-filter > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dna-ink);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-search input,
+body[data-experience="dual-v01"] .dual-brand-category-filter select {
+  width: 100%;
+  min-height: 48px;
+  border: 1.5px solid var(--dna-ink);
+  border-radius: 0;
+  background: var(--dna-paper);
+  color: var(--dna-ink);
+  padding: 0 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+body[data-experience="dual-v01"] .dual-sample-library-count {
+  margin: -5px 0 0;
+  color: var(--dna-blue);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-sample-empty {
+  border: 1.5px dashed var(--dna-ink);
+  margin: 0;
+  padding: 20px;
+  color: var(--dna-muted);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  text-align: center;
+}
+
+body[data-experience="dual-v01"] .dual-project-sample-detail .dual-field-guide-topbar > strong {
+  color: var(--dna-blue);
+  font-size: 11px;
+  text-align: right;
+}
+
+body[data-experience="dual-v01"] .dual-brand-detail-hero {
+  display: grid;
+  gap: 7px;
+  padding: 5px 0 4px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-category-chip {
+  width: fit-content;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+  background: var(--dna-ink);
+  color: var(--dna-paper);
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-brand-category-chip .dual-line-icon {
+  width: 16px;
+  height: 16px;
+  filter: invert(1);
+}
+
+body[data-experience="dual-v01"] .dual-brand-store {
+  display: grid;
+  gap: 11px;
+  border-block: 2px solid var(--dna-ink);
+  padding: 13px 0 12px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-count {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  color: var(--dna-red-text);
+  line-height: .86;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-count strong {
+  font-size: 58px;
+  font-weight: 950;
+  letter-spacing: -.03em;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-prefix {
+  align-self: center;
+  margin-right: 1px;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-unit {
+  font-size: 18px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-cities {
+  margin-left: 8px;
+  border-left: 2px solid currentColor;
+  padding-left: 10px;
+  color: var(--dna-ink);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-status {
+  margin: 0;
+  color: var(--dna-ink);
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-location {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--dna-blue);
+  color: var(--dna-paper);
+  padding: 8px 11px;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--dna-yellow);
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-store-link:focus-visible {
+  outline: 2px solid var(--dna-paper);
+  outline-offset: 3px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy {
+  display: grid;
+  gap: 12px;
+  background: var(--dna-blue);
+  color: var(--dna-paper);
+  padding: 16px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy-topline {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy-topline > span {
+  color: var(--dna-yellow);
+  font-size: 54px;
+  font-weight: 950;
+  line-height: .6;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy-logo {
+  width: auto;
+  max-width: 112px;
+  max-height: 44px;
+  display: block;
+  object-fit: contain;
+  object-position: right center;
+  background: var(--dna-paper);
+  padding: 5px 7px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy-headline {
+  max-width: 15ch;
+  font-size: 25px;
+  font-weight: 950;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+body[data-experience="dual-v01"] .dual-brand-philosophy > p {
+  max-width: 34em;
+  margin: 0;
+  color: var(--dna-paper);
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+body[data-experience="dual-v01"] .dual-brand-gallery {
+  min-width: 0;
+}
+
+body[data-experience="dual-v01"] .dual-brand-gallery-track {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+body[data-experience="dual-v01"] .dual-brand-gallery-track::-webkit-scrollbar {
+  display: none;
+}
+
+body[data-experience="dual-v01"] .dual-brand-gallery-track:focus-visible {
+  outline: 3px solid var(--dna-blue);
+  outline-offset: 4px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-gallery-item {
+  min-width: 0;
+  flex: 0 0 86%;
+  scroll-snap-align: start;
+  border: 1.5px solid var(--dna-ink);
+  background: var(--dna-paper-deep);
+  margin: 0;
+}
+
+body[data-experience="dual-v01"] .dual-brand-gallery-item img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: cover;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more {
+  display: grid;
+  gap: 14px;
+  border-top: 5px solid var(--dna-red);
+  margin-inline: -18px;
+  background: var(--dna-paper);
+  padding: 18px 8px 20px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more > h2 {
+  margin: 0;
+  padding-inline: 6px;
+  font-size: 27px;
+  font-weight: 950;
+  line-height: 1.08;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-grid.is-single {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 380px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more[hidden],
+body[data-experience="dual-v01"] .dual-brand-learn-more-card[hidden] {
+  display: none !important;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  height: 100%;
+  gap: 8px;
+  color: var(--dna-ink);
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card figure {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 0;
+  border-radius: 12px;
+  background: var(--dna-paper-deep);
+  margin: 0;
+  transition: transform 180ms cubic-bezier(.22, 1, .36, 1);
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card.is-video figure::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, .72);
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card.is-video figure::after {
+  content: "";
+  position: absolute;
+  top: 19px;
+  right: 19px;
+  z-index: 3;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 9px solid var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card h3 {
+  min-height: 2.84em;
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  padding-inline: 2px;
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1.42;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card:hover figure,
+body[data-experience="dual-v01"] .dual-brand-learn-more-card:focus-visible figure {
+  transform: translateY(-2px);
+}
+
+body[data-experience="dual-v01"] .dual-brand-learn-more-card:focus-visible {
+  outline: 3px solid var(--dna-blue);
+  outline-offset: 4px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-recommendations {
+  display: grid;
+  gap: 10px;
+  border-top: 5px solid var(--dna-blue);
+  background: var(--dna-yellow);
+  padding: 16px 14px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-mother-question {
+  background: rgba(244, 239, 229, .82);
+  box-shadow: inset 0 -4px 0 var(--dna-red);
+  margin: 0;
+  padding: 11px 12px;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+  line-height: 1.5 !important;
+}
+
+body[data-experience="dual-v01"] .dual-brand-recommendations h2 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 9px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card {
+  min-width: 0;
+  display: block;
+  border: 1.5px solid var(--dna-ink);
+  background: var(--dna-ink);
+  color: var(--dna-paper);
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card figure {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  margin: 0;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card.is-contain img {
+  background: var(--dna-paper-deep);
+  object-fit: contain;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: 7px;
+  background: rgba(17, 17, 17, .88);
+  padding: 11px 12px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card h3 {
+  margin: 0;
+  color: var(--dna-paper);
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card figcaption > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card figcaption strong,
+body[data-experience="dual-v01"] .dual-brand-project-card figcaption span {
+  color: var(--dna-paper);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card figcaption strong {
+  color: var(--dna-yellow);
+  font-weight: 950;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-card figcaption span {
+  min-width: 0;
+  font-weight: 760;
+  text-align: right;
+}
+
+body[data-experience="dual-v01"] .dual-brand-project-empty {
+  border: 1.5px dashed var(--dna-ink);
+  background: rgba(244, 239, 229, .75);
+  padding: 14px;
+  font-weight: 850 !important;
+}
+
+body[data-experience="dual-v01"] .dual-brand-detail-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body[data-experience="dual-v01"] .dual-brand-detail-actions a {
+  min-width: 0;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1.5px solid var(--dna-blue);
+  color: var(--dna-blue);
+  padding: 9px 11px;
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+body[data-experience="dual-v01"] .dual-brand-detail-actions a:first-child {
+  background: var(--dna-blue);
+  color: var(--dna-paper);
+}
+
+body[data-experience="dual-v01"] .dual-brand-detail-actions a:first-child .dual-line-icon {
+  filter: invert(1);
+}
+
+body[data-experience="dual-v01"] input:focus-visible,
+body[data-experience="dual-v01"] select:focus-visible {
+  outline: 3px solid var(--dna-blue);
+  outline-offset: 3px;
+}
+
 @media (max-width: 380px) {
   body[data-experience="dual-v01"][data-app-page="dual-project-routes"] main,
   body[data-experience="dual-v01"][data-app-page="dual-all-projects"] main,
-  body[data-experience="dual-v01"][data-app-page="dual-field-guide"] main {
+  body[data-experience="dual-v01"][data-app-page="dual-field-guide"] main,
+  body[data-experience="dual-v01"][data-app-page="dual-project-library"] main,
+  body[data-experience="dual-v01"][data-app-page="dual-project-sample-detail"] main,
+  body[data-experience="dual-v01"][data-app-page="dual-brand-library"] main,
+  body[data-experience="dual-v01"][data-app-page="dual-brand-detail"] main {
     padding-inline: 11px;
   }
 
@@ -3161,5 +4159,84 @@ body[data-experience="dual-v01"] .dual-field-actions a.primary .dual-line-icon {
 
   body[data-experience="dual-v01"] .dual-field-actions {
     grid-template-columns: 1fr;
+  }
+
+  body[data-experience="dual-v01"] .dual-sample-card {
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  }
+
+  body[data-experience="dual-v01"] .dual-sample-card-copy {
+    padding: 11px 9px;
+  }
+
+  body[data-experience="dual-v01"] .dual-sample-card-copy h3,
+  body[data-experience="dual-v01"] .dual-sample-card-copy h4 {
+    font-size: 18px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-fact-panel {
+    padding: 11px 9px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-fact-panel > strong {
+    font-size: 14px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-card-media > span {
+    top: 8px;
+    left: 8px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-card-media > figcaption {
+    padding: 8px 9px 9px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-card-media > figcaption strong {
+    font-size: 14px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more {
+    margin-inline: -11px;
+    padding: 16px 8px 18px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more > h2 {
+    padding-inline: 3px;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more-grid {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more-card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more-grid.is-single .dual-brand-learn-more-card {
+    flex-basis: 100%;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-detail-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-experience="dual-v01"] .dual-brand-learn-more-card figure {
+    transition: none;
+  }
+
+  body[data-experience="dual-v01"] .dual-brand-learn-more-card:hover figure,
+  body[data-experience="dual-v01"] .dual-brand-learn-more-card:focus-visible figure {
+    transform: none;
   }
 }
