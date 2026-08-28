@@ -14,6 +14,7 @@
     "licensed",
     "permission-granted",
     "public-domain",
+    "user-approved-public-display",
   ]);
   const REVIEW_IMAGE_RIGHTS = new Set([
     "official-public-review",

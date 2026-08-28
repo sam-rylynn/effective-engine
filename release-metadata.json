@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "allowlistVersion": "commercial-dna-pages-v1",
+  "allowlistVersion": "commercial-dna-pages-v2",
   "sourceRepository": "local/commercial-dna-main",
   "sourceDirectory": "commercial_dna_web",
-  "sourceCommit": "7681f63f2e57f8b3f25ee630513908f166525eca",
-  "sourceRef": "detached",
+  "sourceCommit": "1a116530c3d6e394f8cac252d2bd3443bae02fd3",
+  "sourceRef": "codex/brand-samples-20260826",
   "sourceDirty": false,
-  "generatedAt": "2026-08-28T07:43:55.490Z",
-  "packagedFileCount": 138,
-  "packagedBytes": 16843609,
-  "packagedFilesSha256": "dfa6c1f4f16ba759a17394896e2166ddfb996ab98aa1eb20fe88dce504ff74a3"
+  "generatedAt": "2026-08-28T08:39:46.343Z",
+  "packagedFileCount": 509,
+  "packagedBytes": 53472646,
+  "packagedFilesSha256": "e1de55a85f1b52f0183de9822a323c1b3b7b622c21fad16df664c27ef3afa4d8"
 }
