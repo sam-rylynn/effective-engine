@@ -165,6 +165,16 @@ body[data-experience="dual-v01"]:not([data-app-page="home"]) .dual-menu-button {
   color: var(--dna-muted);
 }
 
+.dual-desktop-nav,
+.dual-desktop-control-title {
+  display: none;
+}
+
+.dual-home-hero-visual,
+.dual-home-control {
+  display: contents;
+}
+
 .dual-visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -1692,6 +1702,458 @@ body[data-experience="dual-v01"] summary:focus-visible {
 body[data-experience="dual-v01"] h1[tabindex="-1"]:focus,
 body[data-experience="dual-v01"] h2[tabindex="-1"]:focus {
   outline: 0;
+}
+
+/* Desktop homepage — selected editorial atlas direction. Mobile and all inner routes keep the existing shell. */
+@media (min-width: 1100px) {
+  body[data-experience="dual-v01"][data-app-page="home"] {
+    background: var(--dna-paper);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"]::before {
+    content: none;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .topbar {
+    width: 100%;
+    height: 72px;
+    margin: 0;
+    padding-inline: max(20px, calc((100vw - 1440px) / 2));
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .topbar .brand {
+    gap: 12px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .topbar .brand > .dna-logo {
+    grid-template-columns: repeat(3, 34px);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .topbar .dna-logo i {
+    width: 34px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .topbar .brand-copy strong {
+    font-size: 21px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .topbar .brand-copy em {
+    font-size: 10px;
+    letter-spacing: .22em;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .dual-menu-button {
+    display: none;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .dual-desktop-nav {
+    display: flex;
+    align-items: stretch;
+    align-self: stretch;
+    gap: 40px;
+    margin-left: auto;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .dual-desktop-nav a,
+  body[data-experience="dual-v01"][data-app-page="home"] .dual-desktop-nav button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--dna-ink);
+    padding: 0 3px;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] .dual-desktop-nav .is-active::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 12px;
+    left: 0;
+    height: 2px;
+    background: var(--dna-ink);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] main {
+    width: min(1440px, calc(100% - 40px));
+    min-height: calc(100svh - 72px);
+    margin: 0 auto;
+    border: 0;
+    background: var(--dna-paper);
+    padding: 0 0 64px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-hero {
+    min-height: 423px;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 395px);
+    grid-template-rows: minmax(405px, auto);
+    column-gap: 22px;
+    overflow: hidden;
+    border-bottom: 3px solid var(--dna-ink);
+    padding: 18px 0 0;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-hero-visual {
+    position: relative;
+    min-width: 0;
+    min-height: 405px;
+    display: block;
+    overflow: hidden;
+    border-right: 1px solid rgba(17, 17, 17, .38);
+    padding: 0;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-hero .dna-home-mascot {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: auto;
+    overflow: hidden;
+    background: var(--dna-paper);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-hero .dna-home-mascot picture,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-hero .dna-home-mascot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-hero .dna-home-mascot img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-control {
+    min-width: 0;
+    display: grid;
+    grid-template-rows: 42px 168px auto;
+    gap: 18px;
+    padding: 14px 0 24px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-desktop-control-title {
+    display: flex;
+    align-items: center;
+    background: var(--dna-ink);
+    color: var(--dna-paper);
+    padding: 0 16px;
+    font-size: 17px;
+    font-weight: 950;
+    line-height: 1;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 12px 0 4px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button {
+    min-height: 152px;
+    align-content: center;
+    gap: 14px;
+    border: 1.5px solid var(--dna-ink);
+    border-radius: 0;
+    background: var(--dna-paper);
+    color: var(--dna-ink);
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button:first-child span {
+    color: var(--dna-blue);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button:nth-child(2) span {
+    color: var(--dna-red-text);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button span {
+    font-size: 31px;
+    font-weight: 950;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button small,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button.is-active small {
+    overflow: visible;
+    color: var(--dna-muted);
+    font-size: 14px;
+    font-weight: 760;
+    line-height: 1.35;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button.is-active {
+    background: var(--dna-paper);
+    color: var(--dna-ink);
+    box-shadow: inset 0 -7px 0 var(--dna-blue);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-mode-switch button:nth-child(2).is-active {
+    box-shadow: inset 0 -7px 0 var(--dna-red);
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-action {
+    grid-template-rows: 64px auto;
+    align-self: start;
+    gap: 12px;
+    margin: 0;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-action > button {
+    min-height: 64px;
+    border-radius: 0;
+    padding-inline: 24px 58px;
+    font-size: 22px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-action > button::after {
+    right: 24px;
+    font-size: 34px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-action p {
+    min-height: 18px;
+    font-size: 13px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-history-shelf {
+    margin-top: 18px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-atlas {
+    gap: 0;
+    border-top: 0;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-heading {
+    min-height: 74px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    align-items: center;
+    column-gap: 42px;
+    row-gap: 3px;
+    border-bottom: 2px solid var(--dna-ink);
+    padding: 0 16px 10px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-heading > span {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    font-size: 16px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-heading h2 {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    font-size: 41px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-heading p {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    max-width: 520px;
+    margin: 12px 0 0;
+    color: var(--dna-ink);
+    font-size: 16px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group {
+    position: relative;
+    gap: 8px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group.is-brand {
+    margin-top: 10px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group > header {
+    min-height: 36px;
+    align-items: center;
+    border-color: var(--dna-ink);
+    padding: 0 46px 4px 16px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group > header > div {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group > header span {
+    font-size: 17px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group > header h3 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-group > header small {
+    max-width: none;
+    color: var(--dna-ink);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card {
+    position: relative;
+    min-height: 184px;
+    display: block;
+    overflow: hidden;
+    border: 1.5px solid var(--dna-ink);
+    background: var(--dna-ink);
+    color: #fff;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-media,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-brand-card-media {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    min-height: 0;
+    border: 0;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-media img,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-brand-card-media > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 5px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, .82) 0%, rgba(0, 0, 0, .48) 50%, rgba(0, 0, 0, .08) 78%, rgba(0, 0, 0, 0) 100%);
+    color: #fff;
+    padding: 20px 72px 20px 20px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > span {
+    order: 1;
+    color: rgba(255, 255, 255, .9);
+    font-size: 15px;
+    font-weight: 850;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy h3,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy h4 {
+    order: 0;
+    max-width: 82%;
+    color: #fff;
+    font-size: 31px;
+    line-height: 1.05;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > div {
+    order: 2;
+    color: #fff;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > div strong,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > div small {
+    color: #fff;
+    font-size: 14px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > p {
+    display: none;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > b {
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+    min-height: 0;
+    display: block;
+    border: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 31px;
+    line-height: 1;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card-copy > b span:first-child {
+    display: none;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-brand-card-media > figcaption {
+    top: auto;
+    z-index: 2;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    background: transparent;
+    padding: 0 72px 20px 20px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-brand-card-media > figcaption strong,
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-brand-card-media > figcaption small {
+    color: rgba(255, 255, 255, .9);
+    font-size: 15px;
+    font-weight: 850;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-list .dual-sample-card.is-brand .dual-sample-card-copy {
+    justify-content: flex-end;
+    padding-bottom: 58px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-more {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    width: 42px;
+    min-height: 36px;
+    border: 0;
+    background: transparent;
+    color: var(--dna-ink);
+    padding: 0;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-more span {
+    display: none;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-sample-more b {
+    font-size: 25px;
+  }
+
+  body[data-experience="dual-v01"][data-app-page="home"] #home .dual-home-brand-question {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3226,6 +3688,11 @@ body[data-experience="dual-v01"] .dual-sample-card[hidden] {
   display: none;
 }
 
+body[data-experience="dual-v01"] .dual-sample-card.is-brand-missing-cover {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(120px, auto);
+}
+
 body[data-experience="dual-v01"] .dual-sample-card-media {
   position: relative;
   min-width: 0;
@@ -3373,6 +3840,33 @@ body[data-experience="dual-v01"] .dual-brand-fact-panel > b {
   overflow-wrap: anywhere;
 }
 
+body[data-experience="dual-v01"] .dual-sample-card.is-brand-missing-cover .dual-brand-fact-panel {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  border-right: 1px dashed rgba(17, 17, 17, .4);
+  background: var(--dna-paper);
+  color: var(--dna-blue);
+  padding: 11px;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card.is-brand-missing-cover .dual-brand-fact-panel > strong,
+body[data-experience="dual-v01"] .dual-sample-card.is-brand-missing-cover .dual-brand-fact-panel > b {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--dna-blue);
+  background: var(--dna-paper);
+  padding: 5px 7px;
+  color: var(--dna-blue);
+}
+
+body[data-experience="dual-v01"] .dual-sample-card.is-brand-missing-cover .dual-brand-fact-panel > small {
+  align-self: center;
+  color: var(--dna-muted);
+}
+
 body[data-experience="dual-v01"] .dual-brand-card-media {
   position: relative;
   min-width: 0;
@@ -3430,6 +3924,42 @@ body[data-experience="dual-v01"] .dual-brand-card-media > figcaption small {
   font-size: 11px;
   font-weight: 850;
   line-height: 1.25;
+}
+
+/* Brand-library covers stay image-first: category and city are compact corner labels. */
+body[data-experience="dual-v01"] .dual-sample-card[data-brand-library-card] .dual-brand-card-media > figcaption {
+  right: auto;
+  bottom: 7px;
+  left: 7px;
+  max-width: calc(100% - 14px);
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: transparent;
+  padding: 0;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card[data-brand-library-card] .dual-brand-card-media > figcaption strong,
+body[data-experience="dual-v01"] .dual-sample-card[data-brand-library-card] .dual-brand-card-media > figcaption small {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--dna-blue);
+  background: var(--dna-paper);
+  padding: 5px 6px;
+  color: var(--dna-blue);
+  font-size: 10px;
+  font-weight: 950;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+body[data-experience="dual-v01"] .dual-sample-card[data-brand-library-card] .dual-brand-card-media > figcaption small {
+  border-color: var(--dna-blue);
+  background: var(--dna-blue);
+  color: #fff;
 }
 
 body[data-experience="dual-v01"] .dual-home-sample-more {

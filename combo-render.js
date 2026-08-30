@@ -1391,7 +1391,16 @@ function setAppPage(page = "home", shouldScroll = true) {
     section.hidden = section.id !== appPageId(page);
   });
   document.querySelectorAll("[data-shell-page]").forEach(node => {
-    node.classList.toggle("active", node.dataset.shellPage === page);
+    const active = node.dataset.shellPage === page;
+    node.classList.toggle("active", active);
+    if (node.closest?.("[data-dual-desktop-nav]")) {
+      if (active) node.setAttribute("aria-current", "page");
+      else node.removeAttribute("aria-current");
+    }
+  });
+  document.querySelectorAll("[data-dual-desktop-nav] [data-dual-open-project-library], [data-dual-desktop-nav] [data-dual-open-brand-library], [data-dual-desktop-nav] button[data-dual-mode]").forEach(node => {
+    node.classList.remove("is-active");
+    node.removeAttribute("aria-current");
   });
   if (page !== "project") {
     updateFlowVisibility();
@@ -1471,7 +1480,8 @@ function sampleCardHTML(item = {}) {
         <p>${escapeHtml(shortText(presentation.oneLineValue || item.bestFor || item.usable || item.value, "适合寻找非标商业打法参照的项目。", 62))}</p>
         <div>
           <i>${escapeHtml(types)}</i>
-          <i>${escapeHtml(item.typeFitLabel || `${item.copyThreshold || "待判断"}门槛`)}</i>
+          ${item.typeFitLabel ? `<i>${escapeHtml(item.typeFitLabel)}</i>` : ""}
+          ${item.copyThreshold ? `<i>${escapeHtml(item.copyThreshold)}门槛</i>` : ""}
         </div>
       </div>
     </article>
@@ -1503,7 +1513,6 @@ function opsRows() {
     dimension: row.dimension,
     action: row.action,
     tag: row.tag,
-    status: sceneEvidenceLinks(item).some(link => sameProjectName(link.projectName, item.name) && link.sceneTag === row.dimension) ? "待核验" : "操盘推断",
   })));
 }
 
@@ -1512,12 +1521,10 @@ function renderOpsLibrary() {
   if (!els.opsLibraryList) return;
   const keyword = String(els.opsSearch?.value || "").trim().toLowerCase();
   const dim = els.opsDimensionFilter?.value || "";
-  const status = els.opsStatusFilter?.value || "";
   const rows = opsRows().filter(row => {
     const text = `${row.item.name} ${row.item.city} ${row.dimension} ${row.action} ${row.tag}`.toLowerCase();
     if (keyword && !text.includes(keyword)) return false;
     if (dim && row.dimension !== dim) return false;
-    if (status && row.status !== status) return false;
     return true;
   }).slice(0, 80);
   els.opsLibraryList.innerHTML = rows.length
@@ -1529,8 +1536,7 @@ function renderOpsLibrary() {
           <p>${escapeHtml(row.action)}</p>
         </div>
         <aside>
-          <strong>${escapeHtml(row.status)}</strong>
-          <em>${escapeHtml(row.item.copyThreshold || "待判断")}门槛</em>
+          ${row.item.copyThreshold ? `<em>${escapeHtml(row.item.copyThreshold)}门槛</em>` : ""}
         </aside>
       </article>
     `).join("")
@@ -1550,16 +1556,37 @@ function renderProfilePage() {
   const store = readProfileStore();
   const rows = Array.isArray(store.results) ? store.results : [];
   const favs = favoriteList();
-  if (!rows.length && !favs.length) {
+  const dualResults = ["self", "project"].map(mode => ({
+    mode,
+    result: state.dual?.results?.[mode] || null,
+  })).filter(row => row.result?.code);
+  if (!rows.length && !favs.length && !dualResults.length) {
     els.profilePanel.innerHTML = `
       <article class="empty-profile">
         <strong>还没有档案</strong>
-      <p>先做一次项目测试，或登记品牌档案。之后结果会保存在这里。</p>
-        <button data-start-project type="button">去测项目</button>
+        <p>先完成一次测我或测项目，结果会保存在这台设备上。</p>
+        <div class="profile-empty-actions">
+          <a href="#test/self">去测我</a>
+          <a href="#test/project">去测项目</a>
+        </div>
       </article>
     `;
     return;
   }
+  const dualHtml = dualResults.map(({ mode, result }) => {
+    const isSelf = mode === "self";
+    const name = isSelf
+      ? (operatorSystem.personasByCode?.[result.code]?.name || "商业操盘人格")
+      : (personaSystem.personas?.project?.[result.code] || "项目动物人格");
+    return `
+      <a class="profile-record profile-dual-result" href="#result/${escapeHtml(mode)}" data-dual-view-result="${escapeHtml(mode)}">
+        <span>${isSelf ? "测我结果" : "测项目结果"}</span>
+        <h3>${escapeHtml(name)}</h3>
+        <strong>DNA · ${escapeHtml(result.code)}</strong>
+        <p>${isSelf ? "查看我的商业操盘人格与同频项目。" : "查看项目人格、经营判断与推荐项目。"}</p>
+      </a>
+    `;
+  }).join("");
   const favHtml = favs.length
     ? favs.map(row => `
       <article class="profile-record profile-favorite">
@@ -1579,7 +1606,7 @@ function renderProfilePage() {
       <em>${escapeHtml(new Date(row.time).toLocaleString("zh-CN", { hour12: false }))}</em>
     </article>
   `).join("");
-  els.profilePanel.innerHTML = favHtml + recordHtml;
+  els.profilePanel.innerHTML = dualHtml + favHtml + recordHtml;
 }
 
 function renderBrandGate() {

@@ -395,6 +395,28 @@
       .replace(/核验/g, "确认");
   }
 
+  function syncDesktopNavigation(screen) {
+    const nav = document.querySelector("[data-dual-desktop-nav]");
+    if (!nav) return;
+    const section = ["home", "question", "result", "match"].includes(screen)
+      ? "test"
+      : (["routes", "samples", "guide", "projectLibrary", "projectDetail"].includes(screen)
+        ? "projects"
+        : (["brandLibrary", "brandDetail"].includes(screen) ? "brands" : ""));
+    nav.querySelectorAll("a, button").forEach(item => {
+      const itemSection = item.matches("button[data-dual-mode]")
+        ? "test"
+        : (item.matches("[data-dual-open-project-library]")
+          ? "projects"
+          : (item.matches("[data-dual-open-brand-library]") ? "brands" : "profile"));
+      const active = Boolean(section && section === itemSection);
+      item.classList.toggle("is-active", active);
+      item.classList.remove("active");
+      if (active) item.setAttribute("aria-current", "page");
+      else item.removeAttribute("aria-current");
+    });
+  }
+
   function setVisiblePage(screen, mode = null) {
     dualState.screen = screen;
     dualState.activeMode = mode;
@@ -421,6 +443,7 @@
     if (screen !== "brandDetail") delete document.body.dataset.dualBrand;
     if (elements.quickMenu) elements.quickMenu.hidden = true;
     if (elements.menuButton) elements.menuButton.setAttribute("aria-expanded", "false");
+    syncDesktopNavigation(screen);
 
     const visibleId = {
       home: "home",
@@ -463,19 +486,64 @@
   function directoryRouteKey(route) {
     if (route?.screen === "projectLibrary") return "samples/projects";
     if (route?.screen === "brandLibrary") return "samples/brands";
+    if (route?.screen === "routes") return `routes/${route.originMode}/${route.code}`;
+    if (route?.screen === "samples") return `samples/${route.originMode}/${route.code}`;
     return "";
   }
 
   function detailDirectoryRouteKey(route) {
     if (route?.screen === "projectDetail") return "samples/projects";
     if (route?.screen === "brandDetail") return "samples/brands";
+    if (route?.screen === "guide") {
+      return `${route.scope === "all" ? "samples" : "routes"}/${route.originMode}/${route.code}`;
+    }
     return "";
+  }
+
+  function directoryDescriptor(routeKey) {
+    if (routeKey === "samples/projects") {
+      return {
+        root: elements.projectLibrary,
+        cardSelector: "[data-project-library-card]",
+        searchSelector: "[data-dual-project-library-search]",
+        idForCard: card => String(card.dataset.projectId || ""),
+        filter: search => filterProjectLibrary(search),
+      };
+    }
+    if (routeKey === "samples/brands") {
+      return {
+        root: elements.brandLibrary,
+        cardSelector: "[data-brand-library-card]",
+        searchSelector: "[data-dual-brand-library-search]",
+        idForCard: card => String(card.dataset.brandId || ""),
+        filter: root => filterBrandLibrary(root),
+      };
+    }
+    if (/^routes\/(?:self|project)\/[A-Z]{4}$/.test(routeKey)) {
+      return {
+        root: elements.projectRoutes,
+        cardSelector: "[data-dual-recommendation-card]",
+        searchSelector: "",
+        idForCard: card => String(card.dataset.projectId || ""),
+        filter: () => {},
+      };
+    }
+    if (/^samples\/(?:self|project)\/[A-Z]{4}$/.test(routeKey)) {
+      return {
+        root: elements.allProjects,
+        cardSelector: "[data-dual-all-sample-card]",
+        searchSelector: "[data-dual-sample-search]",
+        idForCard: card => String(card.dataset.projectId || ""),
+        filter: search => filterAllProjectSamples(search),
+      };
+    }
+    return null;
   }
 
   function sanitizeDirectorySnapshot(value, expectedRouteKey = "") {
     if (!value || typeof value !== "object") return null;
     const routeKey = String(value.routeKey || "");
-    if (!["samples/projects", "samples/brands"].includes(routeKey)) return null;
+    if (!/^(?:samples\/(?:projects|brands|(?:self|project)\/[A-Z]{4})|routes\/(?:self|project)\/[A-Z]{4})$/.test(routeKey)) return null;
     if (expectedRouteKey && routeKey !== expectedRouteKey) return null;
     const scrollY = Number(value.scrollY);
     const anchorTop = Number(value.anchorTop);
@@ -535,27 +603,19 @@
   function directorySnapshot(route = parseRoute()) {
     const routeKey = directoryRouteKey(route);
     if (!routeKey) return null;
-    const root = routeKey === "samples/projects" ? elements.projectLibrary : elements.brandLibrary;
+    const descriptor = directoryDescriptor(routeKey);
+    const root = descriptor?.root;
     if (!root?.querySelectorAll) return null;
-    const cardSelector = routeKey === "samples/projects"
-      ? "[data-project-library-card]"
-      : "[data-brand-library-card]";
-    const visibleCards = [...root.querySelectorAll(cardSelector)].filter(card => !card.hidden);
+    const visibleCards = [...root.querySelectorAll(descriptor.cardSelector)].filter(card => !card.hidden);
     const anchor = visibleCards.find(card => card.getBoundingClientRect().bottom > 0) || null;
-    const anchorId = anchor
-      ? String(routeKey === "samples/projects" ? anchor.dataset.projectId || "" : anchor.dataset.brandId || "")
-      : "";
+    const anchorId = anchor ? descriptor.idForCard(anchor) : "";
     const anchorTop = anchor ? anchor.getBoundingClientRect().top : null;
     return sanitizeDirectorySnapshot({
       routeKey,
       scrollY: currentScrollTop(),
       anchorId,
       anchorTop,
-      query: root.querySelector(
-        routeKey === "samples/projects"
-          ? "[data-dual-project-library-search]"
-          : "[data-dual-brand-library-search]",
-      )?.value || "",
+      query: descriptor.searchSelector ? root.querySelector(descriptor.searchSelector)?.value || "" : "",
       category: routeKey === "samples/brands"
         ? root.querySelector("[data-dual-brand-library-category]")?.value || ""
         : "",
@@ -590,31 +650,26 @@
   function restoreDirectorySnapshot(routeKey, root) {
     const snapshot = directorySnapshotToRestore(routeKey);
     if (!snapshot || !root?.querySelectorAll) return;
-    const search = root.querySelector(
-      routeKey === "samples/projects"
-        ? "[data-dual-project-library-search]"
-        : "[data-dual-brand-library-search]",
-    );
+    const descriptor = directoryDescriptor(routeKey);
+    if (!descriptor) return;
+    const search = descriptor.searchSelector ? root.querySelector(descriptor.searchSelector) : null;
     if (search) search.value = snapshot.query;
     if (routeKey === "samples/brands") {
       const category = root.querySelector("[data-dual-brand-library-category]");
       if (category && [...category.options].some(option => option.value === snapshot.category)) {
         category.value = snapshot.category;
       }
-      filterBrandLibrary(root);
-    } else {
-      filterProjectLibrary(search);
+      descriptor.filter(root);
+    } else if (search) {
+      descriptor.filter(search);
     }
 
     globalScope.requestAnimationFrame(() => {
       globalScope.requestAnimationFrame(() => {
         if (directoryRouteKey(parseRoute()) !== routeKey) return;
-        const cardSelector = routeKey === "samples/projects"
-          ? "[data-project-library-card]"
-          : "[data-brand-library-card]";
-        const anchor = [...root.querySelectorAll(cardSelector)].find(card => (
+        const anchor = [...root.querySelectorAll(descriptor.cardSelector)].find(card => (
           !card.hidden
-          && String(routeKey === "samples/projects" ? card.dataset.projectId || "" : card.dataset.brandId || "") === snapshot.anchorId
+          && descriptor.idForCard(card) === snapshot.anchorId
         ));
         const targetY = anchor && snapshot.anchorTop !== null
           ? currentScrollTop() + anchor.getBoundingClientRect().top - snapshot.anchorTop
@@ -681,6 +736,8 @@
         "aria-label",
         `答题进度 ${draft.questionIndex + 1} / ${definition.questions.length}`,
       );
+      elements.progress.setAttribute("aria-valuenow", String(draft.questionIndex + 1));
+      elements.progress.setAttribute("aria-valuemax", String(definition.questions.length));
     }
     if (elements.count) elements.count.textContent = `${draft.questionIndex + 1} / ${definition.questions.length}`;
     if (elements.axis) {
@@ -813,6 +870,10 @@
     dualState.returnMode = mode;
     elements.result.innerHTML = `
       <article class="dual-result-card dual-result-${mode}">
+        <header class="dual-result-page-heading dual-visually-hidden">
+          <span>${isSelf ? "MY COMMERCIAL DNA" : "PROJECT COMMERCIAL DNA"}</span>
+          <h1 id="dualResultTitle" tabindex="-1">${isSelf ? "我的商业 DNA" : "项目商业 DNA"} · ${escapeHtml(persona.name)}</h1>
+        </header>
         <figure class="dual-result-visual dual-result-image-only">
           <img id="dualResultImage" src="${escapeHtml(asset)}" decoding="async" fetchpriority="high" alt="${escapeHtml(persona.assetAlt)}" tabindex="-1" />
         </figure>
@@ -834,7 +895,7 @@
       </article>
     `;
     bindResultImageState();
-    focusHeading(document.getElementById("dualResultImage"));
+    focusHeading(document.getElementById("dualResultTitle"));
   }
 
   function resultShareHref(mode, result, { saveOnly = false } = {}) {
@@ -1045,12 +1106,17 @@
       .filter(Boolean)
       .join(" ")
       .toLowerCase();
+    const brandCardClasses = [
+      "dual-sample-card",
+      "is-brand",
+      coverImageUrl ? "has-brand-cover" : "is-brand-missing-cover",
+    ].join(" ");
     const libraryAttributes = context === "library"
       ? `data-brand-library-card data-brand-category="${escapeHtml(item?.category || "未分类")}" data-brand-search="${escapeHtml(searchText)}"`
       : "";
     return `
       <a
-        class="dual-sample-card is-brand"
+        class="${brandCardClasses}"
         href="#samples/brands/${encodeURIComponent(item?.id || "")}"
         data-dual-open-brand-sample
         data-brand-id="${escapeHtml(item?.id || "")}"
@@ -1325,7 +1391,9 @@
 
   function brandLearnMoreCardHTML(entry) {
     const destinationUrl = safeHttpUrl(entry?.url);
-    const coverUrl = safeHttpUrl(entry?.coverUrl);
+    const remoteCoverUrl = safeHttpUrl(entry?.coverUrl);
+    const localCoverUrl = safeBrandImageUrl(entry?.coverLocalSrc);
+    const coverUrl = remoteCoverUrl || localCoverUrl;
     const title = String(entry?.title || "").trim();
     if (!destinationUrl || !coverUrl || !title) return "";
     const contentType = entry?.contentType === "video" ? "video" : "article";
@@ -1333,7 +1401,7 @@
     return `
       <a class="dual-brand-learn-more-card is-${contentType}" href="${escapeHtml(destinationUrl)}" target="_blank" rel="noopener noreferrer external" data-brand-learn-more-card data-content-type="${contentType}" aria-label="在外部打开：${escapeHtml(title)}">
         <figure>
-          <img src="${escapeHtml(coverUrl)}" alt="${escapeHtml(title)}封面" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+          <img src="${escapeHtml(coverUrl)}"${remoteCoverUrl && localCoverUrl ? ` data-fallback-cover="${escapeHtml(localCoverUrl)}"` : ""} alt="${escapeHtml(title)}封面" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         </figure>
         <h3 lang="zh-CN">${escapeHtml(displayTitle)}</h3>
       </a>
@@ -1354,9 +1422,16 @@
       const image = card.querySelector("img");
       if (!image) return;
       image.addEventListener("error", () => {
+        const fallbackCover = safeBrandImageUrl(image.dataset.fallbackCover);
+        if (fallbackCover && image.getAttribute("src") !== fallbackCover) {
+          delete image.dataset.fallbackCover;
+          image.removeAttribute("referrerpolicy");
+          image.src = fallbackCover;
+          return;
+        }
         card.hidden = true;
         reconcile();
-      }, { once: true });
+      });
     });
     reconcile();
   }
@@ -1383,7 +1458,9 @@
       .filter(Boolean);
     const footprintUrl = safeHttpUrl(model.footprint.publicUrl);
     const brandLogoUrl = safeBrandImageUrl(model.gallery.logo?.localSrc);
-    const hasStoreSection = model.footprint.count !== null || Boolean(footprintUrl);
+    const hasStoreSection = model.footprint.count !== null
+      || model.footprint.showCitiesWithoutCount
+      || Boolean(footprintUrl);
     const storeLocationLabels = Array.isArray(model.footprint.locationLabels)
       ? model.footprint.locationLabels
       : model.footprint.cities;
@@ -1408,7 +1485,9 @@
             <strong>${escapeHtml(model.footprint.countDisplay)}</strong>
             ${model.footprint.unit ? `<span class="dual-brand-store-unit">${escapeHtml(model.footprint.unit)}</span>` : ""}
             ${storeLocationLabels.length ? `<span class="dual-brand-store-cities" data-brand-store-cities>${storeLocationLabels.map(escapeHtml).join(" · ")}</span>` : ""}
-          </div>` : ""}
+          </div>` : model.footprint.showCitiesWithoutCount && storeLocationLabels.length
+            ? `<div class="dual-brand-store-count dual-brand-store-count--cities-only" data-brand-store-cities>${storeLocationLabels.map(escapeHtml).join(" · ")}</div>`
+            : ""}
           ${footprintUrl ? `<div class="dual-brand-store-location"><span>${escapeHtml(model.footprint.publicUrlLabel)}</span><a class="dual-brand-store-link" href="${escapeHtml(footprintUrl)}" target="_blank" rel="noopener noreferrer"><span>查看地址</span><span aria-hidden="true">↗</span></a></div>` : ""}
         </section>` : ""}
         ${hasPhilosophy ? `<section class="dual-brand-philosophy" aria-labelledby="dualBrandPhilosophyTitle">
@@ -1627,6 +1706,7 @@
       </article>
     `;
     focusHeading(document.getElementById("dualRouteBookTitle"));
+    restoreDirectorySnapshot(`routes/${originMode}/${sourceCode}`, elements.projectRoutes);
   }
 
   function allSampleSectionHTML({ id, eyebrow, title, description, rows }, sourceCode, originMode, startIndex) {
@@ -1729,23 +1809,28 @@
           </div>
           <span class="dual-route-title-mark" aria-hidden="true">${guideIconHTML("bookmark")}</span>
         </header>
-        <dl class="dual-all-samples-summary">
-          <div><dt>全部样本</dt><dd>${rows.length}</dd></div>
-          <div><dt>同码样本</dt><dd>${exactRows.length}</dd></div>
-          <div><dt>所在城市</dt><dd>${cityCount}</dd></div>
-        </dl>
-        <label class="dual-all-samples-search">
-          <span>${guideIconHTML("observe")}搜索项目、城市或 DNA</span>
-          <input type="search" data-dual-sample-search autocomplete="off" placeholder="例如：这有山 / 长春 / DCMR" />
-        </label>
-        <p class="dual-all-samples-count" data-dual-sample-count role="status">显示全部 ${rows.length} 个样本</p>
-        ${exactSection}
-        ${nearSection}
-        ${exploreSection}
+        <aside class="dual-all-samples-sidebar" aria-label="样本筛选与统计">
+          <dl class="dual-all-samples-summary">
+            <div><dt>全部样本</dt><dd>${rows.length}</dd></div>
+            <div><dt>同码样本</dt><dd>${exactRows.length}</dd></div>
+            <div><dt>所在城市</dt><dd>${cityCount}</dd></div>
+          </dl>
+          <label class="dual-all-samples-search">
+            <span>${guideIconHTML("observe")}搜索项目、城市或 DNA</span>
+            <input type="search" data-dual-sample-search autocomplete="off" placeholder="例如：这有山 / 长春 / DCMR" />
+          </label>
+          <p class="dual-all-samples-count" data-dual-sample-count role="status">显示全部 ${rows.length} 个样本</p>
+        </aside>
+        <div class="dual-all-samples-content">
+          ${exactSection}
+          ${nearSection}
+          ${exploreSection}
+        </div>
         <p class="dual-all-samples-empty" data-dual-sample-empty hidden>没有找到匹配的样本，换个项目名、城市或 DNA 试试。</p>
       </article>
     `;
     focusHeading(document.getElementById("dualAllSamplesTitle"));
+    restoreDirectorySnapshot(`samples/${originMode}/${sourceCode}`, elements.allProjects);
   }
 
   function renderFieldGuide(origin, code, projectId, scope = "routes") {
@@ -1923,7 +2008,8 @@
     if (!MODES.includes(mode)) return;
     dualState.selectedMode = mode;
     persistState();
-    renderHome();
+    if (parseRoute().screen === "home") renderHome();
+    else navigate("#home");
   }
 
   function startTest(mode, forceRetest = false) {
@@ -2092,6 +2178,12 @@
   function parseRoute(hash = globalScope.location.hash) {
     const route = decodeURIComponent(String(hash || "#home")).replace(/^#/, "");
     if (!route || route === "home") return { screen: "home", mode: null };
+    if (route === "sample-library") {
+      return { screen: "projectLibrary", mode: null, canonicalHash: "#samples/projects" };
+    }
+    if (["ops-library", "profile", "brand-gate", "consumer-gate", "personality-test", "personality-result"].includes(route)) {
+      return { screen: "shell", mode: null, page: route };
+    }
     if (route === "match") return { screen: "match", mode: null };
     const parts = route.split("/");
     const [screen, mode] = parts;
@@ -2189,6 +2281,13 @@
 
   function handleRoute() {
     const route = parseRoute();
+    if (route.canonicalHash && globalScope.location.hash !== route.canonicalHash) {
+      globalScope.history.replaceState(globalScope.history.state, "", route.canonicalHash);
+    }
+    if (route.screen === "shell") {
+      if (typeof globalScope.setAppPage === "function") globalScope.setAppPage(route.page, false);
+      return;
+    }
     if (route.screen === "home") {
       renderHome();
       return;
@@ -2263,7 +2362,9 @@
     };
     const initialRoute = parseRoute();
     if (initialRoute.screen === "home") renderHome();
-    else setVisiblePage(initialRoute.screen, initialRoute.mode);
+    else if (initialRoute.screen === "shell") {
+      if (typeof globalScope.setAppPage === "function") globalScope.setAppPage(initialRoute.page, false);
+    } else setVisiblePage(initialRoute.screen, initialRoute.mode);
     try {
       const response = await fetch(operatorSystem.assetManifestUrl, { cache: "no-store" });
       if (!response.ok) throw new Error(`资产清单读取失败（${response.status}）`);

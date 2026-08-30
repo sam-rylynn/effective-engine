@@ -15,8 +15,10 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111111'/%3E%3Ccircle cx='21' cy='20' r='8' fill='%23ffd13d'/%3E%3Ccircle cx='43' cy='32' r='8' fill='%23ff5a3d'/%3E%3Ccircle cx='21' cy='44' r='8' fill='%23255dff'/%3E%3Cpath d='M28 20c12 0 4 24 16 24M28 44c12 0 4-24 16-24' fill='none' stroke='%23fff8eb' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="combo.css?v=20260716-dual-v02-01" />
   <link rel="stylesheet" href="dual-v0-2.css?v=20260729-project-results-01" />
-  <link rel="stylesheet" href="dual-v0-3.css?v=20260827-xhs-deep-read-01" />
-  <link rel="preload" as="image" href="assets/dna-home-hero-direction-01-v01.webp" type="image/webp" fetchpriority="high" />
+  <link rel="stylesheet" href="dual-v0-3.css?v=20260829-brand-card-badges-02" />
+  <link rel="stylesheet" href="dual-desktop-v0-1.css?v=20260829-full-desktop-03" />
+  <link rel="preload" as="image" href="assets/dna-home-hero-direction-01-v01.webp" type="image/webp" media="(max-width: 1099px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/dna-home-hero-desktop-v04.webp" type="image/webp" media="(min-width: 1100px)" fetchpriority="high" />
 </head>
 <body data-app-page="home" data-experience="dual-v01">
   <header class="topbar">
@@ -27,6 +29,12 @@
         <em>从不同中，找到同类</em>
       </span>
     </a>
+    <nav class="dual-desktop-nav" data-dual-desktop-nav aria-label="桌面主导航">
+      <button class="is-active" data-dual-mode="self" type="button">测试</button>
+      <a href="#samples/projects" data-dual-open-project-library>项目样本</a>
+      <a href="#samples/brands" data-dual-open-brand-library>品牌样本</a>
+      <a href="#profile" data-shell-page="profile">我的档案</a>
+    </nav>
     <button class="dual-menu-button" data-dual-menu type="button" aria-label="打开菜单" aria-expanded="false">☰</button>
     <div class="dual-quick-menu" id="dualQuickMenu" hidden>
       <button data-dual-mode="self" type="button">测我</button>
@@ -55,18 +63,26 @@
   <main id="top">
     <section class="app-page app-home" id="home">
       <article class="dna-home-hero dual-home-hero">
-        <h1 class="dual-visually-hidden" id="dualHomeTitle" tabindex="-1">测试你的商业 DNA</h1>
-        <p class="dual-visually-hidden" id="dualHomeLead">看看你是哪只商业打工怪物。</p>
-        <figure class="dna-home-mascot">
-          <img src="assets/dna-home-hero-direction-01-v01.webp" width="714" height="1024" loading="eager" decoding="async" fetchpriority="high" alt="测试你的商业 DNA：手持 DNA DECODER 卡片的黑色解码者" />
-        </figure>
-        <div class="dual-mode-switch" id="dualModeSwitch" role="group" aria-label="选择测试模式">
-          <button class="is-active" data-dual-mode="self" type="button" aria-pressed="true"><span>测我</span><small>发现你的商业动物人格</small></button>
-          <button data-dual-mode="project" type="button" aria-pressed="false"><span>测项目</span><small>看看项目的人格匹配</small></button>
+        <div class="dual-home-hero-visual">
+          <h1 class="dual-visually-hidden" id="dualHomeTitle" tabindex="-1"><span>测试你的</span><span>商业 DNA</span></h1>
+          <p class="dual-visually-hidden" id="dualHomeLead">看看你是哪只商业打工怪物。</p>
+          <figure class="dna-home-mascot">
+            <picture>
+              <source media="(min-width: 1100px)" srcset="assets/dna-home-hero-desktop-v04.webp" type="image/webp" />
+              <img src="assets/dna-home-hero-direction-01-v01.webp" width="714" height="1024" loading="eager" decoding="async" fetchpriority="high" alt="手持金色 DNA DECODER 卡片的商业 DNA 解码员" />
+            </picture>
+          </figure>
         </div>
-        <div class="dual-home-action">
-          <button id="dualStartButton" data-dual-start type="button" disabled>正在准备测我</button>
-          <p id="dualGateNote" role="status" aria-live="polite">正在准备测试。</p>
+        <div class="dual-home-control">
+          <strong class="dual-desktop-control-title">选择测试对象</strong>
+          <div class="dual-mode-switch" id="dualModeSwitch" role="group" aria-label="选择测试模式">
+            <button class="is-active" data-dual-mode="self" type="button" aria-pressed="true"><span>测我</span><small>发现你的商业动物人格</small></button>
+            <button data-dual-mode="project" type="button" aria-pressed="false"><span>测项目</span><small>看看项目的人格匹配</small></button>
+          </div>
+          <div class="dual-home-action">
+            <button id="dualStartButton" data-dual-start type="button" disabled>正在准备测我</button>
+            <p id="dualGateNote" role="status" aria-live="polite">正在准备测试。</p>
+          </div>
         </div>
       </article>
       <section class="dual-history-shelf" id="dualHistoryShelf" hidden aria-labelledby="dualHistoryTitle"></section>
@@ -113,11 +129,11 @@
         <p>不做测试也能浏览。完成项目测试后，样本会按你的项目类型重新排序。</p>
       </div>
       <div class="library-filters">
-        <input id="sampleSearch" placeholder="搜索项目 / 城市 / 操盘方" />
-        <select id="sampleTypeFilter">
+        <input id="sampleSearch" aria-label="搜索项目、城市或操盘方" placeholder="搜索项目 / 城市 / 操盘方" />
+        <select id="sampleTypeFilter" aria-label="按项目形态筛选">
           <option value="">全部形态</option>
         </select>
-        <select id="sampleBarrierFilter">
+        <select id="sampleBarrierFilter" aria-label="按复制门槛筛选">
           <option value="">全部门槛</option>
           <option>低</option>
           <option>中</option>
@@ -134,8 +150,8 @@
         <p>把项目拆成可借鉴动作、复制门槛和适合谁看，先看判断，再看现场与经营条件。</p>
       </div>
       <div class="library-filters">
-        <input id="opsSearch" placeholder="搜索项目 / 操盘动作 / 维度" />
-        <select id="opsDimensionFilter">
+        <input id="opsSearch" aria-label="搜索项目、操盘动作或维度" placeholder="搜索项目 / 操盘动作 / 维度" />
+        <select id="opsDimensionFilter" aria-label="按操盘维度筛选">
           <option value="">全部维度</option>
         </select>
       </div>
@@ -198,7 +214,7 @@
         <button class="persona-back dual-visually-hidden" data-dual-back type="button">返回上一题</button>
         <div class="persona-topline">
           <div class="persona-count"><span>问题</span><strong id="personaCount">1 / 16</strong></div>
-          <div class="persona-progress" id="personaProgress" aria-label="答题进度">
+          <div class="persona-progress" id="personaProgress" role="progressbar" aria-label="答题进度" aria-valuemin="1" aria-valuemax="16" aria-valuenow="1">
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           </div>
         </div>
@@ -579,12 +595,13 @@
   <script src="daily-confirmed-20260704.js?v=20260704-01"></script>
   <script src="daily-confirmed-20260705.js?v=20260705-01"></script>
   <script src="brand-removals-v0-1.js?v=20260828-user-selection-01"></script>
-  <script src="brand-editorial-v0-1.js?v=20260827-xhs-deep-read-01"></script>
+  <script src="approved-brand-expansion-v0-1.js?v=20260830-approved-twenty-one-01"></script>
+  <script src="brand-editorial-v0-1.js?v=20260830-approved-twenty-one-01"></script>
   <script src="scene-evidence-v1.js?v=20260813-pac-yuanye-01"></script>
   <script src="formal-project-samples-v0-1.js?v=20260813-retire-seven-01"></script>
-  <script src="brand-gallery-v0-1.js?v=20260828-public-web-01"></script>
-  <script src="brand-gallery-local-review-loader-v0-1.js?v=20260826-local-review-01"></script>
-  <script src="sample-atlas-v0-1.js?v=20260828-public-gallery-01"></script>
+  <script src="brand-gallery-v0-1.js?v=20260830-approved-twenty-one-01"></script>
+  <script src="brand-gallery-local-review-loader-v0-1.js?v=20260830-approved-twenty-one-01"></script>
+  <script src="sample-atlas-v0-1.js?v=20260830-approved-twenty-one-01"></script>
   <script src="persona-data-v1.js?v=20260712-mainline-01"></script>
   <script src="project-persona-poster-data-v0-1.js?v=20260729-project-results-01"></script>
   <script src="operator-persona-data-v1.js?v=20260801-p0-dna-evaluation-01"></script>
@@ -595,7 +612,7 @@
   <script src="combo-logic.js?v=20260716-dual-v01-01"></script>
   <script src="combo-render.js?v=20260728-approved-four-01"></script>
   <script src="combo-app.js?v=20260811-all-samples-01"></script>
-  <script src="dual-v01.js?v=20260828-public-gallery-01"></script>
+  <script src="dual-v01.js?v=20260829-brand-expansion-04"></script>
   <script src="feedback-v1.js?v=20260706-01"></script>
 </body>
 </html>

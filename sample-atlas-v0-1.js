@@ -24,8 +24,10 @@
     "brand-website",
     "brand-owned-account",
     "brand-official-wechat",
+    "brand-team-direct-interview",
     "founder-direct-interview",
     "government-brand-profile",
+    "professional-brand-analysis",
   ]);
   const READY_STORE_SCOPES = new Set([
     "historical-location",
@@ -37,6 +39,7 @@
     "official-directory-total",
     "official-current-total",
     "verified-minimum",
+    "verified-current-total",
   ]);
   const READY_STORE_COUNT_QUALIFIERS = new Set([
     "exact",
@@ -62,45 +65,146 @@
     "independent-brand-analysis",
     "professional-brand-analysis",
     "media-brand-analysis",
+    "brand-team-direct-interview",
     "founder-direct-interview",
+    "brand-website",
+  ]);
+  const FALLBACK_LEARN_MORE_AUTHORITIES = new Set([
+    "independent-brand-analysis",
+    "professional-brand-analysis",
+    "media-brand-analysis",
+    "brand-team-direct-interview",
+    "founder-direct-interview",
+  ]);
+  const FALLBACK_LEARN_MORE_EXCLUDED_HOSTS = new Set([
+    "www.xiaoyuzhoufm.com",
+    "xiaoyuzhoufm.com",
   ]);
   const READY_LEARN_MORE_TYPES = new Set(["article", "video"]);
   const LEARN_MORE_DESTINATION_DOMAINS = Object.freeze([
+    "10100.com",
     "ifeng.com",
     "xiaohongshu.com",
     "xhslink.com",
     "mp.weixin.qq.com",
     "winshang.com",
     "brandstar.com.cn",
+    "36kr.com",
     "cmccap.com",
     "foodaily.com",
+    "gzstv.com",
     "insideretail.asia",
+    "jms.ctdsb.net",
+    "cna.com.tw",
+    "cw.com.tw",
+    "cyol.com",
+    "hkcd.com",
+    "hypebeast.cn",
+    "kiwamino.com",
+    "likemagazine.com.hk",
+    "note.com",
+    "nowre.com",
+    "pangjing.cn",
+    "people.com.cn",
+    "podcasts.apple.com",
+    "rachelgouk.com",
+    "shcfa.cn",
+    "sina.cn",
     "sina.com.cn",
     "sophieservesup.com",
+    "soundoflife.com",
     "www.adquan.com",
     "www.archdaily.com",
     "www.bilibili.com",
+    "www.d-arts.cn",
     "www.gooood.cn",
     "www.jiemian.com",
     "www.sohu.com",
+    "thepaper.cn",
+    "theunreasonable.com",
+    "tidesight.com",
+    "vogue.com",
+    "vogue.com.tw",
+    "weibo.com",
+    "xinhuanet.com",
+    "cafa.com.cn",
+    "ronglibrary.com",
+    "www.ronglibrary.com",
+    "archdaily.cn",
+    "www.archdaily.cn",
+    "chinanews.com",
+    "www.chinanews.com",
+    "huaxia.com",
+    "gd.huaxia.com",
+    "nju.edu.cn",
+    "sp.nju.edu.cn",
+    "66wz.com",
+    "www.66wz.com",
+    "tyjxb.xmu.edu.cn",
+    "nationalreading.gov.cn",
+    "www.nationalreading.gov.cn",
+    "gl.sjs.org.hk",
+    "canyin88.com",
+    "pencilnews.cn",
+    "tianjinwe.com",
+    "chinapost.com.cn",
+    "toless.cn",
+    "gmw.cn",
+    "fjdaily.com",
+    "jsxc.gov.cn",
+    "beer52.com",
+    "e-architect.com",
+    "tangyu.net",
+    "ruibokangfu.com",
+    "rebody.vip",
+    "fashionsnap.com",
+    "fuzhou.gov.cn",
+    "yatzer.com",
   ]);
   const LEARN_MORE_COVER_DOMAINS = Object.freeze([
+    "10100.com",
     "ifengimg.com",
     "xhscdn.com",
     "mmbiz.qpic.cn",
     "winshang.com",
     "brandstar.com.cn",
+    "36krcdn.com",
     "cmccap.com",
+    "ctdsb.clouddiffuse.xyz",
     "foodaily.com",
+    "gshmzfgw.com",
     "insideretail.asia",
     "n.sinaimg.cn",
     "sophieservesup.s3.amazonaws.com",
     "i1.hdslb.com",
     "images.adsttc.com",
+    "imagepphcloud.thepaper.cn",
+    "img.d-arts.cn",
     "img.jiemian.com",
     "oss.adquan.com",
     "oss.gooood.cn",
     "q6.itc.cn",
+    "p7.itc.cn",
+    "cdn.sohucs.com",
+    "soundoflife.com",
+    "xiaohongshu.com",
+    "whb.cn",
+    "sznews.com",
+    "798artdistrict.com.cn",
+    "thefastimg.com",
+    "cloudfront.net",
+    "e-architect.com",
+    "faiusr.com",
+    "ruibokangfu.com",
+    "rebody.health",
+    "fashionsnap-assets.com",
+    "fuzhou.gov.cn",
+    "q0.itc.cn",
+    "q5.itc.cn",
+    "hypb.st",
+    "gywb.cn",
+    "abitare.it",
+    "nationalreading.gov.cn",
   ]);
   const READY_SOURCE_LINK_STATUSES = new Set(["active"]);
   const STORE_LOCATION_DOMAINS = Object.freeze([
@@ -115,6 +219,7 @@
     "ctrip.com",
     "b10live.cn",
     "costco.cn",
+    "passoni.com",
   ]);
   const LOCAL_BRAND_MEDIA_PATTERN = /^(?:brand-assets|assets)\/[^\x00<>"'`]+\.(?:avif|webp|png|jpe?g)$/i;
   const LOCAL_REVIEW_BRAND_MEDIA_PATTERN = /^brand-review-assets\/[^\x00<>"'`]+\.(?:avif|webp|png|jpe?g)$/i;
@@ -336,8 +441,18 @@
       )
     );
     const visibleCities = cityReady && citiesStatus !== "unknown" ? cities : [];
+    const visibleCitySet = new Set(visibleCities);
+    const scopeParts = scopeLabel
+      .split(/\s*[·、，,]\s*/u)
+      .map(cleanText)
+      .filter(Boolean);
+    const internalLocationLabelPattern = /(?:已知.{0,16}线索|待核|待补证|当前资料|研究口径|资料边界|未闭环)/u;
+    const publicScopeParts = scopeParts.filter(label => (
+      !visibleCitySet.has(label)
+      && !internalLocationLabelPattern.test(label)
+    ));
     const locationLabels = Array.from(new Set([
-      scopeLabel,
+      ...publicScopeParts,
       ...visibleCities,
     ].filter(Boolean)));
     const directLocationUrl = safeStoreLocationUrl(store?.linkUrl)
@@ -391,6 +506,7 @@
       scope: countReady ? scopeCode : "unknown",
       scopeCode: countReady ? scopeCode : "unknown",
       scopeLabel: countReady ? scopeLabel : "",
+      showCitiesWithoutCount: Boolean(cityReady && visibleCities.length),
       conflicts,
       publicUrl,
       publicUrlLabel: officialLocationUrl && publicUrl === officialLocationUrl
@@ -524,6 +640,7 @@
       purposes: ["deep-read"],
       authorities: READY_LEARN_MORE_AUTHORITIES,
       urlNormalizer: value => safeCuratedHttpsUrl(value, LEARN_MORE_DESTINATION_DOMAINS),
+      allowObservedAt: true,
     });
     if (
       !normalized
@@ -536,6 +653,51 @@
     };
   }
 
+  function shortLearnMoreTitle(source) {
+    const name = cleanText(source?.name)
+      .replace(/^[^｜|]{1,16}[｜|]\s*/u, "")
+      .replace(/\s{2,}/g, " ");
+    const fallback = cleanText(source?.expectedName) || "品牌深读";
+    return Array.from(name || fallback).slice(0, 50).join("");
+  }
+
+  function fallbackLearnMoreRows(item, explicitUrls, editorialSystem) {
+    const brandId = cleanText(item?.id);
+    const brandName = cleanText(item?.name);
+    const entryImage = brandEntryImageModel(item);
+    const coverLocalSrc = cleanText(entryImage?.localSrc);
+    const editorial = editorialSystem?.brands?.[brandId];
+    const editorialMatches = editorial && cleanText(editorial.expectedName) === brandName;
+    const sourceKeys = editorialMatches ? cleanList(editorial.philosophySourceKeys) : [];
+    if (!coverLocalSrc || !sourceKeys.length) return [];
+    return sourceKeys
+      .map(sourceKey => normalizedBoundSource(sourceKey, editorialSystem?.sources?.[sourceKey], {
+        brandId,
+        expectedName: brandName,
+        purposes: ["philosophy"],
+        authorities: FALLBACK_LEARN_MORE_AUTHORITIES,
+        urlNormalizer: value => safeCuratedHttpsUrl(value, LEARN_MORE_DESTINATION_DOMAINS),
+      }))
+      .filter(source => {
+        if (!source || explicitUrls.has(source.url)) return false;
+        try {
+          return !FALLBACK_LEARN_MORE_EXCLUDED_HOSTS.has(new globalScope.URL(source.url).hostname.toLowerCase());
+        } catch (_error) {
+          return false;
+        }
+      })
+      .map(source => ({
+        title: cleanText(source.name) || "品牌深读",
+        displayTitle: shortLearnMoreTitle(source),
+        coverUrl: "",
+        coverLocalSrc,
+        url: source.url,
+        contentType: "article",
+        source,
+        fallbackCover: true,
+      }));
+  }
+
   function brandLearnMoreModel(
     item,
     editorialSystem = globalScope.COMMERCIAL_DNA_BRAND_EDITORIAL_V0_1,
@@ -545,11 +707,12 @@
     const brandName = cleanText(item?.name);
     const editorial = editorialSystem?.brands?.[brandId];
     const editorialMatches = editorial && cleanText(editorial.expectedName) === brandName;
+    const fallbackCoverLocalSrc = cleanText(brandEntryImageModel(item)?.localSrc);
     const candidates = editorialMatches && Array.isArray(editorial.learnMore)
       ? editorial.learnMore
       : [];
     const seen = new Set();
-    return candidates
+    const explicitRows = candidates
       .map(entry => {
         const title = cleanText(entry?.title);
         const displayTitle = cleanText(entry?.displayTitle) || title;
@@ -561,13 +724,14 @@
           brandName,
         );
         const coverUrl = safeCuratedHttpsUrl(entry?.coverUrl, LEARN_MORE_COVER_DOMAINS);
+        const coverLocalSrc = fallbackCoverLocalSrc;
         if (
           !title
           || !displayTitle
           || Array.from(title).length > 80
           || Array.from(displayTitle).length > 50
           || !source
-          || !coverUrl
+          || (!coverUrl && !coverLocalSrc)
           || seen.has(source.url)
         ) return null;
         seen.add(source.url);
@@ -575,13 +739,15 @@
           title,
           displayTitle,
           coverUrl,
+          coverLocalSrc,
           url: source.url,
           contentType: source.contentType,
           source,
         };
       })
-      .filter(Boolean)
-      .slice(0, Math.max(0, Number(limit) || 0));
+      .filter(Boolean);
+    const fallbackRows = explicitRows.length ? [] : fallbackLearnMoreRows(item, seen, editorialSystem);
+    return [...explicitRows, ...fallbackRows].slice(0, Math.max(0, Number(limit) || 0));
   }
 
   function normalizedReadyBrandMedia(asset, { requireRole = false } = {}) {
@@ -667,8 +833,13 @@
   function localBrandReviewEnabled(
     reviewSystem = globalScope.COMMERCIAL_DNA_BRAND_GALLERY_REVIEW_V0_1,
   ) {
+    const protocol = cleanText(globalScope.location?.protocol).toLowerCase();
+    const hostname = cleanText(globalScope.location?.hostname).toLowerCase();
+    const localHosts = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
+    const localReviewOrigin = protocol === "file:"
+      || (["http:", "https:"].includes(protocol) && localHosts.has(hostname));
     return Boolean(
-      globalScope.location?.protocol === "file:"
+      localReviewOrigin
       && globalScope.__COMMERCIAL_DNA_LOCAL_BRAND_REVIEW_ENABLED__ === true
       && cleanText(reviewSystem?.mode) === "file-review-only"
       && cleanText(reviewSystem?.scope) === "local-file-only",
@@ -692,6 +863,7 @@
           expectedName: brandName,
           purposes: ["philosophy"],
           authorities: READY_PHILOSOPHY_AUTHORITIES,
+          allowObservedAt: true,
         }))
         .filter(Boolean)
       : [];
@@ -714,6 +886,7 @@
       expectedName: brandName,
       purposes: ["philosophy"],
       authorities: READY_PHILOSOPHY_AUTHORITIES,
+      allowObservedAt: true,
     });
     if (summary && source) {
       return {

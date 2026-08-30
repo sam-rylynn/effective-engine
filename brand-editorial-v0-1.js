@@ -9,7 +9,7 @@
 
   const editorial = {
     version: "brand-editorial-v0.1",
-    checkedAt: "2026-08-28",
+    checkedAt: "2026-08-29",
     brands: {
       "brand-v2-001": {
         expectedName: "AOKKA Coffee&Bistro",
@@ -17,7 +17,7 @@
         aliases: ["AOKKA COFFEE&BISTRO", "AOKKA澳咖", "AOKKA"],
         entityType: "concept-store",
         disposition: "partial",
-        researchNote: "理念、一个已确认点位和一条商业类小红书视频已核验；图库仅有 3 张合格门店图，Logo 与第 4 张图片仍缺，图库保持隐藏。",
+        researchNote: "理念、一个已确认点位、一条商业类小红书视频及 5 张前滩门店空间图已核验；Logo 仍缺。",
         philosophyHeadline: "把咖啡变成连接人与旷野的生活方式",
         philosophy: "从产地、烘焙到门店，把咖啡当作人与自然、朋友和社群之间的连接；空间也延续户外、自由与松弛感。",
         philosophyAttribution: "DNA 编辑改写｜依据创始人公开表达与政府品牌报道",
@@ -29,7 +29,7 @@
           {
             title: "AOKKA咖啡在上海，如何靠“旷野”突围？",
             displayTitle: "AOKKA 如何靠“旷野”突围？",
-            coverUrl: "https://sns-webpic-qc.xhscdn.com/202608272106/bafcb323aac60289ef79ac87ace454c6/spectrum/1040g0k031u2fph7eh8004a4v9hgag5frptnbs4g!nc_n_webp_mw_1",
+            coverUrl: "https://ci.xiaohongshu.com/spectrum/1040g0k031u2fph7eh8004a4v9hgag5frptnbs4g",
             sourceKey: "aokka-business-analysis-xhs-69c0f972",
           },
         ],
@@ -126,12 +126,20 @@
         aliases: ["Metal Hands Coffee", "铁手咖啡制造局", "铁手咖啡制造总局"],
         entityType: "coffee-brand",
         disposition: "partial",
-        researchNote: "品牌身份与理念已核验，至少可确认北京、上海、杭州有店，但没有可靠的当前门店总数和完整城市名单，因此门店板块保持隐藏；图库与专业深读继续检索。",
+        researchNote: "品牌身份、理念、5 张上海门店图片及一篇创始人访谈已核验；至少可确认北京、上海、杭州有店，但没有可靠的当前门店总数和完整城市名单，因此门店板块保持隐藏。",
         philosophyHeadline: "让咖啡成为完整的感官体验",
         philosophy: "咖啡不只是一种味道。空间、声音、触感和气味共同构成一杯咖啡的体验，门店也用这些细节传达品牌对咖啡、美学与生活的理解。",
         philosophyAttribution: "DNA 编辑改写｜依据创始人公开采访",
         philosophySourceKeys: [
           "metal-hands-founder-profile-20180904",
+        ],
+        learnMore: [
+          {
+            title: "在上海巷弄里感受胡同咖啡？他真的把“北京”搬到了上海",
+            displayTitle: "Metal Hands：把五感带进咖啡店",
+            coverUrl: "https://imagepphcloud.thepaper.cn/pph/image/295/317/591.jpg",
+            sourceKey: "metal-hands-founder-profile-20180904",
+          },
         ],
       },
       "brand-v2-005": {
@@ -140,12 +148,20 @@
         aliases: ["BERRY BEANS"],
         entityType: "coffee-brand",
         disposition: "partial",
-        researchNote: "品牌身份与理念已核验，北京、青岛、天津可确认有店，但没有可靠的当前门店总数和完整城市名单，因此门店板块保持隐藏；图库与专业深读继续检索。",
+        researchNote: "品牌身份、理念、5 张北京胡同店图片及一篇创始人访谈已核验；北京、青岛、天津可确认有店，但没有可靠的当前门店总数和完整城市名单，因此门店板块保持隐藏。",
         philosophyHeadline: "让咖啡店长出所在城市的性格",
         philosophy: "精品咖啡不只复制一种店型，而要回应所在城市的文化和生活节奏；人与咖啡师面对面的交流，也是门店无法被标准化替代的价值。",
         philosophyAttribution: "DNA 编辑改写｜依据创始人长访谈",
         philosophySourceKeys: [
           "berry-beans-founder-podcast-20230308",
+        ],
+        learnMore: [
+          {
+            title: "韦寒夜：30岁时我辞职开了家怎样的咖啡馆？",
+            displayTitle: "Berry Beans：胡同咖啡馆如何诞生",
+            coverUrl: "https://y3.ifengimg.com/a/2015_27/4a060b8259595d9.jpg",
+            sourceKey: "berry-beans-founder-ifeng-20151009",
+          },
         ],
       },
       "brand-v2-006": {
@@ -664,7 +680,21 @@
         entityType: "independent-bookstore-brand",
         disposition: "partial",
         categoryLabel: "书店、咖啡与文创类",
-        researchNote: "联名复合样本已按用户选择移除；当前仅保留新山书屋品牌本体，未核验字段继续隐藏。",
+        researchNote: "联名复合样本已按用户选择移除；新山书屋品牌本体、创始人理念、5 张重庆与厦门门店图片及一篇经营深读已核验，当前完整门店网络仍保持隐藏。",
+        philosophyHeadline: "跳开书本身，才有线下书店的无限可能",
+        philosophy: "以阅读为起点，把生活美学、咖啡、社交与活动编进同一空间；回应人们对安静停留和真实交流的需求，让书店成为可持续的城市生活场景。",
+        philosophyAttribution: "DNA 编辑改写｜依据创始人公开访谈",
+        philosophySourceKeys: [
+          "new-bookstore-founder-36kr-20210414",
+        ],
+        learnMore: [
+          {
+            title: "重庆独立书店②｜新山书屋李晖：未来书店的未来，会是什么样？",
+            displayTitle: "新山书屋：线下书店为何还值得来",
+            coverUrl: "https://img.36krcdn.com/20210414/v2_7ee8c38fe331440f95f15fc551f88c96_img_jpg?x-oss-process=image%2Fformat%2Cjpg%2Finterlace%2C1",
+            sourceKey: "new-bookstore-founder-36kr-20210414",
+          },
+        ],
       },
       "brand-v2-041": {
         expectedName: "Jetlag Books",
@@ -715,12 +745,20 @@
         entityType: "contemporary-art-museum",
         disposition: "partial",
         categoryLabel: "美术馆内容类",
-        researchNote: "美术馆主体与管理团队理念已核验；官方素材以海报和作品为主，其他建筑图无法形成精确的馆内空间组，因此图库、门店与专业视频保持隐藏。",
+        researchNote: "美术馆主体、管理团队理念、4 张当前空间图片及一篇管理团队深读已核验；不把驻留中心或市集拆作门店，门店总数保持隐藏。",
         philosophyHeadline: "让艺术成为日常之外的第三场所",
         philosophy: "以展览、公共教育与艺术驻留连接人和创作，让美术馆成为生活与劳作之外可反复到访的第三场所，也成为感知世界的第一课堂。",
         philosophyAttribution: "DNA 编辑改写｜依据副馆长及联合创始人直接表达",
         philosophySourceKeys: [
           "by-art-matters-principal-interview-20210625",
+        ],
+        learnMore: [
+          {
+            title: "凤凰艺术专访｜BY ART MATTERS 之馆官宣，11月初即将亮相",
+            displayTitle: "BY ART MATTERS：怎样成为第三场所",
+            coverUrl: "https://img.d-arts.cn/sy_img/c0c88a2fdae38ff2f280696e537944a9.jpeg",
+            sourceKey: "by-art-matters-principal-interview-20210625",
+          },
         ],
       },
       "brand-v2-044": {
@@ -781,6 +819,29 @@
         philosophySourceKeys: [
           "ziinlife-founder-brandstar-interview-20190416",
           "ziinlife-founder-speech-20190424",
+        ],
+      },
+      "brand-v2-048": {
+        expectedName: "DOE",
+        canonicalName: "DOE",
+        aliases: ["DOE Shanghai"],
+        entityType: "design-led-fashion-and-lifestyle-retail-brand",
+        disposition: "partial",
+        categoryLabel: "国内设计师潮流买手类",
+        researchNote: "已核验 DOE 上海店项目页、5 张空间图片和一篇专业设计深读；当前完整门店网络仍未形成同一时点目录，因此门店总数保持隐藏。",
+        philosophyHeadline: "把潮流买手店做成可被探索的城市空间",
+        philosophy: "用建筑和陈列把服装、鞋履与生活方式内容组织成可停留、可发现的现场，让购物不只是选择商品，也是在空间里形成新的关系。",
+        philosophyAttribution: "DNA 编辑缩写｜依据 DOE 上海店专业设计项目资料",
+        philosophySourceKeys: [
+          "doe-shanghai-archdaily-20180104",
+        ],
+        learnMore: [
+          {
+            title: "DOE Store in Shanghai / B.L.U.E. Architecture Studio",
+            displayTitle: "DOE 上海店：把买手店做成探索空间",
+            coverUrl: "https://images.adsttc.com/media/images/5a4d/06ee/b22e/3810/b400/0048/large_jpg/doe_06.jpg?1514997475",
+            sourceKey: "doe-shanghai-archdaily-20180104",
+          },
         ],
       },
       "brand-v2-049": {
@@ -848,12 +909,20 @@
         entityType: "gender-fluid-footwear-brand",
         disposition: "partial",
         categoryLabel: "无性别设计鞋履类",
-        researchNote: "品牌主体与两位创始人的理念已核验；未找到 4–5 张精确绑定的门店空间图，不以产品大片代替图库，门店与专业视频也保持隐藏。",
+        researchNote: "品牌主体、两位创始人的理念、一篇创始人深访及 5 张 AW26 独立 Showroom 图片已核验；Showroom 已结束，不作为当前常设门店证明，完整门店网络保持隐藏。",
         philosophyHeadline: "用深度情感共鸣，模糊鞋履与身份的边界",
         philosophy: "从真实生活场景出发，把正装与运动、男装与女装的边界变得流动；比起短暂喜欢，更希望以真诚表达建立持久共鸣。",
         philosophyAttribution: "DNA 编辑改写｜依据创始人 Zen 与设计师 Sans 直接访谈",
         philosophySourceKeys: [
           "untitlab-founders-interview-20201216",
+        ],
+        learnMore: [
+          {
+            title: "KIKS定番｜untitlab 创始人 Zen 与设计师 Sans 直接访谈",
+            displayTitle: "untitlab：在鞋履与身份边界之间",
+            coverUrl: "https://p7.itc.cn/q_70/images03/20201217/2aa1d82128294779a32eb63952b229c3.jpeg",
+            sourceKey: "untitlab-founders-interview-20201216",
+          },
         ],
       },
       "brand-v2-054": {
@@ -863,12 +932,20 @@
         entityType: "chinese-designer-menswear-brand",
         disposition: "partial",
         categoryLabel: "当代实验男装类",
-        researchNote: "已核验品牌主体、理念；图库、当前完整门店网络、专业视频缺少合格证据，相关板块保持隐藏。",
+        researchNote: "已核验品牌主体、理念、一篇联合创始人深访及 5 张 STAFFONLY × UGG 限时展览图片；展览已结束，不作为当前常设门店证明，完整门店网络仍缺合格证据。",
         philosophyHeadline: "把品牌当作容器，用好奇心观察当代生活",
         philosophy: "从日常生活与群体关系中寻找议题，以新材料、幽默细节和跨媒介表达，让男装成为与人沟通的实验。",
         philosophyAttribution: "DNA 编辑缩写｜依据联合创始人 Shimo Zhou、Une Yea 直接访谈",
         philosophySourceKeys: [
           "staffonly-founders-interview-20210327",
+        ],
+        learnMore: [
+          {
+            title: "Sound of Life｜STAFFONLY 联合创始人直接访谈",
+            displayTitle: "STAFFONLY：把品牌当作思想容器",
+            coverUrl: "https://media.soundoflife.com/articles/1286/STAFFONLY-cover-1500x1000.jpg",
+            sourceKey: "staffonly-founders-interview-20210327",
+          },
         ],
       },
       "brand-v2-055": {
@@ -1188,12 +1265,20 @@
         entityType: "wuhan-pet-department-store-and-services-brand",
         disposition: "partial",
         categoryLabel: "宠物百货类",
-        researchNote: "已核验品牌主体、理念；图库、当前完整门店网络、专业视频缺少合格证据，相关板块保持隐藏。",
+        researchNote: "已核验品牌主体、理念与一条极目新闻现场采访视频；图库和当前完整门店网络仍缺合格证据。",
         philosophyHeadline: "不只卖货，把门店变成宠物友好社区",
         philosophy: "以多层复合空间把宠物消费、服务与社交场景放在一起，让门店既满足日常照顾，也承接宠物主人的交流。",
         philosophyAttribution: "DNA 编辑缩写｜依据武汉市政府品牌资料",
         philosophySourceKeys: [
           "ponn-wuhan-government-profile-20250715",
+        ],
+        learnMore: [
+          {
+            title: "极目新闻｜PONN 宠物百货现场采访",
+            displayTitle: "现场看 PONN 如何把门店做成宠物社区",
+            coverUrl: "https://ctdsb.clouddiffuse.xyz/959de983fbff457da7970d3a489bfb32.jpg",
+            sourceKey: "ponn-jimu-onsite-video-20250519",
+          },
         ],
       },
       "brand-v2-080": {
@@ -1241,6 +1326,29 @@
           "petkit-founder-interview-20230524",
         ],
       },
+      "brand-v2-083": {
+        expectedName: "观夏",
+        canonicalName: "观夏 to summer",
+        aliases: ["观夏", "to summer", "TO SUMMER"],
+        entityType: "chinese-fragrance-and-cultural-lifestyle-brand",
+        disposition: "partial",
+        categoryLabel: "东方香氛生活方式类",
+        researchNote: "已核验品牌主体、理念、5 张上海与北京门店图片及一篇品牌团队深读；官方当前完整门店网络仍未形成同一时点目录，因此门店总数保持隐藏。",
+        philosophyHeadline: "让东方香从气味长成一套当代文化",
+        philosophy: "从中国人的气味记忆出发，把香气连接老建筑、器物和城市生活；门店不只陈列产品，也让东方文化被感知、停留与参与。",
+        philosophyAttribution: "DNA 编辑改写｜依据品牌团队公开专访",
+        philosophySourceKeys: [
+          "to-summer-brandstar-interview-20220908",
+        ],
+        learnMore: [
+          {
+            title: "观夏：如何打开东方香的表达和可能性？｜品牌星球专访",
+            displayTitle: "观夏：东方香如何长成一座文化空间",
+            coverUrl: "https://www.brandstar.com.cn/share-cover/uploads/article_covers/%C2%B9%C3%9B%C3%8F%C3%84%C3%8D%C3%8D%C2%BC.png?imageMogr2/thumbnail/1280x%3E/format/jpg/quality/85",
+            sourceKey: "to-summer-brandstar-interview-20220908",
+          },
+        ],
+      },
       "brand-v2-084": {
         expectedName: "闻献DOCUMENTS",
         canonicalName: "闻献 DOCUMENTS",
@@ -1274,17 +1382,17 @@
       },
       "brand-v2-086": {
         expectedName: "超级植物公司",
-        canonicalName: "超级植物公司 SUPERMAN PLANTS",
-        aliases: ["超级植物公司","SUPERMAN PLANTS"],
+        canonicalName: "超级植物公司 SUPER PLANTS",
+        aliases: ["超级植物公司","SUPER PLANTS","SUPERPLANTS"],
         entityType: "chinese-plant-lifestyle-brand",
         disposition: "partial",
         categoryLabel: "植物零售与场景类",
-        researchNote: "已核验品牌主体、理念；图库、当前完整门店网络、专业视频缺少合格证据，相关板块保持隐藏。",
+        researchNote: "已核验品牌主体、理念、4 张门店与展陈空间图片；当前完整门店网络仍无同一时点目录，门店板块保持隐藏。",
         philosophyHeadline: "让年轻人和植物交朋友",
         philosophy: "把植物知识、年轻人的语言和设计创造力放在一起，用有趣、可理解的产品降低亲近自然的门槛，也给创意留下真正生长的空间。",
         philosophyAttribution: "DNA 编辑缩写｜依据超级植物公司创始人李习斌公开分享",
         philosophySourceKeys: [
-          "superman-plants-founder-speech-20230710",
+          "super-plants-founder-speech-20230710",
         ],
       },
       "brand-v2-088": {
@@ -1309,7 +1417,7 @@
         entityType: "hangzhou-fashion-art-concept-store",
         disposition: "partial",
         categoryLabel: "时装与艺术概念零售类",
-        researchNote: "已核验品牌主体、理念；图库、当前完整门店网络、专业视频缺少合格证据，相关板块保持隐藏。",
+        researchNote: "已核验品牌主体、理念、4 张天目里建筑与零售空间图片；当前完整门店网络仍无同一时点目录，门店板块保持隐藏。",
         philosophyHeadline: "让逛街和观展在同一栋楼里发生",
         philosophy: "以当代艺术为出发点，把场域、内容与选品做成一个整体；不复制网红空间，而是让艺术、商品与日常体验持续发生真实连接。",
         philosophyAttribution: "DNA 编辑缩写｜依据B1OCK负责人 Alessio 直接访谈",
@@ -1324,7 +1432,37 @@
         entityType: "design-technology-lifestyle-retailer",
         disposition: "partial",
         categoryLabel: "设计科技生活方式零售类",
-        researchNote: "已核验品牌主体；理念、图库、当前完整门店网络、专业视频缺少合格证据，相关板块保持隐藏。",
+        researchNote: "已核验品牌主体、创始人理念、官网当前 8 个门店条目与 5 个城市、5 张杭州中心店官方空间图片及一篇主理人经营长访谈；不沿用 2021 年历史门店数字。",
+        philosophyHeadline: "不跟着流量走，用审美判断把零售做成体验",
+        philosophy: "以“有趣的高端生活方式”为核心，少而精地选择有独立设计理念的产品；门店不只是交换货物，而要更新，成为顾客愿意专程前往的体验空间。",
+        philosophyAttribution: "DNA 编辑缩写｜依据 DrivePro 创始人 Kevin Liu 直接访谈",
+        philosophySourceKeys: [
+          "drivepro-founder-interview-20210331",
+        ],
+        learnMore: [
+          {
+            title: "对话 DP 主理人：十八年打造高端生活方式领域“超级厂牌”",
+            displayTitle: "DrivePro：十八年怎样把审美做成零售",
+            coverUrl: "https://cdn.10100.com/content/20250915/a488a0a3-cd67-4514-a4d9-8c8e873c4f68.png",
+            sourceKey: "drivepro-founder-interview-20210331",
+          },
+        ],
+        store: {
+          count: 8,
+          countKind: "official-directory-total",
+          qualifier: "exact",
+          unit: "个门店",
+          cities: ["上海", "北京", "宁波", "深圳", "杭州"],
+          citiesStatus: "complete",
+          descriptor: "官网当前门店目录 · 2026",
+          scopeCode: "official-store-directory",
+          observedAt: "2026-08-29",
+          countSourceKey: "drivepro-official-store-directory-20260829",
+          citySourceKey: "drivepro-official-store-directory-20260829",
+          addressSourceKey: "drivepro-official-store-directory-20260829",
+          linkLabel: "官方地址",
+          linkUrl: "https://us.drivepro.com/pages/stores",
+        },
       },
       "brand-v2-092": {
         expectedName: "BASAO佰朔",
@@ -1348,12 +1486,20 @@
         entityType: "modern-chinese-tea-space-brand",
         disposition: "partial",
         categoryLabel: "中国纯茶体验空间类",
-        researchNote: "已核验品牌主体、理念；图库、当前完整门店网络、专业视频缺少合格证据，相关板块保持隐藏。",
+        researchNote: "已核验品牌主体、理念、5 张平安金融中心店空间图片及一篇创始团队深读；当前完整门店网络仍无同一时点目录，门店板块保持隐藏。",
         philosophyHeadline: "让古老中国茶拥有年轻的当代形态",
         philosophy: "以茶为本、守正创新，把茶的风土、器物和仪式重新设计成有趣、轻盈的日常体验，陪伴人们从第一杯纯茶一路喝到更深的理解。",
         philosophyAttribution: "DNA 编辑缩写｜依据tea'stone创始人李姝与COO胡跃直接访谈",
         philosophySourceKeys: [
           "teastone-founder-coo-interview-20220509",
+        ],
+        learnMore: [
+          {
+            title: "tea'stone：古老的中国茶需要一个年轻的代表品牌｜品牌星球专访",
+            displayTitle: "tea'stone：怎样让纯茶变年轻",
+            coverUrl: "https://www.brandstar.com.cn/share-cover/uploads/article_covers/%E5%93%81%E7%89%8C%E6%98%9F%E7%90%83-%E5%A4%B4%E5%9B%BE-teastone%E5%89%8D%E6%B5%B7%E4%B8%87%E8%B1%A1%E5%BA%9708.jpg?imageMogr2/thumbnail/1280x%3E/format/jpg/quality/85",
+            sourceKey: "teastone-founder-coo-interview-20220509",
+          },
         ],
       },
       "brand-v2-104": {
@@ -1862,12 +2008,20 @@
         "entityType": "wuhan-independent-livehouse",
         "disposition": "partial",
         "categoryLabel": "LiveHouse 与音乐现场类",
-        "researchNote": "已核验品牌主体、理念；未通过的图库、门店或专业视频板块保持隐藏。",
+        "researchNote": "已核验品牌主体、理念与 1 篇聚焦创始人、本地乐队培育及城市音乐档案的品牌深读；当前完整门店范围仍需独立核对。",
         "philosophyHeadline": "乐队会老去，但原创不能消失",
         "philosophy": "不只做巡演的中转站，而是把舞台、排练、录音、教育与五千支乐队的记忆连成武汉原创音乐的长期档案。",
         "philosophyAttribution": "DNA 编辑整理｜依据创始人朱宁直接采访",
         "philosophySourceKeys": [
           "vox-founder-interview-20260506"
+        ],
+        "learnMore": [
+          {
+            "title": "这家开了18年的livehouse，才是属于武汉的“乐队的夏天”",
+            "displayTitle": "VOX：18年如何守住武汉原创音乐",
+            "coverUrl": "https://imagepphcloud.thepaper.cn/pph/image/267/961/266.jpg",
+            "sourceKey": "vox-thepaper-brand-profile-20230831"
+          }
         ]
       },
       "brand-confirmed-20260630-005": {
@@ -1913,12 +2067,20 @@
         "entityType": "guizhou-miao-silver-jewelry-brand",
         "disposition": "partial",
         "categoryLabel": "非遗银饰与文创零售类",
-        "researchNote": "已核验品牌主体、理念；未通过的图库、门店或专业视频板块保持隐藏。",
+        "researchNote": "已核验品牌主体、理念与 1 篇贵州广电品牌专题；门店范围仍需独立核对，本次不展示历史数量口径。",
         "philosophyHeadline": "让苗银轻起来，走进年轻人的日常",
         "philosophy": "从传统纹样与古法工艺里提炼现代设计，让苗银不只停在传统服饰和旅游纪念品中，而能成为年轻人每天愿意佩戴的首饰。",
         "philosophyAttribution": "DNA 编辑整理｜依据创始人张晓直接采访",
         "philosophySourceKeys": [
           "ruibird-founder-interview-20260423"
+        ],
+        "learnMore": [
+          {
+            "title": "瑞银鸟：千锤百炼显新意 经纬交织向未来",
+            "displayTitle": "瑞银鸟：让苗银传统长出当代设计",
+            "coverUrl": "https://www.gshmzfgw.com/static/uploadfile/file/2025-08-25/68abd7f5f0636.jpg",
+            "sourceKey": "ruiyinniao-gzstv-brand-profile-20250401"
+          }
         ]
       },
       "brand-confirmed-20260703-004": {
@@ -1931,12 +2093,20 @@
         "entityType": "chongqing-heritage-peanut-snack-brand",
         "disposition": "partial",
         "categoryLabel": "老字号零食与城市伴手礼类",
-        "researchNote": "已核验品牌主体、理念；未通过的图库、门店或专业视频板块保持隐藏。",
+        "researchNote": "已核验品牌主体、理念与 1 篇聚焦第四代传承、品牌复出及产品焕新的品牌深读；当前完整门店范围仍需独立核对。",
         "philosophyHeadline": "守住火候，也让老味道回到城市日常",
         "philosophy": "把祖传的选料、炒制与火候继续做细，也让这口山城老味道从记忆里重新回到街巷与当代人的日常。",
         "philosophyAttribution": "DNA 编辑整理｜依据第四代传承人段余舜公开采访",
         "philosophySourceKeys": [
           "duanshi-inheritor-profile-20240313"
+        ],
+        "learnMore": [
+          {
+            "title": "退市十年重出江湖 奇香花生米“火出圈”",
+            "displayTitle": "段氏奇香：第四代如何让老味道复出",
+            "coverUrl": "https://q6.itc.cn/q_70/images03/20240313/8c8d23c83aef4caab14cef727fbd1a57.jpeg",
+            "sourceKey": "duanshi-sohu-brand-profile-20240313"
+          }
         ]
       },
       "brand-confirmed-20260703-006": {
@@ -1949,12 +2119,20 @@
         "entityType": "xiamen-cat-theme-community-and-cultural-space",
         "disposition": "partial",
         "categoryLabel": "萌宠内容 IP 与文创零售类",
-        "researchNote": "已核验品牌主体、理念；未通过的图库、门店或专业视频板块保持隐藏。",
+        "researchNote": "已核验品牌主体、理念与 1 篇猫街缔造者郭明明专访；当前完整门店范围仍需独立核对。",
         "philosophyHeadline": "不只让人撸猫，也让一条街共同长成",
         "philosophy": "把猫、文创、公益和社区营造连在一起，让居民、商户与游客共同参与，形成一条有日常关系的猫文化街区。",
         "philosophyAttribution": "DNA 编辑整理｜依据猫街缔造者郭明明直接采访",
         "philosophySourceKeys": [
           "xiamen-cat-founder-interview-20180607"
+        ],
+        "learnMore": [
+          {
+            "title": "“猫街”缔造者郭明明：发挥厦门文化优势 营造幸福猫街",
+            "displayTitle": "猫街缔造者郭明明专访",
+            "coverUrl": "https://5b0988e595225.cdn.sohucs.com/images/20180607/9146fbe2b21a494abdde69d5a88e5a4c.jpeg",
+            "sourceKey": "xiamen-cat-founder-interview-20180607"
+          }
         ]
       },
       "brand-confirmed-20260703-007": {
@@ -2250,12 +2428,20 @@
         canonicalName: "邵万生",
         entityType: "heritage-food-brand",
         disposition: "partial",
-        researchNote: "品牌理念已核验；南京东路店与江西路店仅是活动报道中的点位下限，不代表当前完整门店总数，因此门店板块保持隐藏。按用户意见不采用政务报道配图，图库保持空；没有合格专业深读视频。",
+        researchNote: "品牌理念与 1 篇老字号年轻化经营案例已核验；南京东路店与江西路店仅是报道中的点位下限，不代表当前完整门店总数，门店板块保持隐藏。",
         philosophyHeadline: "让百年糟醉成为可体验的上海风味",
         philosophy: "以百年糟醉技艺为根，把“万物皆可糟”做成可吃、可看、可带走的上海风味体验。",
         philosophyAttribution: "DNA 编辑改写｜依据上海市国资委品牌报道",
         philosophySourceKeys: [
           "shaowansheng-shanghai-sasac-20251201",
+        ],
+        learnMore: [
+          {
+            title: "老字号年轻化之路：邵万生的新征程",
+            displayTitle: "邵万生：老字号年轻化的新征程",
+            coverUrl: "https://wenhui.whb.cn/u/cms/www/202310/071118346fvd.jpg",
+            sourceKey: "shaowansheng-retail-association-profile-20221126",
+          },
         ],
       },
     },
@@ -2289,6 +2475,21 @@
         linkStatus: "active",
         basis: "创始人与投资方围绕线下体验、线上能力、融资后规模扩张及一店一设计展开完整商业访谈，不是门店打卡内容。",
       },
+      "doe-shanghai-archdaily-20180104": {
+        brandId: "brand-v2-048",
+        expectedName: "DOE",
+        subjectName: "DOE 上海店",
+        relationship: "same-brand",
+        purpose: ["identity", "philosophy", "deep-read"],
+        name: "ArchDaily｜DOE 上海店空间设计项目",
+        url: "https://www.archdaily.com/886517/doe-store-in-shanghai-blue-architecture-studio",
+        authority: "professional-brand-analysis",
+        contentType: "article",
+        publishedAt: "2018-01-04",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "项目页以 DOE 上海店为主体，展示门店空间、可变木盒展示系统与 B.L.U.E. 的设计说明；用于空间与品牌理解，不外推当前门店网络。",
+      },
       "kumo-founder-interview-foodaily-20230418": {
         brandId: "brand-v2-018",
         expectedName: "KUMO KUMO",
@@ -2309,7 +2510,7 @@
         expectedName: "Basdban",
         subjectName: "Basdban",
         relationship: "same-brand",
-        purpose: ["identity", "philosophy"],
+        purpose: ["identity", "philosophy", "deep-read"],
         name: "IDEAT理想家｜Basdban 主理人品牌访谈",
         url: "https://www.sohu.com/a/503622720_121124458",
         authority: "founder-direct-interview",
@@ -2458,15 +2659,31 @@
         linkStatus: "active",
         basis: "官网页面当前列出上海红宝石路总部为开放门店，并明确标记延平路、M50、十全路和大连旧店已关闭；WordPress API 显示页面最后修改于 2025-10-22。",
       },
+      "new-bookstore-founder-36kr-20210414": {
+        brandId: "brand-v2-040",
+        expectedName: "新山书屋",
+        subjectName: "新山书屋",
+        relationship: "same-brand",
+        purpose: ["identity", "philosophy", "deep-read"],
+        name: "36氪｜新山书屋创始人李晖访谈",
+        url: "https://www.36kr.com/p/1179881467920644",
+        authority: "founder-direct-interview",
+        contentType: "article",
+        publishedAt: "2021-04-14",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "创始人李晖解释实体书店为何需要跳开图书销售，把阅读、生活美学、社交和活动组织成可持续的线下场景。",
+      },
       "by-art-matters-principal-interview-20210625": {
         brandId: "brand-v2-043",
         expectedName: "BY ART MATTERS",
         subjectName: "BY ART MATTERS 天目里美术馆",
         relationship: "same-brand",
-        purpose: ["identity", "philosophy"],
+        purpose: ["identity", "philosophy", "deep-read"],
         name: "D-ARTS｜BY ART MATTERS 管理团队直接访谈",
         url: "https://www.d-arts.cn/article/article_info/key/MTE5OTI4Njc1NjGFqYljr6mgcw.html",
         authority: "founder-direct-interview",
+        contentType: "article",
         publishedAt: "2021-06-25",
         checkedAt: "2026-08-27",
         linkStatus: "active",
@@ -2603,28 +2820,30 @@
         expectedName: "UNTITLAB",
         subjectName: "untitlab™",
         relationship: "same-brand",
-        purpose: ["identity", "philosophy"],
+        purpose: ["identity", "philosophy", "deep-read"],
         name: "KIKS定番｜untitlab 创始人 Zen 与设计师 Sans 直接访谈",
         url: "https://www.sohu.com/a/438718201_698577",
         authority: "founder-direct-interview",
+        contentType: "article",
         publishedAt: "2020-12-16",
-        checkedAt: "2026-08-27",
+        checkedAt: "2026-08-29",
         linkStatus: "active",
-        basis: "两位创始人直接说明跨场景鞋履、模糊正装与运动及性别边界、以真诚生活体验建立深度情感共鸣；用于理念。",
+        basis: "两位创始人直接说明跨场景鞋履、模糊正装与运动及性别边界、以真诚生活体验建立深度情感共鸣；用于身份、理念与品牌深读。",
       },
       "staffonly-founders-interview-20210327": {
         brandId: "brand-v2-054",
         expectedName: "STAFFONLY",
         subjectName: "STAFFONLY",
         relationship: "same-brand",
-        purpose: ["identity", "philosophy"],
+        purpose: ["identity", "philosophy", "deep-read"],
         name: "Sound of Life｜STAFFONLY 联合创始人直接访谈",
         url: "https://zh.soundoflife.com/blogs/people/sound-of-inspirations-interview-staffonly-designers-une-yea-and-shimo-zhou",
         authority: "founder-direct-interview",
+        contentType: "article",
         publishedAt: "2021-03-27",
-        checkedAt: "2026-08-27",
+        checkedAt: "2026-08-29",
         linkStatus: "active",
-        basis: "The founders describe STAFFONLY as a container for ideas and materials, driven by curiosity, daily observation and communication.；用于身份与理念，不沿用历史门店数字。",
+        basis: "联合创始人直接说明 STAFFONLY 是承载想法与材料的容器，并谈到好奇心、日常观察与沟通；用于身份、理念与品牌深读，不沿用历史门店数字。",
       },
       "short-sentence-founder-interview-20210125": {
         brandId: "brand-v2-055",
@@ -2948,6 +3167,21 @@
         linkStatus: "active",
         basis: "Government profile verifies the exact three-floor PONN format and its pet-social scene at Yuexiu IFC.；用于身份与理念，不沿用历史门店数字。",
       },
+      "ponn-jimu-onsite-video-20250519": {
+        brandId: "brand-v2-078",
+        expectedName: "PONN宠物百货",
+        subjectName: "PONN宠物百货",
+        relationship: "same-brand",
+        purpose: ["deep-read"],
+        name: "极目新闻｜PONN 宠物百货现场采访",
+        url: "https://jms.ctdsb.net/jmythshare/#/index_share?contentType=9&contentId=2445691&cId=0&type=1",
+        authority: "media-brand-analysis",
+        contentType: "video",
+        publishedAt: "2025-05-19",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "极目新闻在 PONN 宠物百货现场拍摄并介绍多层复合空间、商品服务和宠物社交场景；用于品牌深读，不外推当前完整门店网络。",
+      },
       "pidan-founder-speech-20220112": {
         brandId: "brand-v2-080",
         expectedName: "pidan",
@@ -2989,6 +3223,21 @@
         checkedAt: "2026-08-27",
         linkStatus: "active",
         basis: "Founder 郭维科 describes technology care, solving concrete pet-owner problems through small details and pursuing harmony between people and pets.；用于身份与理念，不沿用历史门店数字。",
+      },
+      "to-summer-brandstar-interview-20220908": {
+        brandId: "brand-v2-083",
+        expectedName: "观夏",
+        subjectName: "观夏 to summer",
+        relationship: "same-brand",
+        purpose: ["identity", "philosophy", "deep-read"],
+        name: "品牌星球｜观夏品牌团队与东方香空间专访",
+        url: "https://www.brandstar.com.cn/in-depth/4501",
+        authority: "brand-team-direct-interview",
+        contentType: "article",
+        publishedAt: "2022-09-08",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "品牌团队围绕国子监四合院、上海闲庭、东方器物与公共空间说明观夏如何把东方香从产品延展为文化叙事。",
       },
       "documents-founder-interview-20221021": {
         brandId: "brand-v2-084",
@@ -3032,10 +3281,10 @@
         linkStatus: "active",
         basis: "Zhuang Ying describes the original model as listening to a customer's story and using flowers to carry its emotion, with story and execution central to the brand.；用于身份与理念，不沿用历史门店数字。",
       },
-      "superman-plants-founder-speech-20230710": {
+      "super-plants-founder-speech-20230710": {
         brandId: "brand-v2-086",
         expectedName: "超级植物公司",
-        subjectName: "超级植物公司 SUPERMAN PLANTS",
+        subjectName: "超级植物公司 SUPER PLANTS",
         relationship: "same-brand",
         purpose: ["identity", "philosophy"],
         name: "品牌星球｜超级植物公司创始人公开演讲",
@@ -3074,6 +3323,35 @@
         linkStatus: "active",
         basis: "Alessio positions B1OCK from contemporary art rather than pure selling or internet-celebrity traffic, emphasizing the combined quality of place, content and selection.；用于身份与理念，不沿用历史门店数字。",
       },
+      "drivepro-founder-interview-20210331": {
+        brandId: "brand-v2-091",
+        expectedName: "DrivePro",
+        subjectName: "DrivePro / DP",
+        relationship: "same-brand-group-founder-interview",
+        purpose: ["identity", "philosophy", "deep-read"],
+        name: "iziRetail 热点｜对话 DrivePro 创始人 Kevin Liu",
+        url: "https://www.10100.com/article/9446916",
+        authority: "founder-direct-interview",
+        contentType: "article",
+        publishedAt: "2021-03-31",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "创始人直接说明 DrivePro 的创立、选品标准、少而精策略、门店体验价值及 DP 多品牌体系边界；2021 年历史门店数字不用于当前门店总数。",
+      },
+      "drivepro-official-store-directory-20260829": {
+        brandId: "brand-v2-091",
+        expectedName: "DrivePro",
+        subjectName: "DrivePro",
+        relationship: "same-brand-official-directory",
+        purpose: ["identity", "store-count", "store-city", "store-address"],
+        name: "DrivePro 官网｜STORES",
+        url: "https://us.drivepro.com/pages/stores",
+        authority: "official-store-directory",
+        observedAt: "2026-08-29",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "官网当前 STORES 页面列出 8 个门店条目，城市为上海、北京、宁波、深圳与杭州；按页面同一时点目录计数，不混用 2021 年历史报道。",
+      },
       "basao-cofounder-interview-20151223": {
         brandId: "brand-v2-092",
         expectedName: "BASAO佰朔",
@@ -3093,12 +3371,13 @@
         expectedName: "tea'stone",
         subjectName: "tea'stone",
         relationship: "same-brand",
-        purpose: ["identity", "philosophy"],
+        purpose: ["identity", "philosophy", "deep-read"],
         name: "品牌星球｜tea'stone 创始人与 COO 直接访谈",
         url: "https://www.brandstar.com.cn/in-depth/3809",
         authority: "founder-direct-interview",
+        contentType: "article",
         publishedAt: "2022-05-09",
-        checkedAt: "2026-08-27",
+        checkedAt: "2026-08-29",
         linkStatus: "active",
         basis: "Li Shu and Hu Yue describe 守正创新, tea culture as an ongoing present tense, and the use of contemporary form to make pure tea playful and accompany users from beginners to deeper understanding.；用于身份与理念，不沿用历史门店数字。",
       },
@@ -3493,6 +3772,23 @@
         "linkStatus": "active",
         "basis": "该日期来源中的品牌负责人或官方主体直接说明品牌定位、经营方式与长期目标；用于整理理念，不外推门店数字。"
       },
+      "vox-thepaper-brand-profile-20230831": {
+        "brandId": "brand-confirmed-20260630-004",
+        "expectedName": "VOX LIVEHOUSE",
+        "subjectName": "VOX LIVEHOUSE",
+        "relationship": "same-brand",
+        "purpose": [
+          "deep-read"
+        ],
+        "name": "澎湃新闻｜这家开了18年的livehouse，才是属于武汉的“乐队的夏天”",
+        "url": "https://www.thepaper.cn/newsDetail_forward_24424564",
+        "authority": "media-brand-analysis",
+        "contentType": "article",
+        "publishedAt": "2023-08-31",
+        "checkedAt": "2026-08-29",
+        "linkStatus": "active",
+        "basis": "报道以 VOX 为主体，结合创始人朱宁直接表达，完整梳理其扶持本地原创乐队、持续制作《武汉之声》及保存演出木牌档案的长期运营方法；用于理解品牌与城市音乐生态，不外推当前门店范围。"
+      },
       "b10-curator-profile-20210610": {
         "brandId": "brand-confirmed-20260630-005",
         "expectedName": "深圳B10现场",
@@ -3527,6 +3823,23 @@
         "linkStatus": "active",
         "basis": "该日期来源中的品牌负责人或官方主体直接说明品牌定位、经营方式与长期目标；用于整理理念，不外推门店数字。"
       },
+      "ruiyinniao-gzstv-brand-profile-20250401": {
+        "brandId": "brand-confirmed-20260703-003",
+        "expectedName": "瑞银鸟",
+        "subjectName": "瑞银鸟",
+        "relationship": "same-brand",
+        "purpose": [
+          "deep-read"
+        ],
+        "name": "贵州广播电视台｜瑞银鸟：千锤百炼显新意 经纬交织向未来",
+        "url": "https://www.gzstv.com/a/8228599de2d64c3d908f3316035eedb2",
+        "authority": "media-brand-analysis",
+        "contentType": "article",
+        "publishedAt": "2025-04-01",
+        "checkedAt": "2026-08-29",
+        "linkStatus": "active",
+        "basis": "贵州广播电视台品牌专题结合创始人与设计、经营团队直接表达，梳理传统纹样现代化、手工品质标准、产业协作与业务延展；报道中的历史门店口径不作为本轮当前门店数据。"
+      },
       "duanshi-inheritor-profile-20240313": {
         "brandId": "brand-confirmed-20260703-004",
         "expectedName": "段氏奇香花生米",
@@ -3544,6 +3857,23 @@
         "linkStatus": "active",
         "basis": "该日期来源中的品牌负责人或官方主体直接说明品牌定位、经营方式与长期目标；用于整理理念，不外推门店数字。"
       },
+      "duanshi-sohu-brand-profile-20240313": {
+        "brandId": "brand-confirmed-20260703-004",
+        "expectedName": "段氏奇香花生米",
+        "subjectName": "段氏奇香花生米",
+        "relationship": "same-brand",
+        "purpose": [
+          "deep-read"
+        ],
+        "name": "重庆日报转载｜退市十年重出江湖 奇香花生米“火出圈”",
+        "url": "https://www.sohu.com/a/763738166_121433834",
+        "authority": "media-brand-analysis",
+        "contentType": "article",
+        "publishedAt": "2024-03-13",
+        "checkedAt": "2026-08-29",
+        "linkStatus": "active",
+        "basis": "重庆日报转载报道以第四代传承人段余舜为核心，完整呈现品牌沉浮、下浩里复出、传统炒制延续与新品开发，适合作为品牌传承和当代更新的深读材料。"
+      },
       "xiamen-cat-founder-interview-20180607": {
         "brandId": "brand-confirmed-20260703-006",
         "expectedName": "厦门猫咪博物馆",
@@ -3551,15 +3881,17 @@
         "relationship": "same-brand",
         "purpose": [
           "identity",
-          "philosophy"
+          "philosophy",
+          "deep-read"
         ],
-        "name": "厦门日报｜猫街缔造者郭明明专访",
+        "name": "台海网｜猫街缔造者郭明明专访",
         "url": "https://www.sohu.com/a/234368240_411853",
         "authority": "founder-direct-interview",
+        "contentType": "article",
         "publishedAt": "2018-06-07",
-        "checkedAt": "2026-08-28",
+        "checkedAt": "2026-08-29",
         "linkStatus": "active",
-        "basis": "该日期来源中的品牌负责人或官方主体直接说明品牌定位、经营方式与长期目标；用于整理理念，不外推门店数字。"
+        "basis": "猫街缔造者郭明明直接讲述从猫主题绘画、文创店与猫咪博物馆出发，联动居民、商户和游客共同营造猫街的过程；用于品牌理念及社区型内容运营深读，不外推当前门店数字。"
       },
       "huaji-operator-interview-20231223": {
         "brandId": "brand-confirmed-20260703-007",
@@ -4104,10 +4436,11 @@
         expectedName: "Metal Hands",
         subjectName: "METAL HANDS / 铁手咖啡制造局",
         relationship: "same-brand",
-        purpose: ["identity", "philosophy"],
+        purpose: ["identity", "philosophy", "deep-read"],
         name: "品牌访谈｜METAL HANDS 上海首店与创始人丁江涛",
         url: "https://www.sohu.com/a/251771306_343481",
         authority: "founder-direct-interview",
+        contentType: "article",
         publishedAt: "2018-09-04",
         checkedAt: "2026-08-27",
         linkStatus: "active",
@@ -4126,6 +4459,21 @@
         checkedAt: "2026-08-27",
         linkStatus: "active",
         basis: "创始人直接讲述品牌、城市门店与咖啡师交流的经营理解；用于品牌身份与理念，不从历史点位推断当前门店总数。",
+      },
+      "berry-beans-founder-ifeng-20151009": {
+        brandId: "brand-v2-005",
+        expectedName: "Berry Beans",
+        subjectName: "Berry Beans",
+        relationship: "same-brand",
+        purpose: ["deep-read"],
+        name: "凤凰网生活美学家｜Berry Beans 创始人韦寒夜访谈",
+        url: "https://finance.ifeng.com/lifeplus/season02/5.shtml",
+        authority: "founder-direct-interview",
+        contentType: "article",
+        publishedAt: "2015-10-09",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "创始人直接讲述离开连锁体系、在北京胡同建立 Berry Beans，以及开放吧台、院落和面对面交流的经营选择。",
       },
       "grid-founder-brandstar-20221016": {
         brandId: "brand-v2-003",
@@ -4569,6 +4917,21 @@
         linkStatus: "active",
         basis: "主管部门品牌报道明确“万物皆可糟”“糟醉+”的发展方式，以及在保留百年技艺基础上把旗舰店升级为文化体验空间；只用于理念，不采用其中政务配图。",
       },
+      "shaowansheng-retail-association-profile-20221126": {
+        brandId: "brand-confirmed-20260705-dsbe-007",
+        expectedName: "邵万生",
+        subjectName: "邵万生",
+        relationship: "same-brand",
+        purpose: ["deep-read"],
+        name: "上海连锁经营协会｜老字号年轻化之路：邵万生的新征程",
+        url: "https://shcfa.cn/article/154.html",
+        authority: "professional-brand-analysis",
+        contentType: "article",
+        publishedAt: "2022-11-26",
+        checkedAt: "2026-08-29",
+        linkStatus: "active",
+        basis: "上海连锁经营协会案例系统拆解邵万生通过糟醉咖啡跨界、创新首店、年轻化包装与内容传播更新老字号认知的路径；用于品牌经营深读，不外推当前门店数量。",
+      },
       "shaowansheng-two-stores-people-20250809": {
         brandId: "brand-confirmed-20260705-dsbe-007",
         expectedName: "邵万生",
@@ -4583,6 +4946,10 @@
       },
     },
   };
+
+  const approvedExpansion = globalScope.COMMERCIAL_DNA_APPROVED_BRAND_EXPANSION_V0_1?.editorial;
+  Object.assign(editorial.brands, approvedExpansion?.brands || {});
+  Object.assign(editorial.sources, approvedExpansion?.sources || {});
 
   const removedIds = new Set(
     globalScope.COMMERCIAL_DNA_BRAND_REMOVALS_V0_1?.brandIds || [],
