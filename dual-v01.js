@@ -600,14 +600,16 @@
     return Math.max(0, Number(candidates.find(Number.isFinite)) || 0);
   }
 
-  function directorySnapshot(route = parseRoute()) {
+  function directorySnapshot(route = parseRoute(), preferredAnchorId = "") {
     const routeKey = directoryRouteKey(route);
     if (!routeKey) return null;
     const descriptor = directoryDescriptor(routeKey);
     const root = descriptor?.root;
     if (!root?.querySelectorAll) return null;
     const visibleCards = [...root.querySelectorAll(descriptor.cardSelector)].filter(card => !card.hidden);
-    const anchor = visibleCards.find(card => card.getBoundingClientRect().bottom > 0) || null;
+    const anchor = visibleCards.find(card => (
+      preferredAnchorId && descriptor.idForCard(card) === preferredAnchorId
+    )) || visibleCards.find(card => card.getBoundingClientRect().bottom > 0) || null;
     const anchorId = anchor ? descriptor.idForCard(anchor) : "";
     const anchorTop = anchor ? anchor.getBoundingClientRect().top : null;
     return sanitizeDirectorySnapshot({
@@ -622,8 +624,8 @@
     }, routeKey);
   }
 
-  function captureDirectorySnapshot(route = parseRoute()) {
-    const snapshot = directorySnapshot(route);
+  function captureDirectorySnapshot(route = parseRoute(), preferredAnchorId = "") {
+    const snapshot = directorySnapshot(route, preferredAnchorId);
     if (!snapshot) return null;
     const previousState = globalScope.history?.state;
     const state = previousState && typeof previousState === "object" && !Array.isArray(previousState)
@@ -664,17 +666,33 @@
       descriptor.filter(search);
     }
 
+    const restoreAnchor = () => {
+      if (directoryRouteKey(parseRoute()) !== routeKey) return;
+      const anchor = [...root.querySelectorAll(descriptor.cardSelector)].find(card => (
+        !card.hidden
+        && descriptor.idForCard(card) === snapshot.anchorId
+      ));
+      const targetY = anchor && snapshot.anchorTop !== null
+        ? currentScrollTop() + anchor.getBoundingClientRect().top - snapshot.anchorTop
+        : snapshot.scrollY;
+      const documentRoot = document.documentElement;
+      const previousScrollBehavior = documentRoot?.style.scrollBehavior || "";
+      if (documentRoot) documentRoot.style.scrollBehavior = "auto";
+      globalScope.scrollTo(0, Math.max(0, targetY));
+      if (documentRoot) documentRoot.style.scrollBehavior = previousScrollBehavior;
+    };
+
     globalScope.requestAnimationFrame(() => {
       globalScope.requestAnimationFrame(() => {
-        if (directoryRouteKey(parseRoute()) !== routeKey) return;
-        const anchor = [...root.querySelectorAll(descriptor.cardSelector)].find(card => (
-          !card.hidden
-          && descriptor.idForCard(card) === snapshot.anchorId
-        ));
-        const targetY = anchor && snapshot.anchorTop !== null
-          ? currentScrollTop() + anchor.getBoundingClientRect().top - snapshot.anchorTop
-          : snapshot.scrollY;
-        globalScope.scrollTo(0, Math.max(0, targetY));
+        restoreAnchor();
+        document.fonts?.ready?.then(restoreAnchor).catch(() => {});
+        const anchorCards = [...root.querySelectorAll(descriptor.cardSelector)];
+        const anchorIndex = anchorCards.findIndex(card => descriptor.idForCard(card) === snapshot.anchorId);
+        anchorCards
+          .slice(0, anchorIndex >= 0 ? anchorIndex + 1 : 0)
+          .flatMap(card => [...card.querySelectorAll("img")])
+          .filter(image => !image.complete)
+          .forEach(image => image.addEventListener("load", restoreAnchor, { once: true }));
       });
     });
   }
@@ -2241,14 +2259,16 @@
     return { screen: "home", mode: null };
   }
 
-  function navigate(hash, replace = false) {
+  function navigate(hash, replace = false, preferredDirectoryAnchorId = "") {
     const currentRoute = parseRoute();
     const nextRoute = parseRoute(hash);
     const currentDirectoryKey = directoryRouteKey(currentRoute);
     const nextDirectoryKey = directoryRouteKey(nextRoute);
     const currentDetailKey = detailDirectoryRouteKey(currentRoute);
     const nextDetailKey = detailDirectoryRouteKey(nextRoute);
-    const capturedSnapshot = currentDirectoryKey ? captureDirectorySnapshot(currentRoute) : null;
+    const capturedSnapshot = currentDirectoryKey
+      ? captureDirectorySnapshot(currentRoute, preferredDirectoryAnchorId)
+      : null;
     let nextState = null;
     if (capturedSnapshot && nextDetailKey === currentDirectoryKey) {
       nextState = {
@@ -2440,11 +2460,19 @@
     }
     else if (target.matches("[data-dual-open-project-library]")) navigate("#samples/projects");
     else if (target.matches("[data-dual-open-project-sample]")) {
-      navigate(`#samples/projects/${encodeURIComponent(target.dataset.projectId || "")}`);
+      navigate(
+        `#samples/projects/${encodeURIComponent(target.dataset.projectId || "")}`,
+        false,
+        String(target.dataset.projectId || ""),
+      );
     }
     else if (target.matches("[data-dual-open-brand-library]")) navigate("#samples/brands");
     else if (target.matches("[data-dual-open-brand-sample]")) {
-      navigate(`#samples/brands/${encodeURIComponent(target.dataset.brandId || "")}`);
+      navigate(
+        `#samples/brands/${encodeURIComponent(target.dataset.brandId || "")}`,
+        false,
+        String(target.dataset.brandId || ""),
+      );
     }
     else if (target.matches("[data-dual-back-routes]")) {
       const originMode = MODES.includes(target.dataset.dualOrigin) ? target.dataset.dualOrigin : "self";
@@ -2489,6 +2517,9 @@
 
   async function init() {
     hydratePersistedState();
+    if ("scrollRestoration" in globalScope.history) {
+      globalScope.history.scrollRestoration = "manual";
+    }
     document.addEventListener("click", handleOwnedClick, true);
     document.addEventListener("input", event => {
       if (event.target.matches?.("[data-dual-sample-search]")) filterAllProjectSamples(event.target);

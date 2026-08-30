@@ -201,7 +201,7 @@
     ["Berry Beans", "北京", "咖啡烘焙饮品", "精品咖啡", "社区咖啡", "咖啡,社区,小店", "LSME,LCME,LCMR", "适合社区更新和小体量街区。", "socialAuditNeeded"],
     ["Algebraist Coffee", "上海", "咖啡烘焙饮品", "精品咖啡", "高识别咖啡品牌", "咖啡,设计,年轻", "LCME,DCME,DCMR", "适合高审美街区和内容型商业。", "shCoffee2025"],
     ["TAG Espresso", "成都", "咖啡烘焙饮品", "咖啡+艺术", "成都社区商业落地案例", "咖啡,艺术,社区", "LCMR,DCME", "适合艺术生活街区和社区共创型商业。", "socialAuditNeeded"],
-    ["Cycle&Cycle", "上海", "咖啡烘焙饮品", "骑行+烘焙+咖啡", "天目里等非标项目常见品牌", "骑行,烘焙,咖啡,社群", "DSMR,LCMR,DCMR", "适合公园、滨水、骑行绿道和生活方式街区。", "socialAuditNeeded"],
+    ["Cycle&Cycle", "杭州", "咖啡烘焙饮品", "精品烘焙生活方式", "在地烘焙与移动面包房", "烘焙,面包,社区,手作", "LCME,LCMR,DCMR", "适合街区、公园与社区型生活方式项目。", "socialAuditNeeded"],
     ["% Arabica", "京都", "咖啡烘焙饮品", "国际咖啡目的地", "非标空间高传播咖啡", "咖啡,游客,拍照", "DCBE,DCBR,DCMR", "适合标杆非标项目的视觉传播点位。", "socialAuditNeeded"],
     ["Seesaw Coffee", "上海", "咖啡烘焙饮品", "精品咖啡", "成熟但适配非标街区", "咖啡,社区,年轻", "LCBE,LCME,DSME", "适合社区和办公混合型非标商业。", "shCoffee2025"],
     ["M Stand", "上海", "咖啡烘焙饮品", "空间型咖啡", "空间传播型咖啡", "咖啡,社交,空间", "LCBR,DCBR,DCMR", "适合需要社交停留和视觉识别的街区。", "shCoffee2025"],

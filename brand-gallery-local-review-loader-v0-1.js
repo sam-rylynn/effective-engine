@@ -10,7 +10,7 @@
   if (!enabled) return;
 
   globalScope.document.write(
-    '<script src="approved-brand-expansion-gallery-review-v0-1.js?v=20260830-approved-twenty-one-01"><\/script>'
-      + '<script src="brand-gallery-review-v0-1.js?v=20260830-approved-twenty-one-01"><\/script>',
+    '<script src="approved-brand-expansion-gallery-review-v0-1.js?v=20260830-public-gallery-155-01"><\/script>'
+      + '<script src="brand-gallery-review-v0-1.js?v=20260830-public-gallery-155-01"><\/script>',
   );
 })(typeof window !== "undefined" ? window : globalThis);
