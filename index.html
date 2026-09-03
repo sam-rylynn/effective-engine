@@ -15,7 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111111'/%3E%3Ccircle cx='21' cy='20' r='8' fill='%23ffd13d'/%3E%3Ccircle cx='43' cy='32' r='8' fill='%23ff5a3d'/%3E%3Ccircle cx='21' cy='44' r='8' fill='%23255dff'/%3E%3Cpath d='M28 20c12 0 4 24 16 24M28 44c12 0 4-24 16-24' fill='none' stroke='%23fff8eb' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="combo.css?v=20260716-dual-v02-01" />
   <link rel="stylesheet" href="dual-v0-2.css?v=20260729-project-results-01" />
-  <link rel="stylesheet" href="dual-v0-3.css?v=20260829-brand-card-badges-02" />
+  <link rel="stylesheet" href="dual-v0-3.css?v=20260903-sample-decode-wordmarks-03-no-atlas" />
   <link rel="stylesheet" href="dual-desktop-v0-1.css?v=20260829-full-desktop-03" />
   <link rel="preload" as="image" href="assets/dna-home-hero-direction-01-v01.webp" type="image/webp" media="(max-width: 1099px)" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/dna-home-hero-desktop-v04.webp" type="image/webp" media="(min-width: 1100px)" fetchpriority="high" />
@@ -86,17 +86,14 @@
         </div>
       </article>
       <section class="dual-history-shelf" id="dualHistoryShelf" hidden aria-labelledby="dualHistoryTitle"></section>
-      <section class="dual-home-sample-atlas" aria-labelledby="dualHomeSampleAtlasTitle">
-        <header class="dual-home-sample-heading">
-          <span>SAMPLE ATLAS</span>
-          <h2 id="dualHomeSampleAtlasTitle">样本区</h2>
-          <p>不做测试，也可以直接认识真实项目和品牌。</p>
-        </header>
+      <section class="dual-home-sample-atlas" aria-labelledby="dualHomeSamplesTitle">
+        <h2 class="dual-visually-hidden" id="dualHomeSamplesTitle">项目与品牌样本</h2>
         <section class="dual-home-sample-group" aria-labelledby="dualHomeProjectSampleTitle">
           <header>
-            <div>
-              <span>PROJECT SAMPLES</span>
-              <h3 id="dualHomeProjectSampleTitle">项目样本</h3>
+            <div class="dual-home-sample-wordmark is-project">
+              <img src="assets/sample-headings-v0-1/project-samples-wordmark.png?v=20260903-01" width="1200" height="520" loading="lazy" decoding="async" alt="" aria-hidden="true" onerror="this.hidden=true;this.parentElement.classList.add('is-wordmark-fallback')" />
+              <span class="dual-visually-hidden">PROJECT SAMPLES</span>
+              <h3 class="dual-visually-hidden" id="dualHomeProjectSampleTitle">项目样本</h3>
             </div>
             <small>看空间与运营如何发生</small>
           </header>
@@ -107,9 +104,10 @@
         </section>
         <section class="dual-home-sample-group is-brand" aria-labelledby="dualHomeBrandSampleTitle">
           <header>
-            <div>
-              <span>BRAND SAMPLES</span>
-              <h3 id="dualHomeBrandSampleTitle">品牌样本</h3>
+            <div class="dual-home-sample-wordmark is-brand">
+              <img src="assets/sample-headings-v0-1/brand-samples-wordmark-light.png?v=20260903-01" width="1200" height="520" loading="lazy" decoding="async" alt="" aria-hidden="true" onerror="this.hidden=true;this.parentElement.classList.add('is-wordmark-fallback')" />
+              <span class="dual-visually-hidden">BRAND SAMPLES</span>
+              <h3 class="dual-visually-hidden" id="dualHomeBrandSampleTitle">品牌样本</h3>
             </div>
             <small>先认识品牌，再讨论项目</small>
           </header>
@@ -594,14 +592,16 @@
   <script src="daily-confirmed-20260703.js?v=20260801-yantaishan-dcmr-01"></script>
   <script src="daily-confirmed-20260704.js?v=20260704-01"></script>
   <script src="daily-confirmed-20260705.js?v=20260705-01"></script>
-  <script src="brand-removals-v0-1.js?v=20260828-user-selection-01"></script>
+  <script src="brand-removals-v0-1.js?v=20260903-core-gap-removal-01"></script>
   <script src="approved-brand-expansion-v0-1.js?v=20260830-public-gallery-155-01"></script>
-  <script src="brand-editorial-v0-1.js?v=20260830-public-gallery-155-01"></script>
+  <script src="approved-brand-expansion-80-v0-1.js?v=20260831-complete-expansion-80-01"></script>
+  <script src="brand-research-rerun-20260902-v0-1.js?v=20260903-gap-rerun-01"></script>
+  <script src="brand-editorial-v0-1.js?v=20260903-gap-rerun-01"></script>
   <script src="scene-evidence-v1.js?v=20260813-pac-yuanye-01"></script>
   <script src="formal-project-samples-v0-1.js?v=20260813-retire-seven-01"></script>
   <script src="brand-gallery-v0-1.js?v=20260830-public-gallery-155-01"></script>
-  <script src="brand-gallery-local-review-loader-v0-1.js?v=20260830-public-gallery-155-01"></script>
-  <script src="sample-atlas-v0-1.js?v=20260830-public-gallery-155-01"></script>
+  <script src="brand-gallery-local-review-loader-v0-1.js?v=20260831-complete-expansion-80-01"></script>
+  <script src="sample-atlas-v0-1.js?v=20260831-complete-expansion-80-01"></script>
   <script src="persona-data-v1.js?v=20260712-mainline-01"></script>
   <script src="project-persona-poster-data-v0-1.js?v=20260729-project-results-01"></script>
   <script src="operator-persona-data-v1.js?v=20260801-p0-dna-evaluation-01"></script>

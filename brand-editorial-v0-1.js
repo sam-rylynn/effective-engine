@@ -9,7 +9,7 @@
 
   const editorial = {
     version: "brand-editorial-v0.1",
-    checkedAt: "2026-08-30",
+    checkedAt: "2026-08-31",
     brands: {
       "brand-v2-001": {
         expectedName: "AOKKA Coffee&Bistro",
@@ -5324,6 +5324,37 @@
   const approvedExpansion = globalScope.COMMERCIAL_DNA_APPROVED_BRAND_EXPANSION_V0_1?.editorial;
   Object.assign(editorial.brands, approvedExpansion?.brands || {});
   Object.assign(editorial.sources, approvedExpansion?.sources || {});
+
+  const approvedExpansion80 = globalScope.COMMERCIAL_DNA_APPROVED_BRAND_EXPANSION_80_V0_1?.editorial;
+  Object.assign(editorial.brands, approvedExpansion80?.brands || {});
+  Object.assign(editorial.sources, approvedExpansion80?.sources || {});
+
+  const researchRerun = globalScope.COMMERCIAL_DNA_BRAND_RESEARCH_RERUN_20260902_V0_1?.editorial;
+  Object.entries(researchRerun?.brands || {}).forEach(([brandId, patch]) => {
+    const existing = editorial.brands[brandId] || {};
+    editorial.brands[brandId] = {
+      ...existing,
+      ...patch,
+      store: patch.store
+        ? { ...(existing.store || {}), ...patch.store }
+        : existing.store,
+      philosophySourceKeys: patch.philosophySourceKeys
+        ? Array.from(new Set([
+          ...(existing.philosophySourceKeys || []),
+          ...patch.philosophySourceKeys,
+        ]))
+        : existing.philosophySourceKeys,
+      learnMore: patch.learnMore
+        ? [
+          ...patch.learnMore,
+          ...(existing.learnMore || []).filter(existingEntry => (
+            !patch.learnMore.some(patchEntry => patchEntry.sourceKey === existingEntry.sourceKey)
+          )),
+        ]
+        : existing.learnMore,
+    };
+  });
+  Object.assign(editorial.sources, researchRerun?.sources || {});
 
   const removedIds = new Set(
     globalScope.COMMERCIAL_DNA_BRAND_REMOVALS_V0_1?.brandIds || [],

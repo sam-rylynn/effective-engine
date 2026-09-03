@@ -5,9 +5,13 @@
   const BRAND_NEED_QUESTION = "这个区域生活的人，或者来到这里的人，真正需要什么品牌？";
   const FEATURED_BRAND_NAMES = Object.freeze([
     "荒石公园",
-    "光明邨",
+    "对的咖啡",
     "AOKKA Coffee&Bistro",
     "TOTOMATO",
+  ]);
+  const FEATURED_PROJECT_IDS = Object.freeze([
+    "case-14",
+    "case-22",
   ]);
   const READY_IMAGE_RIGHTS = new Set([
     "owned",
@@ -160,6 +164,54 @@
     "fashionsnap.com",
     "fuzhou.gov.cn",
     "yatzer.com",
+    "azut.cn",
+    "behance.net",
+    "bigsee.eu",
+    "ccas.com.cn",
+    "cdrb.com.cn",
+    "ce.cn",
+    "cnstock.com",
+    "duzhebao.cn",
+    "frenchdesignawards.com",
+    "gmp.de",
+    "gz.gov.cn",
+    "hangzhou.gov.cn",
+    "hutb.edu.cn",
+    "mingchu.co",
+    "mixmag.asia",
+    "mtarch.cn",
+    "naowork.com",
+    "news.cn",
+    "scmp.com",
+    "seen-studios.com",
+    "shine.cn",
+    "singaporeair.com",
+    "stheadline.com",
+    "studio8-sh.com",
+    "studiovapore.com",
+    "suzhou.gov.cn",
+    "sznews.com",
+    "takaobooks.tw",
+    "thape.com",
+    "thatsmags.com",
+    "themillsfabrica.com",
+    "theworlds50best.com",
+    "wallpaper.com",
+    "wuhan.gov.cn",
+    "yicai.com",
+    "zeno.fm",
+    "zjol.com.cn",
+    "archina.com",
+    "designverse.com.cn",
+    "gafei.com",
+    "hcreates.design",
+    "hisheji.com",
+    "hzxcw.gov.cn",
+    "jschina.com.cn",
+    "mydesignplus.cn",
+    "plusc.cc",
+    "sz.gov.cn",
+    "xmnn.cn",
   ]);
   const LEARN_MORE_COVER_DOMAINS = Object.freeze([
     "10100.com",
@@ -1149,7 +1201,10 @@
     const formalIds = formalProjectIds(formalSystem);
     const formal = rows.filter(item => formalIds.has(cleanText(item.id)));
     const presentationReady = formal.filter(item => cleanText(item.imageFit) === "contain");
-    return [...presentationReady, ...formal.filter(item => !presentationReady.includes(item)), ...rows.filter(item => !formalIds.has(cleanText(item.id)))]
+    const byId = new Map(rows.map(item => [cleanText(item.id), item]));
+    const featured = FEATURED_PROJECT_IDS.map(id => byId.get(id)).filter(Boolean);
+    return [...featured, ...presentationReady, ...formal.filter(item => !presentationReady.includes(item)), ...rows.filter(item => !formalIds.has(cleanText(item.id)))]
+      .filter((item, index, candidates) => candidates.indexOf(item) === index)
       .slice(0, Math.max(0, Number(limit) || 0));
   }
 

@@ -7,6 +7,29 @@
   const groups = Object.freeze([
     Object.freeze({
       libraryDecision: "exclude",
+      reasonCode: "user_confirmed_core_data_missing",
+      rows: Object.freeze([
+        ["brand-v2-012", "三顿半线下概念"],
+        ["brand-v2-023", "可能有咖啡"],
+        ["brand-v2-079", "PETSBUY宠物生活馆"],
+        ["brand-v2-087", "荣器"],
+        ["brand-local-004", "DRINK.食社"],
+        ["brand-local-009", "一块美味"],
+        ["brand-local-011", "知亘茶食"],
+        ["brand-local-015", "Pocket Shop Coffee"],
+        ["brand-local-019", "不重逢"],
+        ["brand-local-020", "山生咖啡"],
+        ["brand-local-024", "微风之物"],
+        ["brand-local-027", "纯坊佳哥手作"],
+        ["brand-local-029", "默迹咖啡馆"],
+        ["brand-local-032", "光与尘咖啡空间"],
+        ["brand-confirmed-20260629-007", "山野文创"],
+        ["brand-confirmed-20260629-013", "空杯计划"],
+        ["brand-confirmed-20260629-015", "大吃"],
+      ]),
+    }),
+    Object.freeze({
+      libraryDecision: "exclude",
       reasonCode: "user_confirmed_removal",
       rows: Object.freeze([
         ["brand-v2-019", "fufuland"],
@@ -104,7 +127,7 @@
 
   globalScope.COMMERCIAL_DNA_BRAND_REMOVALS_V0_1 = Object.freeze({
     version: "brand-removals-v0.1",
-    removedAt: "2026-08-28",
+    removedAt: "2026-09-02",
     brandIds: Object.freeze(entries.map(entry => entry.id)),
     entries,
   });
